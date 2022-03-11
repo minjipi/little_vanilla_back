@@ -1,0 +1,993 @@
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <style>
+
+
+        @media (max-width: 719px) {
+            .vue-curtain.active[data-v-de09a10e] {
+                display: block;
+            }
+        }
+
+        .alertmsg.show[data-v-de09a10e] {
+            display: block !important;
+        }
+
+        .checkout_product[data-v-de09a10e] {
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .checkout_product .starIcon[data-v-de09a10e] {
+            display: none;
+        }
+
+        .checkout_product .select-noti[data-v-de09a10e] {
+            color: #999999;
+        }
+
+        .checkout_product__cost_label[data-v-de09a10e] {
+            padding-top: 16px;
+            width: 100%;
+            display: table;
+            vertical-align: middle;
+        }
+
+        .checkout_product__cost_label > *[data-v-de09a10e] {
+            display: table-cell;
+            vertical-align: middle;
+            width: 25%;
+        }
+
+        .checkout_product__cost_label > *[data-v-de09a10e]:first-child {
+            width: 50%;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .checkout_product__cost_label > *:first-child b[data-v-de09a10e] {
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .checkout_product__cost_label > *:first-child .subtitle[data-v-de09a10e] {
+            display: block;
+            color: #999999;
+            font-size: 10px;
+        }
+
+        .checkout_product__cost_label > *:first-child .red[data-v-de09a10e] {
+            color: #ff7b30;
+        }
+
+        @media (min-width: 720px) {
+            .checkout_product__cost_label > *[data-v-de09a10e]:first-child {
+                display: none;
+            }
+        }
+
+        .checkout_product__cost_label > *[data-v-de09a10e]:last-child {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+            width: 50%;
+            text-align: right;
+            vertical-align: middle;
+            line-height: 30px;
+        }
+
+        .checkout_product__cost_label > *:last-child .subtitle[data-v-de09a10e] {
+            color: #666666;
+            font-size: 10px;
+            font-weight: normal;
+            vertical-align: middle;
+        }
+
+        @media (min-width: 720px) {
+            .checkout_product__cost_label > *:last-child .subtitle[data-v-de09a10e] {
+                float: left;
+                font-size: 14px;
+            }
+        }
+
+        .checkout_product__btn_group[data-v-de09a10e] {
+            margin-top: 16px;
+        }
+
+        .checkout_product__btn_group b[data-v-de09a10e] {
+            font-weight: bold;
+        }
+
+        .checkout_product__btn_group[data-v-de09a10e]:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .checkout_product__btn_group > button[data-v-de09a10e],
+        .checkout_product__btn_group a[data-v-de09a10e] {
+            display: block;
+            float: left;
+            padding: 0;
+            line-height: 46px;
+            font-size: 16px;
+            width: 29%;
+            margin-right: 1%;
+            height: 48px;
+        }
+
+        @media (max-width: 719px) {
+            .checkout_product__btn_group > button[data-v-de09a10e],
+            .checkout_product__btn_group a[data-v-de09a10e] {
+                display: block;
+                float: left;
+                padding: 0;
+                line-height: 46px;
+                font-size: 16px;
+                width: calc(48.5% - 44px);
+                margin-right: 1%;
+                height: 48px;
+            }
+        }
+
+        .checkout_product__btn_group > button.npay[data-v-de09a10e],
+        .checkout_product__btn_group a.npay[data-v-de09a10e] {
+            background: #30c612;
+            border-color: #30c612;
+        }
+
+        .checkout_product__btn_group > button.npay_sub[data-v-de09a10e],
+        .checkout_product__btn_group a.npay_sub[data-v-de09a10e] {
+            display: none;
+            width: 32.5%;
+            color: white;
+            background: #30c612;
+            border-color: #30c612;
+        }
+
+        .checkout_product__btn_group > button.npay_sub > img[data-v-de09a10e],
+        .checkout_product__btn_group a.npay_sub > img[data-v-de09a10e] {
+            width: 60px;
+        }
+
+        .checkout_product__btn_group > button.present[data-v-de09a10e],
+        .checkout_product__btn_group a.present[data-v-de09a10e] {
+            width: 10%;
+            margin-right: 0;
+        }
+
+        .checkout_product__btn_group > button.present .inner[data-v-de09a10e],
+        .checkout_product__btn_group a.present .inner[data-v-de09a10e] {
+            line-height: 15px;
+            color: #ff7b30;
+        }
+
+        .checkout_product__btn_group > button.present .btn_txt[data-v-de09a10e],
+        .checkout_product__btn_group a.present .btn_txt[data-v-de09a10e] {
+            font-size: 10px;
+            line-height: initial;
+        }
+
+        .checkout_product__btn_group > button[data-v-de09a10e]:last-child,
+        .checkout_product__btn_group a[data-v-de09a10e]:last-child {
+            margin-right: 0;
+        }
+
+        @media (min-width: 720px) {
+            .checkout_product__btn_group > *.message[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product__btn_group > *.present_sub[data-v-de09a10e] {
+                display: none;
+            }
+        }
+
+        @media (max-width: 719px) {
+            .checkout_product__btn_group[data-v-de09a10e] {
+                margin-top: 0;
+                position: absolute;
+                left: 12px;
+                right: 12px;
+            }
+
+            .checkout_product__btn_group > button[data-v-de09a10e]:last-child,
+            .checkout_product__btn_group a[data-v-de09a10e]:last-child {
+                margin-right: 0;
+            }
+
+            .checkout_product__btn_group > button.cart[data-v-de09a10e],
+            .checkout_product__btn_group a.cart[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product__btn_group > button.present[data-v-de09a10e],
+            .checkout_product__btn_group a.present[data-v-de09a10e] {
+                width: 44px !important;
+            }
+
+            .checkout_product__btn_group > button.star[data-v-de09a10e],
+            .checkout_product__btn_group a.star[data-v-de09a10e] {
+                width: 44px !important;
+                margin-right: 1%;
+            }
+
+            .checkout_product__btn_group > button.present_sub[data-v-de09a10e],
+            .checkout_product__btn_group a.present_sub[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product__btn_group > button.npay_present[data-v-de09a10e],
+            .checkout_product__btn_group a.npay_present[data-v-de09a10e] {
+                display: none;
+            }
+        }
+
+        @media (max-width: 719px) {
+            .checkout_product[data-v-de09a10e] {
+                min-height: 64px;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: #ffffff;
+                z-index: 151;
+                padding: 8px 12px;
+                border-top: 1px solid #d9d9d9;
+            }
+
+            .checkout_product .mobile-layer[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product .starIcon[data-v-de09a10e] {
+                display: block;
+                position: absolute;
+                right: 12px;
+                border: 0 none;
+                box-shadow: none;
+                padding: 0;
+                height: 48px;
+            }
+        }
+
+        @media (min-width: 720px) {
+            .checkout_product .select_group[data-v-de09a10e] {
+                z-index: 1;
+                top: -68px;
+            }
+
+            .checkout_product .select_group__body[data-v-de09a10e] {
+                max-height: 350px;
+                overflow: auto;
+            }
+
+            .checkout_product .select_group__body ol[data-v-de09a10e]:first-of-type {
+                margin-top: 11px;
+            }
+
+            .checkout_product .select_group__body ol[data-v-de09a10e]:last-of-type {
+                margin-bottom: 11px;
+            }
+
+            .checkout_product .select_group__body__present-desc[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product .select_group__close[data-v-de09a10e] {
+                display: none;
+            }
+        }
+
+        @media (max-width: 719px) {
+            .checkout_product.mobileToggled .mobile-layer[data-v-de09a10e] {
+                display: block;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group[data-v-de09a10e] {
+                border: 0;
+                background-color: #ffffff;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group .select_group__parent_list > li[data-v-de09a10e] {
+                box-shadow: none;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group .select_group__parent_list .bottom-border[data-v-de09a10e] {
+                width: 98%;
+                height: 1px;
+                background-color: #d9d9d9;
+                margin-left: 1%;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group .select_group__parent_list .bottom-border.full[data-v-de09a10e] {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__header[data-v-de09a10e] {
+                display: none;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__body[data-v-de09a10e] {
+                min-height: 310px;
+                padding-bottom: 10px;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__body ol[data-v-de09a10e]:first-of-type {
+                margin-top: 11px;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__body__present-desc[data-v-de09a10e] {
+                height: 86px;
+                color: #333333;
+                font-size: 14px;
+                text-align: left;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 0 0 0;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__body__present-desc img[data-v-de09a10e] {
+                width: 52px;
+                margin-right: 8px;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__body__present-desc b[data-v-de09a10e] {
+                display: block;
+                font-size: 17px;
+                font-weight: bold;
+            }
+
+            .checkout_product.mobileToggled .mobile-layer .select_group__close[data-v-de09a10e] {
+                display: block;
+                width: 98%;
+                margin-left: 1%;
+                position: absolute;
+                margin-bottom: 10px;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group[data-v-de09a10e] {
+                position: initial;
+                margin-top: 16px;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group > *[data-v-de09a10e] {
+                width: 49.5%;
+                margin-right: 0;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group > *[data-v-de09a10e]:first-child {
+                margin-right: 1%;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show1 > *[data-v-de09a10e] {
+                width: 49% !important;
+                display: none;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show1 > *.cart[data-v-de09a10e] {
+                display: block;
+                margin-right: 1%;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show1 > *.buy[data-v-de09a10e] {
+                display: block;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show2 > *[data-v-de09a10e] {
+                width: 49% !important;
+                display: none;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show2 > *.cart[data-v-de09a10e] {
+                display: block;
+                margin-right: 1%;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show2 > *.npay_sub[data-v-de09a10e] {
+                display: block;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show3 > *[data-v-de09a10e] {
+                width: 98% !important;
+                display: none;
+            }
+
+            .checkout_product.mobileToggled .checkout_product__btn_group.show3 > *.present_sub[data-v-de09a10e] {
+                display: block;
+            }
+        }
+
+        .checkout_product .tooltip[data-v-de09a10e] {
+            text-align: center;
+            bottom: -55px;
+            right: 0;
+        }
+
+        @media (max-width: 719px) {
+            .checkout_product .tooltip[data-v-de09a10e] {
+                border-radius: 0;
+                width: 100%;
+                bottom: 63px;
+                right: 0;
+            }
+        }
+
+        .selected_options[data-v-de09a10e] {
+            max-height: 175px;
+            overflow-y: auto;
+        }
+
+        .selected_options .select_group__body__present-desc[data-v-de09a10e] {
+            padding: 0 0 10px 0 !important;
+        }
+
+        .selected_options .option_card[data-v-de09a10e]:first-child {
+            margin-top: 5px;
+        }
+
+        @media (max-width: 719px) {
+            .selected_options[data-v-de09a10e] {
+                margin-top: 10px;
+                height: 175px;
+            }
+        }
+
+        @media (min-width: 720px) {
+            .selected_options[data-v-de09a10e] {
+                max-height: 145px;
+            }
+        }
+
+        .mobile-ui-close[data-v-de09a10e] {
+            background: #ffffff;
+            position: absolute;
+            height: 24px;
+            top: -24px;
+            width: 44px;
+            left: 50%;
+            margin-left: -32px;
+            color: #333333;
+        }
+
+        .mobile-ui-close.on-layer[data-v-de09a10e] {
+            top: -48px;
+        }
+
+        .mobile-ui-close[data-v-de09a10e]:before, .mobile-ui-close[data-v-de09a10e]:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: #ffffff;
+        }
+
+        .mobile-ui-close[data-v-de09a10e]:before {
+            left: -10px;
+            -ms-transform: skewX(-20deg);
+            -webkit-transform: skewX(-20deg);
+            transform: skewX(-20deg);
+            border-top-left-radius: 5px;
+        }
+
+        .mobile-ui-close[data-v-de09a10e]:after {
+            right: -10px;
+            -ms-transform: skewX(20deg);
+            -webkit-transform: skewX(20deg);
+            transform: skewX(20deg);
+            border-top-right-radius: 5px;
+        }
+
+        .quota-message[data-v-de09a10e] {
+            margin: 10px 0 5px;
+            color: #666666;
+            font-size: 12px;
+        }
+
+        @media (max-width: 719px) {
+            .quota-message[data-v-de09a10e] {
+                margin: 10px 0 0;
+            }
+        }
+
+        .quota-message i[data-v-de09a10e] {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 2px;
+            font-size: 14px;
+        }
+
+        .idus-icon-gift[data-v-de09a10e] {
+            font-size: 22px;
+            color: #ff7b30;
+        }
+        </style>
+
+        <form action="/product/write" method="post" enctype="multipart/form-data">
+            <div id="content" class="content relative" data-page="prd-detail">
+                <div id="sticky-start" style="position: absolute; top: 25px;"></div>
+                <div class="inner-w mobile-full">
+                    <section id="img-section" class="prd-detail-section">
+                        <!-- ui image preview -->
+                        <div class="image-preview ui-slider" data-ui="slider" tabindex="-1"
+                             style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                            <div class="outer-frame">
+                                <ul class="img-view inner-frame">
+
+                                </ul>
+                            </div>
+                            <fieldset class="ui-control">
+                                <button type="button" class="ui-btn prev" aria-label="이전">
+                                    <i class="fas fa-angle-left"></i>
+                                </button>
+
+                                    <input type="file" class="custom-file-input" name="productimage" multiple><br>
+
+                                <ul class="img-list indicator">
+                                    <li class="indicator-btn" style="background-image: url()"></li>
+                                </ul>
+                                <button type="button" class="ui-btn next" aria-label="다음" ><i
+                                        class="fa fa-angle-right fa-2x"></i></button>
+                            </fieldset>
+                        </div>
+                    </section>
+                    <aside class="sticky_aside product_detail" data-ui="sticky_aside" data-state="" data-offset="36">
+                        <div class="sticky_aside_product">
+                            <!-- artist_card -->
+                            <!-- artist_card -->
+                            <div class="artist_card">
+                                <div class="artist_card__split">
+                                    <a class="artist_card__link"
+                                       href="/w/artist/859435fa-e4af-4a27-9465-d992c55ebf2b/product">
+                                        <div class="artist_card__img"
+                                             style="background-image: url(http://image.idus.com/image/files/448094be561b4bceacd0ad270420d44b_256.jpg);"></div>
+                                        <span class="artist_card__label">
+                        너나들이 폰케이스                        <i class="idus-icon-arrow-right"></i>
+                    </span>
+                                    </a>
+                                </div>
+                                <div class="artist_card__split"></div>
+                            </div>
+
+                            <input name="productName" type="text" class="sticky_aside__produc-title">
+
+                            <div data-v-ae3f0052="" class="product-detail-info">
+                                <div data-v-3ee9a3ba="" data-v-ae3f0052="" class="price_tag-detail">
+                                    <mark data-v-3ee9a3ba="" class="sticky_aside__marked right">
+                                        <button data-v-488f5f82="" data-v-6a60e66d="" data-v-3ee9a3ba=""
+                                                aria-label="찜하기"
+                                                class="full-button" style="width: 24px; height: 100%;">
+                                            <div data-v-6a60e66d="" data-v-488f5f82=""
+                                                 class="product-detail-star-text-box">
+                                                <div data-v-6a60e66d="" data-v-488f5f82=""
+                                                     class="product-detail-star-box">
+                                                    <i data-v-6a60e66d="" data-v-488f5f82=""
+                                                       class="product-detail-star idus-icon-favorite-border-p-5"></i>
+                                                </div>
+                                                <div data-v-6a60e66d="" data-v-488f5f82="" class="star-count-text-box">
+                                                    <p
+                                                            data-v-6a60e66d="" data-v-488f5f82=""
+                                                            class="star-count-text">
+                                                        11,195
+                                                    </p></div>
+                                            </div>
+                                        </button>
+                                        <button data-v-3ee9a3ba="" data-ui="url-copy" data-ui-option="short"
+                                                data-icon-event="hover" data-clipboard-message="작품 URL이 복사되었습니다."
+                                                class="product-detail-share-button">
+                                            <div data-v-3ee9a3ba="" class="product-detail-share-box"><i
+                                                    data-v-3ee9a3ba=""
+                                                    class="idus-icon-share-p-5"></i>
+                                            </div>
+                                        </button>
+                                    </mark>
+
+
+
+                                    <span data-v-3ee9a3ba="">
+                                        <span data-v-3ee9a3ba="" class="price_tag__hilight">
+                                            <em data-v-3ee9a3ba="">
+                                            <strong data-v-3ee9a3ba="" class="sold-price"></strong>
+                                            </em>%</span>
+
+<!--                                        <script>-->
+<!--                                            function keytest(event){-->
+<!--                                                console.log(this.value);-->
+<!--                                            }-->
+<!--                                        </script>-->
+
+                                        <span data-v-3ee9a3ba="" class="price_tag__strong">
+                                            <input type="text" name="salePrice" placeholder="할인된 가격" onkeyup="keytest(this)">
+
+
+                                        </span>
+
+
+                                        <del data-v-3ee9a3ba="" class="price_tag__crossout">
+                                            <input type="text" name="price" placeholder="원래 가격" onkeyup="keytest(this)">
+                                        </del>
+                                    </span>
+
+
+
+
+
+
+
+
+                                    <div data-v-3ee9a3ba="" id="marker"></div>
+                                </div>
+                                <div data-v-9e3c00aa="" data-v-ae3f0052="" class="price_tag-detail ">
+                                    <mark data-v-18576c8e="" data-v-9e3c00aa="" class="sticky_aside__marked right"><span
+                                            data-v-18576c8e="" id="count_up" class="bold-txt dark">5,008 명</span> <span
+                                            data-v-18576c8e="" class="dark">구매</span></mark> <!----></div>
+                                <div data-v-7b67a23d="" data-v-ae3f0052="" class="product-define-info">
+                                    <div data-v-9e98616a="" data-v-7b67a23d="" class="data-row">
+                                        <table data-v-9e98616a="">
+                                            <tr data-v-9e98616a="">
+                                                <td data-v-9e98616a="" class="data-row__title">
+                                                    적립금
+                                                </td>
+                                                <td data-v-9e98616a="" class="data-row__content">
+                                                    <span data-v-7b67a23d="" data-v-9e98616a="">최대
+                                                    <span data-v-7b67a23d="" data-v-9e98616a=""
+                                                          class="bold-txt">350P</span></span>
+                                                    <div data-v-9e98616a="" class="balloon">
+                                                        <img data-v-9e98616a=""
+                                                             src="/resources/dist/images/icon-info.svg" alt="">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <div data-v-9e98616a="" data-v-7b67a23d="" class="data-row">
+                                            <table data-v-9e98616a="">
+                                                <tr data-v-9e98616a="">
+                                                    <td data-v-9e98616a="" class="data-row__title">
+                                                        수량
+                                                    </td>
+                                                    <td data-v-9e98616a="" class="data-row__content">
+                                                        <span data-v-7b67a23d="" data-v-9e98616a="">
+                                                            <input name="quantity" type="text"
+                                                                   class="sticky_aside__produc-title">
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <div data-v-9e98616a="" class="balloon__content">
+                                            <i data-v-9e98616a="" type="button" class="close_btn mobile-show">
+                                                <i data-v-9e98616a="" class="idus-icon-close"></i>
+                                            </i>
+                                            <div data-v-7b67a23d="" data-v-9e98616a="" class="point-balloon">
+                                                <table data-v-7b67a23d="" data-v-9e98616a="" class="balloon-table">
+                                                    <tr data-v-7b67a23d="" data-v-9e98616a="">
+                                                        <td data-v-7b67a23d="" data-v-9e98616a=""
+                                                            class="balloon-table left">
+                                                            회원등급 적립률
+                                                        </td>
+                                                        <td data-v-7b67a23d="" data-v-9e98616a="">2%</td>
+                                                    </tr>
+                                                    <tr data-v-7b67a23d="" data-v-9e98616a="">
+                                                        <td data-v-7b67a23d="" data-v-9e98616a=""
+                                                            class="balloon-table left">
+                                                            VIP 클럽 추가 적립
+                                                        </td>
+                                                        <td data-v-7b67a23d="" data-v-9e98616a="">+1%</td>
+                                                    </tr>
+                                                    <tr data-v-7b67a23d="" data-v-9e98616a="">
+                                                        <td data-v-7b67a23d="" data-v-9e98616a=""
+                                                            class="balloon-table left">
+                                                            간편 결제 시
+                                                        </td>
+                                                        <td data-v-7b67a23d="" data-v-9e98616a="">+0.5%</td>
+                                                    </tr>
+                                                </table>
+                                                <div data-v-7b67a23d="" data-v-9e98616a="">
+                                                    <table data-v-7b67a23d="" data-v-9e98616a="" class="vip-section">
+                                                        <div data-v-7b67a23d="" data-v-9e98616a=""
+                                                             class="vip-section__line"></div>
+                                                        <tr data-v-7b67a23d="" data-v-9e98616a="">
+                                                            <td data-v-7b67a23d="" data-v-9e98616a=""
+                                                                style="float: left;">
+                                                                <h4 data-v-7b67a23d="" data-v-9e98616a=""
+                                                                    class="hilight">
+                                                                    아이디어스 VIP 클럽
+                                                                </h4></td>
+                                                            <td data-v-7b67a23d="" data-v-9e98616a=""
+                                                                style="float: right;">
+                                                                <a data-v-7b67a23d="" data-v-9e98616a=""
+                                                                   href="https://www.idus.com/w/board/notice/detail?id=55"
+                                                                   class="hilight red">더 알아보기&gt;</a></td>
+                                                        </tr>
+                                                    </table>
+                                                    <p data-v-7b67a23d="" data-v-9e98616a="" class="vip-section__desc">
+                                                        핸드메이드를 사랑하는 회원님들에게 제공하는 유료
+                                                        서비스로 작품 금액의 1.0% 추가 적립 및 배송비 무료
+                                                        혜택을 제공합니다.
+                                                    </p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 작품 추가 정보: 배송비 & 적립금 -->
+                            <div class="tab-style" data-ui="toggle-tab" style="display: none">
+                                <div class="tab">
+                        <span>
+                        주문시 제작                        </span>
+                                </div>
+
+                                <div class="tab" data-ui-id="product_info_detail">
+                                    <span>배송비 3,000원</span>
+                                    <span>10일 이내 발송</span>
+                                    <i class="idus-icon-arrow-down"></i>
+                                </div>
+                                <ul data-ui="tab-panel" data-panel-id="product_info_detail">
+                                    <li>제주 / 도서산간 추가비용 :
+                                        <span>3,000원</span>
+                                    </li>
+                                    <li>
+                                        <span>50,000원 이상 구매시 배송비 무료(제주, 도서산간 추가 비용 제외)</span>
+                                    </li>
+                                </ul>
+                                <!-- 적립금 -->
+                                <div class="tab" data-ui-id="user_point">
+                                    <span>적립금</span>
+                                    <span>최대 3.5% 적립</span>
+                                    <i class="idus-icon-arrow-down"></i>
+                                </div>
+                                <div class="user-point" data-ui="tab-panel" data-panel-id="user_point">
+                                    <dl>
+                                        <dt>회원등급 적립률</dt>
+                                        <dd class="hilight blue">2.0%</dd>
+                                        <dt>VIP 클럽 가입</dt>
+                                        <dd class="hilight blue">+1.0%</dd>
+                                        <dt>간편하게 카드 결제시</dt>
+                                        <dd class="hilight blue">+0.5%</dd>
+                                    </dl>
+                                    <h4 class="hilight red">아이디어스 VIP 클럽</h4>
+                                    <p>핸드메이드를 사랑하는 회원님들에게 제공하는 유료 서비스로 작품 금액의 1.0% 추가 적립 및 배송비 무료 혜택을 제공합니다.</p>
+                                    <a href="/w/me/vipclub" class="hilight blue">더 알아보기&gt;</a>
+                                </div>
+                            </div>
+
+                            <!-- 작품 옵션 선택 -->
+                            <div data-v-de09a10e="">
+                                <div data-v-de09a10e="" class="mobile-layer">
+                                    <button data-v-de09a10e="" type="button" class="mobile-show mobile-ui-close">
+                                        <i data-v-de09a10e="" class="idus-icon-arrow-down"></i>
+                                    </button>
+                                    <button onclick="addOption()" data-v-de09a10e="" type="button"
+                                            class="data-row__title">
+                                        옵션 추가
+                                    </button>
+
+                                    <div data-v-de09a10e="" id="optionScrollable"
+                                         class="option_select_group Scrollable"
+                                         style="">
+
+                                        <div data-v-de09a10e="" id="select_group__body" class="select_group__body"><ol data-v-de09a10e="" class="select_group__parent_list active">
+                                                <li data-v-de09a10e="">
+                                                    <span data-v-de09a10e="">
+                                                        <input type="text" name="optionDTOList[0].title" placeholder="옵션">
+                                                    </span>
+                                                    <span data-v-de09a10e="" class="align_right">
+                                                        <button onclick="addOptionSelect(this, event)" data-v-de09a10e="" class="idus-icon-arrow-down">
+                                                        </button>
+                                                        <i onclick="deleteOption(this)" data-v-de09a10e="" class="idus-icon-close"></i>
+                                                    </span>
+
+                                                </li>
+
+                                                <div data-v-de09a10e="" class="bottom-border full">
+                                                </div>
+
+                                                <ul data-v-de09a10e="" class="select_group__child_list active">
+                                                    <li data-v-de09a10e="">
+                                                        <span data-v-de09a10e="">
+                                                            <input type="text" name="optionDTOList[0].optionSelectDTOList[0].title" placeholder="선택">
+                                                            <input type="text" name="optionDTOList[0].optionSelectDTOList[0].price" placeholder="추가금액">
+                                                        </span>
+                                                        <i onclick="deleteOptionSelect(this)" data-v-de09a10e=""
+                                                                class="idus-icon-close"></i>
+                                                    </li></ul>
+                                            </ol>
+                                        </div>
+                                    </div>
+
+
+                                    <dl data-v-de09a10e="" class="checkout_product__cost_label">
+                                        <span data-v-de09a10e="">
+                                            <span data-v-de09a10e="">
+                                                배송비
+                                                <b data-v-de09a10e="">3,000원</b>
+                                            </span>
+                                            <span data-v-de09a10e="" class="subtitle">(50,000원 이상 구매 시 무료배송)</span>
+                                        </span>
+
+                                    </dl>
+                                </div>
+                                <!--                                <fieldset data-v-de09a10e="" class="checkout_product__btn_group show1">-->
+                                <button data-v-de09a10e="" type="submit" data-to="present" data-pay-type="present"
+                                        class="ui_btn--red present_sub">
+                                    작성완료
+                                </button>
+                                <!--                                </fieldset>-->
+
+
+                                <div data-v-de09a10e="" class="">
+                                    <div data-v-895af704="" data-v-de09a10e="" class="tooltip with-close" style="display: none;"><span data-v-de09a10e="" data-v-895af704="">전화번호만 알아도 선물할 수 있어요!</span>
+                                        <span data-v-895af704="" class="close-btn"><i data-v-895af704="" class="idus-icon-close"></i>
+                                        </span>
+                                        <div data-v-895af704="" class="triangle top end">
+                                            <div data-v-895af704="" class="before"></div>
+                                            <div data-v-895af704="" class="after"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-v-de09a10e="" class="alertmsg"><span data-v-de09a10e="" class="close-btn"><i
+                                        data-v-de09a10e="" class="idus-icon-close"></i></span>
+                                    <p data-v-de09a10e="">장바구니에 작품이 담겼습니다.</p>
+                                    <a data-v-de09a10e="" href="/w/cart" class="btn btn-s btn-point">장바구니 가기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 쿠폰 받기 -->
+                        <!---->
+                    </aside>
+                    <a data-vue-ref="artist_message_url"
+                       href="/w/message/859435fa-e4af-4a27-9465-d992c55ebf2b?productuuid=4023c681-b192-4f48-86c6-e0c6632edb1e"
+                       class="artist-inquire-float-btn" target="_blank" data-ui="inquire-float-btn"
+                       style="bottom: 30px;">
+                        <img src="/resources/dist/images/artist-inquire-icon.svg" alt="작가 문의">
+                    </a>
+                </div>
+                <div class="inner-w mobile-full">
+                    <!-- vip club banner -->
+
+                    <div data-trigger-detail="true"></div>
+                    <div data-trigger="fixposition"></div>
+                    <nav class="flex_nav_style nav-mobile--nm" data-ui-position="default" data-ui="tab-control"
+                         data-page="product">
+                        <a href="#prd-info" data-id="prd-info" class="active">작품정보</a>
+                    </nav>
+
+                    <!-- 제품정보 -->
+                    <section id="prd-info" class="prd-detail-section" data-scroll="hashChecker">
+                        <!-- 안전식품 고지 -->
+
+                        <p style="word-break: break-all" class="para">
+                            <textarea name="productInfo"></textarea>
+                        </p>
+
+                        <div class="hashtag-box">
+                            <div class="center-txt">
+                                <span class="txt">Category &amp; Keyword</span>
+                                <a class="txt-strong" href="/w/main/category/66299878-c6bc-11e3-8577-06f4fe0000b5">
+                                    인테리어 소품 </a>
+                            </div>
+                            <div class="listwrap">
+                                <input type="text" name="tags">
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+            <div class="box">
+
+            </div>
+        </form>
+
+
+
+
+
+        <script>
+            window.onload = function () {
+
+                document.getElementsByClassName("custom-file-input")[0].addEventListener('change',function () {
+                    var formData = new FormData();
+                    var files = this.files;
+                    var appended = false;
+
+                    for (var i = 0; i < files.length; i++){
+                        formData.append("uploadFiles", files[i]);
+                        appended = true;
+                    }
+
+                    if (!appended){
+                        return;
+                    }
+
+                    console.log("formData: "+formData);
+                    function sendRequest() {
+                        var httpRequest = new XMLHttpRequest();
+                        httpRequest.onreadystatechange = function() {
+                            if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200 ) {
+                                console.log(httpRequest.responseText);
+                                var json = JSON.parse(httpRequest.responseText)
+                                var li_tag = '';
+
+                                var str = "";
+
+                                for(var i = 0 ; i < json.length; i ++) {
+                                    console.log(json[i]);
+                                    str += "<input type='hidden' name='productImageUploadDTOList["+i+"].imgName' value='"+json[i].fileName +"'>";
+
+                                    if (i==0) {
+                                        li_tag += `<li class="ui-slide" data-trigger-preview="open" style="background-image: url('/product/display?fileName=`+json[i].fileName+`'); width: 560px; display: list-item;" data-index="0">
+                                                    </li>`;
+                                    } else {
+                                        li_tag += `<li class="ui-slide" data-trigger-preview="open" style="background-image: url('/product/display?fileName=`+json[i].fileName+`'); width: 560px; display: none;" data-index="`+i+`">
+                                                    </li>`;
+                                    }
+                                }
+
+                                document.getElementsByClassName("img-view inner-frame")[0].innerHTML = li_tag;
+                                document.getElementsByClassName("box")[0].innerHTML = str;
+
+
+                                // document.getElementsByClassName('ui-slide')[0].style.backgroundImage = "url('/product/display?fileName="+json[0].fileName+"')"
+                                // document.getElementsByClassName('indicator-btn')[0].style.backgroundImage = "url('/product/display?fileName="+json[0].fileName+"')"
+                            }
+                        };
+                        // POST 방식의 요청은 데이터를 Http 헤더에 포함시켜 전송함.
+                        httpRequest.open("POST", "/product/uploadAjax", true);
+                        httpRequest.send(formData);
+                    }
+                    sendRequest();
+                });
+
+            //    이미지 넘기기 액션.
+                document.getElementsByClassName("ui-btn next")[0].addEventListener('click',function () {
+                    var uiSlides = document.getElementsByClassName("ui-slide");
+
+                    //다음 이미지 디스플레이 보이게
+                    uiSlides[1].style.display = "list-item";
+                    var firstLi = uiSlides[0].outerHTML;
+                    //여기에 마진 레프트 이용해서 애니메이션을 주면 됨
+
+
+                    // for(var i=0; i>-590; i=i-0.1) {
+                    //     document.getElementsByClassName("img-view inner-frame")[0].style.marginLeft = i;
+                    // }
+                    // document.getElementsByClassName("img-view inner-frame")[0].style.marginLeft = 0;
+
+
+                    uiSlides[0].remove();
+
+
+                    document.getElementsByClassName("img-view inner-frame")[0].innerHTML = document.getElementsByClassName("img-view inner-frame")[0].innerHTML + firstLi;
+
+                    uiSlides = document.getElementsByClassName("ui-slide");
+
+                    uiSlides[uiSlides.length-1].style.display = 'none';
+
+                });
+
+                document.getElementsByClassName("ui-btn prev")[0].addEventListener('click',function () {
+                    var uiSlides = document.getElementsByClassName("ui-slide");
+                    var uiSlidesLength = document.getElementsByClassName("ui-slide").length - 1;
+
+                    uiSlides[document.getElementsByClassName("ui-slide").length - 2].style.display = "list-item";
+                    var lastLi = uiSlides[uiSlidesLength].outerHTML;
+                    uiSlides[uiSlidesLength].remove();
+
+                    document.getElementsByClassName("img-view inner-frame")[0].innerHTML = lastLi + document.getElementsByClassName("img-view inner-frame")[0].innerHTML;
+
+                });
+            }
+        </script>
+
+    </th:block>
+</th:block>

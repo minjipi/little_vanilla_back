@@ -1,0 +1,88 @@
+{"dir" : "ltr",
+    "lang" : "Korean",
+    "name" : "idus",
+    "scope" : "/",
+    "display" : "fullscreen",
+    "start_url" : "https://www.idus.com/",
+    "short_name" : "idus",
+    "theme_color" : "#ff7b30",
+    "description" : "취향 맞춤 작품 구매부터 취미 생활까지, 아이디어스로 일상에 특별함을 잇다!",
+    "orientation" : "portrait",
+    "background_color" : "#ff7b30",
+    "related_applications" : [],
+    "prefer_related_applications" : true,
+    "generated" : true,
+    "icons" : [
+        {
+            "src": "https://www.idus.com/resources/favicon_32.ico",
+            "sizes": "32x32"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_44.png?ver=2.0",
+            "sizes": "44x44"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_48.png?ver=2.0",
+            "sizes": "48x48"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_300.png?ver=2.0",
+            "sizes": "300x300"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_150.png?ver=2.0",
+            "sizes": "150x150"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_88.png?ver=2.0",
+            "sizes": "88x88"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_24.png?ver=2.0",
+            "sizes": "24x24"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_50.png?ver=2.0",
+            "sizes": "50x50"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_192.png?ver=2.0",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_144.png?ver=2.0",
+            "sizes": "144x144"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_96.png?ver=2.0",
+            "sizes": "96x96"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_72.png?ver=2.0",
+            "sizes": "72x72"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_36.png?ver=2.0",
+            "sizes": "36x36"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_180.png?ver=2.0",
+            "sizes": "180x180"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_152.png?ver=2.0",
+            "sizes": "152x152"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_120.png?ver=2.0",
+            "sizes": "120x120"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_76.png?ver=2.0",
+            "sizes": "76x76"
+        },
+        {
+            "src": "https://www.idus.com/resources/dist/images/app-icon/icon_1024.png?ver=2.0",
+            "sizes": "1024x1024"
+        }
+    ]}
