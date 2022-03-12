@@ -16,10 +16,13 @@ public class MemberService {
     MemberDao memberDao;
 
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
-
         postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
         return memberDao.createMember(postMemberReq);
+    }
 
+    public Boolean getUserEmail(String email) {
+
+        return memberDao.getUserEmail(email);
     }
 
 }

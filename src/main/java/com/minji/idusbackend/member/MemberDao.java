@@ -5,13 +5,12 @@ import com.minji.idusbackend.member.model.PostMemberRes;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.GetProductRes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class MemberDao {
@@ -37,7 +36,7 @@ public class MemberDao {
         return new PostMemberRes(lastInsertIdx, 1);
     }
 
-    public UserLoginRes findByEmailAndName(String email){
+    public UserLoginRes findByEmailAndName(String email) {
         String getEmailQuery = "SELECT * FROM member WHERE email=?";
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
@@ -47,9 +46,32 @@ public class MemberDao {
                         rs.getString("password"),
                         new ArrayList<>()
                 ), email);
-
     }
 
+    public Boolean getUserEmail(String email) {
+
+        String findEmailQuery = "SELECT * FROM member WHERE email=?";
+
+        try {
+            UserLoginRes userLoginRes = this.jdbcTemplate.queryForObject(findEmailQuery
+                    , (rs, rowNum) -> new UserLoginRes(
+                            rs.getObject("idx", int.class),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            new ArrayList<>()
+                    ), email);
+            if (userLoginRes.getEmail() != null) {
+                return true;
+
+            } else {
+                return false;
+            }
+
+        }catch (EmptyResultDataAccessException e) {
+            return false;
+
+        }
+    }
 
 }
 

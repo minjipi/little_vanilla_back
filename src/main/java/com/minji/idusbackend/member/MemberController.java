@@ -42,6 +42,15 @@ public class MemberController {
         }
     }
 
+    @ResponseBody
+    @GetMapping("{email}")
+    public Boolean getUserEmail(@PathVariable("email") String email) {
+
+        Boolean result = memberService.getUserEmail(email);
+        return result;
+
+    }
+
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {

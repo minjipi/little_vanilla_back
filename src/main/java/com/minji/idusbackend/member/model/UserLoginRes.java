@@ -9,6 +9,7 @@ import java.util.Collection;
 
 @Getter
 @Setter
+
 public class UserLoginRes extends User {
     int idx;
     String email;
