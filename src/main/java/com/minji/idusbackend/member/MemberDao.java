@@ -3,7 +3,6 @@ package com.minji.idusbackend.member;
 import com.minji.idusbackend.member.model.PostMemberReq;
 import com.minji.idusbackend.member.model.PostMemberRes;
 import com.minji.idusbackend.member.model.UserLoginRes;
-import com.minji.idusbackend.product.model.GetProductRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,22 @@ public class MemberDao {
 
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
 
-        String createMemberQuery = "insert into Member (email, password, nickname) VALUES (?, ?, ?)";
+        String createMemberQuery = "insert into Member (email, password, nickname, isSeller ) VALUES (?, ?, ?, 0)";
+
+        Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(),
+        };
+
+        this.jdbcTemplate.update(createMemberQuery, createMemberParams);
+
+        String getLastInsertIdxQuery = "select last_insert_id()";
+        int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+
+        return new PostMemberRes(lastInsertIdx, 1);
+    }
+
+    public PostMemberRes createSeller(PostMemberReq postMemberReq) {
+
+        String createMemberQuery = "insert into Member (email, password, nickname, isSeller ) VALUES (?, ?, ?, 1)";
 
         Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(),
         };

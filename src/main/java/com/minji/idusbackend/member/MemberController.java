@@ -43,6 +43,22 @@ public class MemberController {
     }
 
     @ResponseBody
+    @PostMapping("/sellersignup")
+    public BaseResponse<PostMemberRes> createSeller(@RequestBody PostMemberReq postMemberReq) {
+
+        try {
+            System.out.println("========================== Req: " + postMemberReq);
+
+            PostMemberRes postMemberRes = memberService.createSeller(postMemberReq);
+            return new BaseResponse<>(postMemberRes);
+
+        } catch (Exception exception) {
+            System.out.println(exception);
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+    @ResponseBody
     @GetMapping("{email}")
     public Boolean getUserEmail(@PathVariable("email") String email) {
 

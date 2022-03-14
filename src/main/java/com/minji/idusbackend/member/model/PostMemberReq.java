@@ -10,6 +10,7 @@ public class PostMemberReq {
     private String email;
     private String password;
     private String nickname;
+    private Authority authority;
 //    private String name;
 //    private int birthday;
 //    private String gender;

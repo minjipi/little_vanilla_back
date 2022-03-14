@@ -20,8 +20,12 @@ public class MemberService {
         return memberDao.createMember(postMemberReq);
     }
 
-    public Boolean getUserEmail(String email) {
+    public PostMemberRes createSeller(PostMemberReq postMemberReq) {
+        postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
+        return memberDao.createSeller(postMemberReq);
+    }
 
+    public Boolean getUserEmail(String email) {
         return memberDao.getUserEmail(email);
     }
 
