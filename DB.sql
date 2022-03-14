@@ -16,14 +16,14 @@ create table member (
     email varchar(50),
     nickname varchar(30),
     password varchar(200),
-    FOREIGN KEY authority varchar(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
-
-create table authority
-(
-    GUEST varchar(20),
-    MEMBER varchar(20),
-    SELLER varchar(20),
-    ADMIN varchar(20)
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+create table authority (
+    member_idx int,
+    role int,
+    foreign key (member_idx) references member (idx)
+);
+
+

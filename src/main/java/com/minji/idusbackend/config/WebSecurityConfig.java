@@ -25,6 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    @Autowired
     private UserDetailsService jwtUserDetailsService;
 
     @Autowired
@@ -55,16 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 특정 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정.
 
-                .authorizeRequests().antMatchers("/member/*").hasRole("MEMBER")
-                .antMatchers("/product/productwrite").hasRole("SELLER")
-
-                .antMatchers("/", "/login","/resources/**").permitAll().
+                .authorizeRequests()
+                .antMatchers("/product/lists").hasRole("MEMBER")
+                .antMatchers("/product/search").hasRole("SELLER")
+                .antMatchers("/", "/member/*", "/resources/**").permitAll().
 
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
 
                 // exception handling 할 때 우리가 만든 클래스를 추가.
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
 
                 // 시큐리티는 기본적으로 세션을 사용하지만, 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정.
                 .and().sessionManagement()
