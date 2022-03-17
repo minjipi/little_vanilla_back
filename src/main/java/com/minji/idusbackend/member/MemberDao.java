@@ -23,6 +23,7 @@ public class MemberDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
 
         String createMemberQuery = "insert into Member (email, password, nickname ) VALUES (?, ?, ?)";
@@ -41,9 +42,9 @@ public class MemberDao {
 
         this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
 
-
         return new PostMemberRes(lastInsertIdx, 1);
     }
+
 
     public PostMemberRes createSeller(PostMemberReq postMemberReq) {
 
@@ -63,11 +64,10 @@ public class MemberDao {
 
         this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
 
-
         return new PostMemberRes(lastInsertIdx, 1);
     }
 
-    public UserLoginRes findByEmailAndName(String email) {
+    public UserLoginRes findByEmail(String email) {
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=?";
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
@@ -81,9 +81,7 @@ public class MemberDao {
     }
 
     public Boolean getUserEmail(String email) {
-
         String findEmailQuery = "SELECT * FROM member WHERE email=?";
-
         try {
             UserLoginRes userLoginRes = this.jdbcTemplate.queryForObject(findEmailQuery
                     , (rs, rowNum) -> new UserLoginRes(
@@ -99,7 +97,7 @@ public class MemberDao {
                 return false;
             }
 
-        }catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             return false;
 
         }

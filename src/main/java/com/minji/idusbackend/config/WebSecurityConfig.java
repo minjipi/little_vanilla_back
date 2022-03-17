@@ -35,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load user for matching credentials
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -59,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 특정 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정.
 
                 .authorizeRequests()
-                .antMatchers("/product/lists").hasRole("MEMBER")
+                .antMatchers("/product/lists").authenticated()
                 .antMatchers("/product/search").hasRole("SELLER")
                 .antMatchers("/", "/member/*", "/resources/**").permitAll().
 
