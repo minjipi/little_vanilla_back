@@ -1,7 +1,10 @@
 package com.minji.idusbackend.product;
 
+import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -63,12 +66,26 @@ public class ProductService {
         return productDao.createProductImage(poductIdx, productImage);
     }
 
-    public List<GetProductWithImageRes> getProductsWithProductImage() throws Exception {
-        try {
-            List<GetProductWithImageRes> getProductWithImageResList = productDao.getProductsWithProductImage();
-            return getProductWithImageResList;
-        } catch (Exception exception) {
-            throw new Exception();
+    public List<GetProductWithImageAndLikesRes> getProductsWithProductImage() throws Exception {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal.toString() == "anonymousUser") {
+            try {
+                List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImage();
+                return getProductWithImageResList;
+            } catch (Exception exception) {
+                throw new Exception();
+            }
+        } else {
+
+            UserLoginRes userDetails = (UserLoginRes) principal;
+
+            try {
+                List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImageAndLikes(userDetails.getIdx());
+                return getProductWithImageResList;
+            } catch (Exception exception) {
+                throw new Exception();
+            }
         }
     }
 
@@ -79,6 +96,10 @@ public class ProductService {
         } catch (Exception exception) {
             throw new Exception();
         }
+    }
+
+    public String likeProduct(int userLoginResIdx, int idx){
+        return productDao.likeProduct(userLoginResIdx, idx);
     }
 
 }

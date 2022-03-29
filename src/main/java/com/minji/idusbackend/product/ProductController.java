@@ -3,12 +3,14 @@ package com.minji.idusbackend.product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minji.idusbackend.config.BaseResponse;
 import com.minji.idusbackend.config.BaseResponseStatus;
+import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +27,6 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000/")
 @RestController
 @RequestMapping("/product")
-
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -81,7 +82,6 @@ public class ProductController {
     @ResponseBody
     @GetMapping("/images/{idx}")
     public BaseResponse<List<ProductImage>> getProductImages(@PathVariable int idx) {
-
         try {
             List<ProductImage> getProductImageResList = productService.getProductImages(idx);
             return new BaseResponse<>(getProductImageResList);
@@ -197,10 +197,10 @@ public class ProductController {
 
     @ResponseBody
     @GetMapping("/lists")
-    public BaseResponse<List<GetProductWithImageRes>> getProductsWithProductImage() {
+    public BaseResponse<List<GetProductWithImageAndLikesRes>> getProductsWithProductImage() {
         try {
-            List<GetProductWithImageRes> getProductWithImageResList = productService.getProductsWithProductImage();
-            return new BaseResponse<>(getProductWithImageResList);
+            List<GetProductWithImageAndLikesRes> getProductWithImageAndLikesResList = productService.getProductsWithProductImage();
+            return new BaseResponse<>(getProductWithImageAndLikesResList);
         } catch (Exception exception) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
@@ -221,4 +221,10 @@ public class ProductController {
     }
 
 
+    @ResponseBody
+    @GetMapping("/like/{idx}")
+    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx) {
+
+        return  productService.likeProduct(userLoginRes.getIdx(),idx);
+    }
 }

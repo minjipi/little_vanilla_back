@@ -5,6 +5,7 @@ import com.minji.idusbackend.member.model.PostMemberRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberService {
@@ -20,6 +21,7 @@ public class MemberService {
         return memberDao.createMember(postMemberReq);
     }
 
+    @Transactional
     public PostMemberRes createSeller(PostMemberReq postMemberReq) {
         postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
         return memberDao.createSeller(postMemberReq);

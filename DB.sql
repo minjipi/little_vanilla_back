@@ -26,4 +26,11 @@ create table authority (
     foreign key (member_idx) references member (idx)
 );
 
+create table likes (
+    member_idx int,
+    product_idx int,
+    foreign key (member_idx) references member (idx),
+    foreign key (product_idx) references product (idx),
+    primary key (member_idx, product_idx)
+);
 

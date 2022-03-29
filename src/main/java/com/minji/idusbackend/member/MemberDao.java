@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 @Repository
 public class MemberDao {
     private JdbcTemplate jdbcTemplate;
@@ -60,7 +61,14 @@ public class MemberDao {
 
         String createAuthorityQuery = "insert into authority values(?, ?)";
 
-        Object[] createAuthorityParams = new Object[]{lastInsertIdx, 1};
+        Object[] createAuthorityParams = new Object[]{lastInsertIdx, 0};
+
+        this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
+
+        createAuthorityQuery = "insert into authority values(?, ?)";
+
+        createAuthorityParams = new Object[]{lastInsertIdx, 1};
+//        createAuthorityParams = new Object[]{111, 1};
 
         this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
 

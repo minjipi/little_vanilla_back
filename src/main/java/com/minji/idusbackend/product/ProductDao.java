@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductDao {
@@ -120,11 +121,11 @@ public class ProductDao {
         return productImage;
     }
 
-    public List<GetProductWithImageRes> getProductsWithProductImage() {
+    public List<GetProductWithImageAndLikesRes> getProductsWithProductImage() {
         String getProductsQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx";
 
         return this.jdbcTemplate.query(getProductsQuery,
-                (rs, rowNum) -> new GetProductWithImageRes(
+                (rs, rowNum) -> new GetProductWithImageAndLikesRes(
                         rs.getObject("idx", int.class),
                         rs.getString("name"),
                         rs.getObject("brandIdx", int.class),
@@ -133,14 +134,36 @@ public class ProductDao {
                         rs.getObject("salePrice", int.class),
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
-                        rs.getString("group_concat(filename)")));
+                        rs.getString("filename"),
+                        0
+                ));
     }
+
+    public List<GetProductWithImageAndLikesRes> getProductsWithProductImageAndLikes(int member_idx) {
+        String getProductsQuery = "SELECT *, ifnull(product_idx, 0) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filename FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx;";
+
+        return this.jdbcTemplate.query(getProductsQuery,
+                (rs, rowNum) -> new GetProductWithImageAndLikesRes(
+                        rs.getObject("idx", int.class),
+                        rs.getString("name"),
+                        rs.getObject("brandIdx", int.class),
+                        rs.getObject("categoryIdx", int.class),
+                        rs.getObject("price", int.class),
+                        rs.getObject("salePrice", int.class),
+                        rs.getString("deliveryType"),
+                        rs.getString("isTodayDeal"),
+                        rs.getString("filename"),
+                        rs.getObject("like_ckeck", int.class)
+                        ),member_idx);
+    }
+
+
 
     public List<GetProductRes> getSearchProducts(String word, Integer isDelFree, Integer gte, Integer lte) {
         String getProductsQuery = "select * from Product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx WHERE name LIKE ?";
 
         if (gte != -1 && lte != -1) {
-            getProductsQuery += "AND salePrice >= "+gte+" AND salePrice <= "+lte;
+            getProductsQuery += "AND salePrice >= " + gte + " AND salePrice <= " + lte;
         }
 
         if (isDelFree == 1) {
@@ -163,5 +186,45 @@ public class ProductDao {
                         rs.getString("group_concat(filename)")), "%" + word + "%");
     }
 
+    public String likeProduct(int userLoginResIdx, int idx) {
+        // 좋아요를 누른 적이 있나 확인
+        String getLikeQuery = "select * from likes where member_idx=? and product_idx=?";
+        List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(getLikeQuery, userLoginResIdx, idx);
+
+        for(Map<String, Object> row : rows){
+            int member_idx = Integer.parseInt(row.get("member_idx").toString());
+            int product_idx = Integer.parseInt(row.get("product_idx").toString());;
+
+            System.out.println(member_idx + " " + product_idx);
+        }
+
+        // 없으면 추가
+        if (rows.size() == 0) {
+            // 있으면 제거
+            String createProductQuery = "insert into likes (member_idx, product_idx) VALUES (?, ?)";
+
+            Object[] createProductParams = new Object[]{userLoginResIdx, idx};
+
+            this.jdbcTemplate.update(createProductQuery, createProductParams);
+
+            String getLastInsertIdxQuery = "select last_insert_id()";
+            int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+
+            return "added";
+        } else {
+            // 있으면 제거
+            String createProductQuery = "DELETE FROM likes WHERE member_idx=? and product_idx=?";
+
+            Object[] createProductParams = new Object[]{userLoginResIdx, idx};
+
+            this.jdbcTemplate.update(createProductQuery, createProductParams);
+
+            String getLastInsertIdxQuery = "select last_insert_id()";
+            int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+
+            return "deleted";
+
+        }
+    }
 
 }
