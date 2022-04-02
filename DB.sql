@@ -34,3 +34,11 @@ create table likes (
     primary key (member_idx, product_idx)
 );
 
+-- 만원 충전, 이만원 충전. 내가 얼만큼 충전했나 내역 볼 때.. 만원 이만원 따로 있어야함. 그래서 idx, member_idx따로 만듬.
+create table pay(
+    idx int auto_increment primary key,
+    money int,
+    member_idx int,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    foreign key (member_idx) references member (idx)
+);

@@ -220,11 +220,9 @@ public class ProductController {
         }
     }
 
-
     @ResponseBody
     @GetMapping("/like/{idx}")
     public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx) {
-
-        return  productService.likeProduct(userLoginRes.getIdx(),idx);
+        return productService.likeProduct(userLoginRes.getIdx(),idx);
     }
 }

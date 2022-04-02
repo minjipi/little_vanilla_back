@@ -101,5 +101,4 @@ public class ProductService {
     public String likeProduct(int userLoginResIdx, int idx){
         return productDao.likeProduct(userLoginResIdx, idx);
     }
-
 }

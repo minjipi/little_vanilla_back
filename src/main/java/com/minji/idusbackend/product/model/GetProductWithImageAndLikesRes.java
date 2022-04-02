@@ -17,5 +17,5 @@ public class GetProductWithImageAndLikesRes {
     private String deliveryType;
     private String isTodayDeal;
     private String filename;
-    private int like_check;
+    private Boolean like_check;
 }

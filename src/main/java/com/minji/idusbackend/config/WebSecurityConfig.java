@@ -58,8 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 특정 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정.
 
                 .authorizeRequests()
-                .antMatchers("/product/lists", "/member/*", "/resources/**").permitAll()
+                .antMatchers("/product/lists", "/product/display", "/member/*", "/resources/**").permitAll()
                 .antMatchers("/product/test").authenticated()
+                .antMatchers("/product/**").authenticated()
                 .antMatchers("/product/search").hasRole("SELLER")
 
                 // all other requests need to be authenticated

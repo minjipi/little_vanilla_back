@@ -18,7 +18,6 @@ public class ProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
     public PostProductRes createProduct(PostProductReq postProductReq) {
         System.out.println(postProductReq.toString());
 
@@ -135,12 +134,12 @@ public class ProductDao {
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
                         rs.getString("filename"),
-                        0
+                        false
                 ));
     }
 
     public List<GetProductWithImageAndLikesRes> getProductsWithProductImageAndLikes(int member_idx) {
-        String getProductsQuery = "SELECT *, ifnull(product_idx, 0) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filename FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx;";
+        String getProductsQuery = "SELECT *, ifnull(product_idx, false) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filename FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx;";
 
         return this.jdbcTemplate.query(getProductsQuery,
                 (rs, rowNum) -> new GetProductWithImageAndLikesRes(
@@ -153,11 +152,9 @@ public class ProductDao {
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
                         rs.getString("filename"),
-                        rs.getObject("like_ckeck", int.class)
+                        rs.getBoolean("like_ckeck")
                         ),member_idx);
     }
-
-
 
     public List<GetProductRes> getSearchProducts(String word, Integer isDelFree, Integer gte, Integer lte) {
         String getProductsQuery = "select * from Product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx WHERE name LIKE ?";
@@ -187,20 +184,24 @@ public class ProductDao {
     }
 
     public String likeProduct(int userLoginResIdx, int idx) {
+
+        System.out.println(userLoginResIdx);
+
+        System.out.println(idx);
+
         // 좋아요를 누른 적이 있나 확인
         String getLikeQuery = "select * from likes where member_idx=? and product_idx=?";
         List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(getLikeQuery, userLoginResIdx, idx);
 
         for(Map<String, Object> row : rows){
             int member_idx = Integer.parseInt(row.get("member_idx").toString());
-            int product_idx = Integer.parseInt(row.get("product_idx").toString());;
+            int product_idx = Integer.parseInt(row.get("product_idx").toString());
 
             System.out.println(member_idx + " " + product_idx);
         }
 
         // 없으면 추가
         if (rows.size() == 0) {
-            // 있으면 제거
             String createProductQuery = "insert into likes (member_idx, product_idx) VALUES (?, ?)";
 
             Object[] createProductParams = new Object[]{userLoginResIdx, idx};
@@ -226,5 +227,4 @@ public class ProductDao {
 
         }
     }
-
 }
