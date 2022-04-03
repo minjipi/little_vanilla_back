@@ -16,16 +16,28 @@ public class PayService {
     @Autowired
     PayDao payDao;
 
-    public String chargePay(int userLoginRes, int money) {
-        return payDao.chargePay(userLoginRes, money);
-    }
+//    public String chargePay(int userLoginRes, int money) {
+//        return payDao.chargePay(userLoginRes, money);
+//    }
 
-    public int showTotalPay(int member_idx){
-        return payDao.showTotalPay(member_idx);
-    }
+//    public int showTotalPay(int member_idx){
+//        return payDao.showTotalPay(member_idx);
+//    }
 
     public List<PostPayRes> showPayChargeList(int member_idx){
         return payDao.showPayChargeList(member_idx);
+    }
+
+    public String chargePay2(int userLoginRes, int money) {
+        return payDao.chargePay2(userLoginRes, money);
+    }
+
+    public int showTotalPay2(int member_idx){
+        return payDao.showTotalPay2(member_idx);
+    }
+
+    public String withdrawPay(int userLoginRes, int money) {
+        return payDao.withdrawPay(userLoginRes, money);
     }
 
 }
