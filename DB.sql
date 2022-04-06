@@ -16,6 +16,8 @@ create table member (
     email varchar(50),
     nickname varchar(30),
     password varchar(200),
+    point int  NOT NULL DEFAULT 0,
+    grade VARCHAR(45) NOT NULL DEFAULT 'WELCOME',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -52,7 +54,11 @@ create table orders(
     member_idx int,
     product_idx int,
     amount int,
+    status varchar(20) NOT NULL DEFAULT '입금대기',
     ordered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key (member_idx) references member (idx),
-    foreign key (product_idx) references product (idx),
-)
+    foreign key (product_idx) references product (idx)
+);
+
+
+-- '6 : 리뷰쓰기 / 5 : 배송완료 / 4 : 배송중 / 3 : 배송준비 / 2 : 결제완료 / 1 : 입금대기 / 0 : 주문취소(유효하지 않은 상태)'

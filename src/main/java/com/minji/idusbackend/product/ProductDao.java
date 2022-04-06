@@ -1,5 +1,6 @@
 package com.minji.idusbackend.product;
 
+import com.minji.idusbackend.member.model.MemberInfo;
 import com.minji.idusbackend.product.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -224,7 +225,15 @@ public class ProductDao {
             int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
 
             return "deleted";
-
         }
     }
+
+    public int getProductPrice(int idx) {
+        String findEmailQuery = "SELECT * FROM product WHERE idx=?";
+        return this.jdbcTemplate.queryForObject(findEmailQuery
+                , (rs, rowNum) -> new Integer(
+                        rs.getObject("salePrice", int.class)
+                ), idx);
+    }
+
 }

@@ -26,6 +26,7 @@ public class PayDao {
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
     public String chargePay(int userLoginRes, int money) {
 
         // createMemberQuery에 insert~ 쿼리문 저장
@@ -89,6 +90,5 @@ public class PayDao {
 
         return "성공";
     }
-
 }
 

@@ -1,9 +1,6 @@
 package com.minji.idusbackend.member;
 
-import com.minji.idusbackend.member.model.Authority;
-import com.minji.idusbackend.member.model.PostMemberReq;
-import com.minji.idusbackend.member.model.PostMemberRes;
-import com.minji.idusbackend.member.model.UserLoginRes;
+import com.minji.idusbackend.member.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 @Repository
@@ -107,9 +105,26 @@ public class MemberDao {
 
         } catch (EmptyResultDataAccessException e) {
             return false;
-
         }
     }
+
+    public MemberInfo getUserGradeAndPoint(int idx) {
+        String findEmailQuery = "SELECT * FROM member WHERE idx=?";
+        return this.jdbcTemplate.queryForObject(findEmailQuery
+                , (rs, rowNum) -> new MemberInfo(
+                        rs.getString("email"),
+                        rs.getString("nickname"),
+                        rs.getObject("point", int.class),
+                        rs.getString("grade")
+                ), idx);
+    }
+
+    public void setMemberPoint(int idx, int point) {
+        String plusUserPointQuery = "update member set point = ? where idx = ?";
+        Object[] plusUserPointParams = new Object[]{point, idx};
+        this.jdbcTemplate.update(plusUserPointQuery, plusUserPointParams);
+    }
+
 
 }
 
