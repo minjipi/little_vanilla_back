@@ -28,17 +28,6 @@ create table authority (
     foreign key (member_idx) references member (idx)
 );
 
-create table likes (
-    member_idx int,
-    product_idx int,
-    foreign key (member_idx) references member (idx),
-    foreign key (product_idx) references product (idx),
-    primary key (member_idx, product_idx)
-);
-
--- 만원 충전, 이만원 충전. 내가 얼만큼 충전했나 내역 볼 때.. 만원 이만원 따로 있어야함. 그래서 idx, member_idx따로 만듬.
--- 1이 충전, 0이 출금
-
 create table pay(
     idx int auto_increment primary key,
     money int,
@@ -60,5 +49,23 @@ create table orders(
     foreign key (product_idx) references product (idx)
 );
 
-
 -- '6 : 리뷰쓰기 / 5 : 배송완료 / 4 : 배송중 / 3 : 배송준비 / 2 : 결제완료 / 1 : 입금대기 / 0 : 주문취소(유효하지 않은 상태)'
+create table likes (
+    member_idx int,
+    product_idx int,
+    cabinet_idx int NULL,
+    foreign key (cabinet_idx) references cabinet(idx),  
+    foreign key (member_idx) references member (idx),
+    foreign key (product_idx) references product (idx),
+    primary key (member_idx, product_idx)
+);
+
+-- 만원 충전, 이만원 충전. 내가 얼만큼 충전했나 내역 볼 때.. 만원 이만원 따로 있어야함. 그래서 idx, member_idx따로 만듬.
+-- 1이 충전, 0이 출금
+
+create table cabinet (
+    idx int auto_increment primary key,
+   cabinetName varchar(100) NOT NULL DEFAULT '기본',
+   member_idx int,
+   foreign key (member_idx) references member (idx)
+);

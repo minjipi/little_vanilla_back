@@ -77,9 +77,7 @@ public class ProductService {
                 throw new Exception();
             }
         } else {
-
             UserLoginRes userDetails = (UserLoginRes) principal;
-
             try {
                 List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImageAndLikes(userDetails.getIdx());
                 return getProductWithImageResList;
@@ -98,7 +96,7 @@ public class ProductService {
         }
     }
 
-    public String likeProduct(int userLoginResIdx, int idx){
-        return productDao.likeProduct(userLoginResIdx, idx);
+    public String likeProduct(int userLoginResIdx, int idx, String cabinetIdx){
+        return productDao.likeProduct(userLoginResIdx, idx, cabinetIdx);
     }
 }

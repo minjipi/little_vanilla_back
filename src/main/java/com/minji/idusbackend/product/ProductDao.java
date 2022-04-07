@@ -184,10 +184,9 @@ public class ProductDao {
                         rs.getString("group_concat(filename)")), "%" + word + "%");
     }
 
-    public String likeProduct(int userLoginResIdx, int idx) {
+    public String likeProduct(int userLoginResIdx, int idx, String cabinetIdx) {
 
         System.out.println(userLoginResIdx);
-
         System.out.println(idx);
 
         // 좋아요를 누른 적이 있나 확인
@@ -203,9 +202,9 @@ public class ProductDao {
 
         // 없으면 추가
         if (rows.size() == 0) {
-            String createProductQuery = "insert into likes (member_idx, product_idx) VALUES (?, ?)";
+            String createProductQuery = "insert into likes (member_idx, product_idx, cabinet_idx) VALUES (?, ?, ?)";
 
-            Object[] createProductParams = new Object[]{userLoginResIdx, idx};
+            Object[] createProductParams = new Object[]{userLoginResIdx, idx, cabinetIdx};
 
             this.jdbcTemplate.update(createProductQuery, createProductParams);
 
@@ -235,5 +234,6 @@ public class ProductDao {
                         rs.getObject("salePrice", int.class)
                 ), idx);
     }
-
+//    saleP, price 설정 시
+//    createOrderWithPoint 포인트로 주문시
 }

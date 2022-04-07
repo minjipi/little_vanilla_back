@@ -5,6 +5,7 @@ import com.minji.idusbackend.config.BaseResponse;
 import com.minji.idusbackend.config.BaseResponseStatus;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
+import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -30,17 +31,6 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
-
-    @ResponseBody
-    @GetMapping("/list")
-    public BaseResponse<List<GetProductRes>> getProducts() {
-        try {
-            List<GetProductRes> getProductResList = productService.getProducts();
-            return new BaseResponse<>(getProductResList);
-        } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
-        }
-    }
 
     @ResponseBody
     @GetMapping("/{idx}")
@@ -196,6 +186,17 @@ public class ProductController {
     }
 
     @ResponseBody
+    @GetMapping("/list")
+    public BaseResponse<List<GetProductRes>> getProducts() {
+        try {
+            List<GetProductRes> getProductResList = productService.getProducts();
+            return new BaseResponse<>(getProductResList);
+        } catch (Exception exception) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+    @ResponseBody
     @GetMapping("/lists")
     public BaseResponse<List<GetProductWithImageAndLikesRes>> getProductsWithProductImage() {
         try {
@@ -222,7 +223,8 @@ public class ProductController {
 
     @ResponseBody
     @GetMapping("/like/{idx}")
-    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx) {
-        return productService.likeProduct(userLoginRes.getIdx(),idx);
+    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx, @Nullable String cabinetIdx) {
+        System.out.println("cabinetIdx: "+cabinetIdx);
+        return productService.likeProduct(userLoginRes.getIdx(),idx, cabinetIdx);
     }
 }
