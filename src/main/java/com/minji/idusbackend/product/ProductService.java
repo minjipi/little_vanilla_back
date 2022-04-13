@@ -28,7 +28,7 @@ public class ProductService {
         }
     }
 
-    public GetProductRes getProduct(int idx) throws Exception {
+    public GetProductRes getProduct(BigInteger idx) throws Exception {
         try {
             GetProductRes getProductRes = productDao.getProduct(idx);
             return getProductRes;
@@ -46,7 +46,7 @@ public class ProductService {
         }
     }
 
-    public PatchProductRes deleteProduct(int idx) throws Exception {
+    public PatchProductRes deleteProduct(BigInteger idx) throws Exception {
         try {
             return productDao.deleteProduct(idx);
         } catch (Exception exception) {
@@ -96,7 +96,10 @@ public class ProductService {
         }
     }
 
-    public String likeProduct(int userLoginResIdx, int idx, String cabinetIdx){
-        return productDao.likeProduct(userLoginResIdx, idx, cabinetIdx);
-    }
+//    public String likeProduct(int userLoginResIdx, int idx, String cabinetIdx){
+//        return productDao.likeProduct(userLoginResIdx, idx, cabinetIdx);
+//    }
+public String likeProduct(int userLoginResIdx, int idx){
+    return productDao.likeProduct(userLoginResIdx, idx);
+}
 }

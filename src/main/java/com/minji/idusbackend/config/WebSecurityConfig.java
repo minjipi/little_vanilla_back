@@ -55,16 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // CSRF 설정 Disable
         httpSecurity.csrf().disable()
 
-                // 특정 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정.
-
                 .authorizeRequests()
-                .antMatchers("/product/lists", "/product/display", "/member/*", "/resources/**").permitAll()
-                .antMatchers("/product/test").authenticated()
-                .antMatchers("/product/**").authenticated()
-                .antMatchers("/product/search").hasRole("SELLER")
+//                .antMatchers("/", "/product/**", "/member/*", "/resources/**").permitAll()
+//                .antMatchers("/product/**").authenticated()
+//                .antMatchers("/product/search").hasRole("SELLER")
 
-                // all other requests need to be authenticated
-                .anyRequest().authenticated().and()
+                .anyRequest().permitAll()
+                .and()
 
                 // exception handling 할 때 우리가 만든 클래스를 추가.
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

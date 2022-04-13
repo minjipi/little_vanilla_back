@@ -1,4 +1,4 @@
-package com.minji.idusbackend.favoriteproduct;
+package com.minji.idusbackend.cbn.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +17,4 @@ public class GetCbnProductRes {
     private String deliveryType;
     private String isTodayDeal;
     private String filename;
-    private Boolean like_check;
 }

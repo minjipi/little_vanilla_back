@@ -3,14 +3,12 @@ package com.minji.idusbackend.order;
 import com.minji.idusbackend.member.MemberDao;
 import com.minji.idusbackend.member.model.MemberInfo;
 import com.minji.idusbackend.order.model.PostOrderReq;
-import com.minji.idusbackend.order.model.ProductAmount;
 import com.minji.idusbackend.product.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 @Repository
 public class OrderDao {
@@ -36,8 +34,6 @@ public class OrderDao {
             Object[] createOrderParams = new Object[]{userLoginRes, postOrderReq.getProductAmountList().get(i).getProduct_idx(), postOrderReq.getProductAmountList().get(i).getAmount(), postOrderReq.getStatus()};
 
             this.jdbcTemplate.update(createOrderQuery, createOrderParams);
-
-
         }
 
         if (postOrderReq.getStatus().equals("결제완료")){

@@ -68,10 +68,8 @@ public class PayDao {
     }
 
     public String chargePay2(int userLoginRes, int money) {
-        // createMemberQuery에 insert~ 쿼리문 저장
         String createMemberQuery = "insert into pay (member_idx, money, total, in_out) select member_idx, ?, total+?, 1  from pay where member_idx=? order by idx desc limit 1";
 
-        // {userLoginRes, money}를 Object[] 새 리스트로 만들어서 위 VALUES (?, ?)의 ?에 값 넣음.
         Object[] createMemberParams = new Object[]{money, money, userLoginRes};
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
@@ -80,10 +78,8 @@ public class PayDao {
     }
 
     public String withdrawPay(int userLoginRes, int money) {
-        // createMemberQuery에 insert~ 쿼리문 저장
         String createMemberQuery = "insert into pay (member_idx, money, total, in_out) select member_idx, ?, total-?, 0  from pay where member_idx=? order by idx desc limit 1";
 
-        // {userLoginRes, money}를 Object[] 새 리스트로 만들어서 위 VALUES (?, ?)의 ?에 값 넣음.
         Object[] createMemberParams = new Object[]{money, money, userLoginRes};
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);

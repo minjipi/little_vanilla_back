@@ -2,10 +2,11 @@ package com.minji.idusbackend.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minji.idusbackend.config.BaseResponse;
-import com.minji.idusbackend.config.BaseResponseStatus;
+
+import static com.minji.idusbackend.config.BaseResponseStatus.*;
+
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
-import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +19,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
@@ -34,25 +38,39 @@ public class ProductController {
 
     @ResponseBody
     @GetMapping("/{idx}")
-    public BaseResponse<GetProductRes> getProducts(@PathVariable int idx) {
+    public BaseResponse<GetProductRes> getProducts(@PathVariable BigInteger idx) {
+
+        if (idx == null) {
+            return new BaseResponse<>(EMPTY_IDX);
+        }
+
+        if (!isValidatedIdx(idx)) {
+            return new BaseResponse<>(INVALID_IDX);
+        }
 
         try {
             GetProductRes getProductRes = productService.getProduct(idx);
             return new BaseResponse<>(getProductRes);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
     @ResponseBody
     @PatchMapping("/delete/{idx}")
-    public BaseResponse<PatchProductRes> deleteProduct(@PathVariable int idx) {
+    public BaseResponse<PatchProductRes> deleteProduct(@PathVariable BigInteger idx) {
+        if (idx == null) {
+            return new BaseResponse<>(EMPTY_IDX);
+        }
+        if (!isValidatedIdx(idx)) {
+            return new BaseResponse<>(INVALID_IDX);
+        }
 
         try {
             PatchProductRes patchProductRes = productService.deleteProduct(idx);
             return new BaseResponse<>(patchProductRes);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
@@ -64,10 +82,9 @@ public class ProductController {
             PatchProductRes patchProductRes = productService.updateProduct(idx, postProductReq);
             return new BaseResponse<>(patchProductRes);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
-
 
     @ResponseBody
     @GetMapping("/images/{idx}")
@@ -76,7 +93,7 @@ public class ProductController {
             List<ProductImage> getProductImageResList = productService.getProductImages(idx);
             return new BaseResponse<>(getProductImageResList);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
@@ -86,45 +103,68 @@ public class ProductController {
     @ResponseBody
     @PostMapping("/create")
     public BaseResponse<PostProductRes> createProduct(String body, MultipartFile[] uploadFiles) {
-        System.out.println(body);
+        System.out.println("body : "+body);
 
         try {
-            PostProductReq postProductReq = new ObjectMapper().readValue(body, PostProductReq.class); // String to Object
+            PostProductReq postProductReq = new ObjectMapper().readValue(body, PostProductReq.class);
 //            일반적으로 controller가 dto를 통해서 (dto에 값을 담아서)받는데, 이건 파일을 전달 받아야하기 때문에
 //            body, uploadFiles 이런 파일을 전달 받음. 여기의 body에서 파일 이름이나 이런걸 postProductReq에 저장하는 것임.
 
-            System.out.println(postProductReq);
-            PostProductRes postProductRes = productService.createProduct(postProductReq);
-            //return new BaseResponse<>("성공");
 
-            List<ProductImage> resultDTOList = new ArrayList<>();
-
-            for (MultipartFile uploadFile : uploadFiles) {
-
-                if (uploadFile.getContentType().startsWith("image") == false) {
-                    return new BaseResponse<>(BaseResponseStatus.FAIL);
-                }
-
-                String originalName = uploadFile.getOriginalFilename();
-                String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
-
-                String saveName = uploadPath + File.separator + fileName;
-                Path savePath = Paths.get(saveName);
-
-                try {
-                    uploadFile.transferTo(savePath);
-                    ProductImage productImage = new ProductImage(fileName);
-                    resultDTOList.add(productImage);
-                    productService.createProductImage(postProductRes.getIdx(), productImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (postProductReq.getBrandIdx() == null) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_BRANDIDX);
             }
-            return new BaseResponse<>(postProductRes);
+
+            if (postProductReq.getCategoryIdx() == 0) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_CATEGORYIDX);
+            }
+
+            if (postProductReq.getName() == null) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_NAME);
+            }
+            if (postProductReq.getPrice() == 0) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_PRICE);
+            }
+            if (postProductReq.getSalePrice() == 0) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_PRICE);
+            }
+            if (postProductReq.getDeliveryType() == null) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_DELIVERYTYPE);
+            }
+            if (postProductReq.getIsTodayDeal() == null) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_ISTODAYDEAL);
+            } else {
+
+                PostProductRes postProductRes = productService.createProduct(postProductReq);
+                List<ProductImage> resultDTOList = new ArrayList<>();
+
+                for (MultipartFile uploadFile : uploadFiles) {
+                    if (uploadFile.getContentType().startsWith("image") == false) {
+                        return new BaseResponse<>(FAIL);
+                    }
+
+                    String originalName = uploadFile.getOriginalFilename();
+                    String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+
+                    String saveName = uploadPath + File.separator + fileName;
+                    Path savePath = Paths.get(saveName);
+
+                    try {
+                        uploadFile.transferTo(savePath);
+                        ProductImage productImage = new ProductImage(fileName);
+                        resultDTOList.add(productImage);
+                        productService.createProductImage(postProductRes.getIdx(), productImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return new BaseResponse<>(postProductRes);
+            }
 
         } catch (Exception exception) {
-            System.out.println(exception);
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            System.out.println("ex :"+exception);
+            return new BaseResponse<>(FAIL);
         }
     }
 
@@ -137,7 +177,7 @@ public class ProductController {
 //        for (MultipartFile uploadFile : uploadFiles) {
 //
 //            if (uploadFile.getContentType().startsWith("image") == false) {
-//                return new BaseResponse<>(BaseResponseStatus.FAIL);
+//                return new BaseResponse<>(FAIL);
 //            }
 //
 //            String originalName = uploadFile.getOriginalFilename();
@@ -192,7 +232,7 @@ public class ProductController {
             List<GetProductRes> getProductResList = productService.getProducts();
             return new BaseResponse<>(getProductResList);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
@@ -203,7 +243,7 @@ public class ProductController {
             List<GetProductWithImageAndLikesRes> getProductWithImageAndLikesResList = productService.getProductsWithProductImage();
             return new BaseResponse<>(getProductWithImageAndLikesResList);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
@@ -217,14 +257,20 @@ public class ProductController {
             List<GetProductRes> getProductResList = productService.getSearchProducts(word, isDelFree, gte, lte);
             return new BaseResponse<>(getProductResList);
         } catch (Exception exception) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(FAIL);
         }
     }
 
+//    @ResponseBody
+//    @GetMapping("/like/{idx}")
+//    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx, @Nullable String cabinetIdx) {
+//        System.out.println("cabinetIdx: "+cabinetIdx);
+//        return productService.likeProduct(userLoginRes.getIdx(),idx, cabinetIdx);
+//    }
+
     @ResponseBody
     @GetMapping("/like/{idx}")
-    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx, @Nullable String cabinetIdx) {
-        System.out.println("cabinetIdx: "+cabinetIdx);
-        return productService.likeProduct(userLoginRes.getIdx(),idx, cabinetIdx);
+    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx) {
+        return productService.likeProduct(userLoginRes.getIdx(), idx);
     }
 }

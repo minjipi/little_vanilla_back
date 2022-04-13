@@ -19,7 +19,6 @@ public class OrderController {
     @ResponseBody
     @PostMapping("/order")
     public BaseResponse<String> order(@AuthenticationPrincipal UserLoginRes userLoginRes, @RequestBody PostOrderReq postOrderReq) {
-
         System.out.println(postOrderReq);
         String result = orderService.createOrder(userLoginRes.getIdx(), postOrderReq);
         return new BaseResponse<>(result);

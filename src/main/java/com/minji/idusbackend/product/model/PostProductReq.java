@@ -2,6 +2,8 @@ package com.minji.idusbackend.product.model;
 
 import lombok.*;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -9,10 +11,10 @@ import lombok.*;
 @ToString
 public class PostProductReq {
     private String name;
-    private int brandIdx;
-    private int categoryIdx;
-    private int price;
-    private int salePrice;
+    private Integer brandIdx;
+    private Integer categoryIdx;
+    private Integer price;
+    private Integer salePrice;
     private String deliveryType;
     private String isTodayDeal;
 }

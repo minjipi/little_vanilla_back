@@ -1,15 +1,13 @@
-package com.minji.idusbackend.product.model;
+package com.minji.idusbackend.cbn.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigInteger;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class PatchProductRes {
-    private BigInteger idx;
+public class PatchCbnRes {
+    private int idx;
     private Integer status;
 }
