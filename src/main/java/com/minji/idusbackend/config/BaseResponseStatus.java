@@ -7,7 +7,6 @@ public enum BaseResponseStatus {
     SUCCESS(true, 1000, "요청 성공."),
 
     //    2000 : Request 오류
-    FAIL(false, 5000, "실패."),
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
     EMPTY_JWT(false, 2001, "JWT를 입력해주세요."),
     INVALID_JWT(false, 2002, "유효하지 않은 JWT입니다."),
@@ -43,8 +42,10 @@ public enum BaseResponseStatus {
     INVALID_ACCESS_TOKEN(false, 5001, "유효하지 않은 토큰입니다."),
     KAKAO_LOGIN_REQUEST_FAILED(false, 5002, "카카오 소셜 로그인 중 응답 받기에 실패했습니다."),
     INVALID_IDX(false, 5003, "잘못된 IDX 값입니다."),
-    INVALID_OFFSET(false, 5004, "잘못된 OFFSET 값입니다.");
+    INVALID_OFFSET(false, 5004, "잘못된 OFFSET 값입니다."),
 
+    // 7000
+    FAIL(false, 7000, "실패.");
 
 
     private final boolean isSuccess;

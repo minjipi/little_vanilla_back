@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class GetProductWithImageAndLikesRes {
-    private int idx;
+    private BigInteger idx;
     private String name;
-    private int brandIdx;
-    private int categoryIdx;
-    private int price;
-    private int salePrice;
+    private BigInteger brandIdx;
+    private BigInteger categoryIdx;
+    private BigInteger price;
+    private BigInteger salePrice;
     private String deliveryType;
     private String isTodayDeal;
     private String filename;

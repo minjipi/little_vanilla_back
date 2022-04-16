@@ -74,6 +74,8 @@ public class ProductService {
                 List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImage();
                 return getProductWithImageResList;
             } catch (Exception exception) {
+                System.out.println("service : " + exception);
+
                 throw new Exception();
             }
         } else {
@@ -82,6 +84,8 @@ public class ProductService {
                 List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImageAndLikes(userDetails.getIdx());
                 return getProductWithImageResList;
             } catch (Exception exception) {
+                System.out.println("service : " + exception);
+
                 throw new Exception();
             }
         }

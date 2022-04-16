@@ -40,6 +40,7 @@ public class CabinetController {
             PatchCbnRes patchCbnRes = cabinetProductService.updateCbn(userLoginRes.getIdx(), product_idx, cbn_idx);
             return new BaseResponse<>(patchCbnRes);
         } catch (Exception exception) {
+            System.out.println(exception);
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }

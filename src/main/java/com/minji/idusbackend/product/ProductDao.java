@@ -121,43 +121,43 @@ public class ProductDao {
     }
 
     public List<GetProductWithImageAndLikesRes> getProductsWithProductImage() {
-        String getProductsQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx";
+        String getProductsQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) as filenames FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx";
 
         return this.jdbcTemplate.query(getProductsQuery,
                 (rs, rowNum) -> new GetProductWithImageAndLikesRes(
-                        rs.getObject("idx", int.class),
+                        rs.getObject("idx", BigInteger.class),
                         rs.getString("name"),
-                        rs.getObject("brandIdx", int.class),
-                        rs.getObject("categoryIdx", int.class),
-                        rs.getObject("price", int.class),
-                        rs.getObject("salePrice", int.class),
+                        rs.getObject("brandIdx", BigInteger.class),
+                        rs.getObject("categoryIdx", BigInteger.class),
+                        rs.getObject("price", BigInteger.class),
+                        rs.getObject("salePrice", BigInteger.class),
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
-                        rs.getString("filename"),
+                        rs.getString("filenames"),
                         false
                 ));
     }
 
     public List<GetProductWithImageAndLikesRes> getProductsWithProductImageAndLikes(int member_idx) {
-        String getProductsQuery = "SELECT *, ifnull(product_idx, false) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filename FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx;";
+        String getProductsQuery = "SELECT *, ifnull(product_idx, false) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filenames FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx";
 
         return this.jdbcTemplate.query(getProductsQuery,
                 (rs, rowNum) -> new GetProductWithImageAndLikesRes(
-                        rs.getObject("idx", int.class),
+                        rs.getObject("idx", BigInteger.class),
                         rs.getString("name"),
-                        rs.getObject("brandIdx", int.class),
-                        rs.getObject("categoryIdx", int.class),
-                        rs.getObject("price", int.class),
-                        rs.getObject("salePrice", int.class),
+                        rs.getObject("brandIdx", BigInteger.class),
+                        rs.getObject("categoryIdx", BigInteger.class),
+                        rs.getObject("price", BigInteger.class),
+                        rs.getObject("salePrice", BigInteger.class),
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
-                        rs.getString("filename"),
+                        rs.getString("filenames"),
                         rs.getBoolean("like_ckeck")
                 ), member_idx);
     }
 
     public List<GetProductRes> getSearchProducts(String word, Integer isDelFree, Integer gte, Integer lte) {
-        String getProductsQuery = "select * from Product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx WHERE name LIKE ?";
+        String getProductsQuery = "select * from product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx WHERE name LIKE ?";
 
         if (gte != -1 && lte != -1) {
             getProductsQuery += "AND salePrice >= " + gte + " AND salePrice <= " + lte;

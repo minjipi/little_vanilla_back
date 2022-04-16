@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         httpSecurity.csrf().disable()
 
-                .authorizeRequests().antMatchers("/", "/product/**", "/authenticate").permitAll()
+                .authorizeRequests().antMatchers("/product/**", "/member/authenticate").permitAll()
                 .antMatchers("/productwrite").hasAuthority("SELLER")
                 .anyRequest().authenticated().and().
 

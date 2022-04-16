@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +35,6 @@ public class JwtTokenUtil implements Serializable {
 
     // JWT에서 회원 정보 추출.
     private Claims getAllClaimsFromToken(String token) {
-//        secret = Base64.getEncoder().encodeToString(secret.getBytes());
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
