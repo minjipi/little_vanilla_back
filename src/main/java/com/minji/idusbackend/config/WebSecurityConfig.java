@@ -33,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean
@@ -52,22 +52,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-        // CSRF 설정 Disable
         httpSecurity.csrf().disable()
 
-                .authorizeRequests()
-//                .antMatchers("/", "/product/**", "/member/*", "/resources/**").permitAll()
-//                .antMatchers("/product/**").authenticated()
-//                .antMatchers("/product/search").hasRole("SELLER")
+                .authorizeRequests().antMatchers("/", "/product/**", "/authenticate").permitAll()
+                .antMatchers("/productwrite").hasAuthority("SELLER")
+                .anyRequest().authenticated().and().
 
-                .anyRequest().permitAll()
-                .and()
-
-                // exception handling 할 때 우리가 만든 클래스를 추가.
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-
-                // 시큐리티는 기본적으로 세션을 사용하지만, 여기서는 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정.
+                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
