@@ -19,14 +19,14 @@ public class ProductService {
         return productDao.createProduct(postProductReq);
     }
 
-    public List<GetProductRes> getProducts() throws Exception {
-        try {
-            List<GetProductRes> getProductResList = productDao.getProducts();
-            return getProductResList;
-        } catch (Exception exception) {
-            throw new Exception();
-        }
-    }
+//    public List<GetProductRes> getProducts() throws Exception {
+//        try {
+//            List<GetProductRes> getProductResList = productDao.getProducts();
+//            return getProductResList;
+//        } catch (Exception exception) {
+//            throw new Exception();
+//        }
+//    }
 
     public GetProductRes getProduct(BigInteger idx) throws Exception {
         try {
@@ -37,7 +37,7 @@ public class ProductService {
         }
     }
 
-    public List<ProductImage> getProductImages(int idx) throws Exception {
+    public List<ProductImage> getProductImages(BigInteger idx) throws Exception {
         try {
             List<ProductImage> getProductImageResList = productDao.getProductImages(idx);
             return getProductImageResList;

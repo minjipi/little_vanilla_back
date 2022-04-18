@@ -3,10 +3,12 @@ package com.minji.idusbackend.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -50,11 +52,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        // swagger-ui.html의 경우 인증된 사용자가 아니어도 접근가능하도록 설정(dev환경에 대해서만 swagger 설정을 하였기 때문에 인증된 사용자가 아니어도 됨)
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         httpSecurity.csrf().disable()
 
-                .authorizeRequests().antMatchers("/product/**", "/member/authenticate").permitAll()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
+                .antMatchers("/product/**", "/member/authenticate", "/auth/**").permitAll()
                 .antMatchers("/productwrite").hasAuthority("SELLER")
                 .anyRequest().authenticated().and().
 

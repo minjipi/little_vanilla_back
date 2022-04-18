@@ -52,22 +52,8 @@ public class Validation {
         return true;
     }
 
-    public static boolean isValidatedFourOffset(Integer offset) {
-        if (offset % 4 != 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean isValidatedFiveOffset(Integer offset) {
-        if (offset % 5 != 0) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean isValidatedTenOffset(Integer offset) {
-        if (offset % 10 != 0) {
+    public static boolean isValidatedSearchWord(String string) {
+        if (string == null) {
             return false;
         }
         return true;

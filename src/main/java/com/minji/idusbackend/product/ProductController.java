@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
+import static com.minji.idusbackend.utils.Validation.isValidatedSearchWord;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
@@ -116,13 +117,12 @@ public class ProductController {
     @ResponseBody
     @PostMapping("/create")
     public BaseResponse<PostProductRes> createProduct(String body, MultipartFile[] uploadFiles) {
-        System.out.println("body : "+body);
+        System.out.println("body : " + body);
 
         try {
             PostProductReq postProductReq = new ObjectMapper().readValue(body, PostProductReq.class);
 //            일반적으로 controller가 dto를 통해서 (dto에 값을 담아서)받는데, 이건 파일을 전달 받아야하기 때문에
 //            body, uploadFiles 이런 파일을 전달 받음. 여기의 body에서 파일 이름이나 이런걸 postProductReq에 저장하는 것임.
-
 
             if (postProductReq.getBrandIdx() == null) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_BRANDIDX);
@@ -153,9 +153,7 @@ public class ProductController {
 
                 for (MultipartFile uploadFile : uploadFiles) {
                     if (uploadFile.getContentType().startsWith("image") == false) {
-                        System.out.println("upload file error");
-
-                        return new BaseResponse<>(FAIL);
+                        return new BaseResponse<>(POST_PRODUCTS_INVALID_FILES);
                     }
 
                     String originalName = uploadFile.getOriginalFilename();
@@ -173,12 +171,11 @@ public class ProductController {
                         e.printStackTrace();
                     }
                 }
-
                 return new BaseResponse<>(postProductRes);
             }
 
         } catch (Exception exception) {
-            System.out.println("ex :"+exception);
+            System.out.println("ex :" + exception);
             return new BaseResponse<>(FAIL);
         }
     }
@@ -239,29 +236,27 @@ public class ProductController {
         }
         return result;
     }
+//
+//    @ResponseBody
+//    @GetMapping("/list")
+//    public BaseResponse<List<GetProductRes>> getProducts() {
+//        try {
+//            List<GetProductRes> getProductResList = productService.getProducts();
+//            return new BaseResponse<>(getProductResList);
+//        } catch (Exception exception) {
+//            System.out.println(exception);
+//            return new BaseResponse<>(FAIL);
+//        }
+//    }
 
     @ResponseBody
     @GetMapping("/list")
-    public BaseResponse<List<GetProductRes>> getProducts() {
-        try {
-            List<GetProductRes> getProductResList = productService.getProducts();
-            return new BaseResponse<>(getProductResList);
-        } catch (Exception exception) {
-            System.out.println(exception);
-
-            return new BaseResponse<>(FAIL);
-        }
-    }
-
-    @ResponseBody
-    @GetMapping("/lists")
     public BaseResponse<List<GetProductWithImageAndLikesRes>> getProductsWithProductImage() {
         try {
             List<GetProductWithImageAndLikesRes> getProductWithImageAndLikesResList = productService.getProductsWithProductImage();
             return new BaseResponse<>(getProductWithImageAndLikesResList);
         } catch (Exception exception) {
             System.out.println("controller : " + exception);
-
             return new BaseResponse<>(FAIL);
         }
     }
@@ -272,12 +267,27 @@ public class ProductController {
                                                                @RequestParam(required = false, defaultValue = "0") Integer isDelFree,
                                                                @RequestParam(required = false, defaultValue = "-1") Integer gte,
                                                                @RequestParam(required = false, defaultValue = "-1") Integer lte) {
+
+        if (!isValidatedSearchWord(word)) {
+            return new BaseResponse<>(NULL_STRING);
+        }
+
         try {
+            if (word == null) {
+                System.out.println("EMPTY_IDX");
+                return new BaseResponse<>(EMPTY_IDX);
+            }
+
+            if (word == " ") {
+                System.out.println("EMPTY_IDX");
+                return new BaseResponse<>(EMPTY_IDX);
+            }
+
+            System.out.println("word: " + word);
             List<GetProductRes> getProductResList = productService.getSearchProducts(word, isDelFree, gte, lte);
             return new BaseResponse<>(getProductResList);
         } catch (Exception exception) {
             System.out.println(exception);
-
             return new BaseResponse<>(FAIL);
         }
     }

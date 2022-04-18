@@ -34,21 +34,21 @@ public class ProductDao {
         return new PostProductRes(lastInsertIdx, 1);
     }
 
-    public List<GetProductRes> getProducts() {
-        String getProductsQuery = "select * from Product";
-
-        return this.jdbcTemplate.query(getProductsQuery,
-                (rs, rowNum) -> new GetProductRes(
-                        rs.getObject("idx", BigInteger.class),
-                        rs.getString("name"),
-                        rs.getObject("brandIdx", BigInteger.class),
-                        rs.getObject("categoryIdx", BigInteger.class),
-                        rs.getObject("price", int.class),
-                        rs.getObject("salePrice", int.class),
-                        rs.getString("deliveryType"),
-                        rs.getString("isTodayDeal"),
-                        rs.getString("group_concat(filename)")));
-    }
+//    public List<GetProductRes> getProducts() {
+//        String getProductsQuery = "select * from Product";
+//
+//        return this.jdbcTemplate.query(getProductsQuery,
+//                (rs, rowNum) -> new GetProductRes(
+//                        rs.getObject("idx", BigInteger.class),
+//                        rs.getString("name"),
+//                        rs.getObject("brandIdx", BigInteger.class),
+//                        rs.getObject("categoryIdx", BigInteger.class),
+//                        rs.getObject("price", int.class),
+//                        rs.getObject("salePrice", int.class),
+//                        rs.getString("deliveryType"),
+//                        rs.getString("isTodayDeal"),
+//                        rs.getString("group_concat(filename)")));
+//    }
 
     public GetProductRes getProduct(BigInteger idx) {
         String getProductQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx where idx = ?";
@@ -66,7 +66,7 @@ public class ProductDao {
                         rs.getString("group_concat(filename)")), idx);
     }
 
-    public List<ProductImage> getProductImages(int idx) {
+    public List<ProductImage> getProductImages(BigInteger idx) {
         String getProductImagesQuery = "select idx, imageUrl from ProductImage\n" +
                 "where productIdx = ? and status = 1";
 

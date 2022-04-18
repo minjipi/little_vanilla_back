@@ -14,13 +14,6 @@ public enum BaseResponseStatus {
     INVALID_USER_STATUS(false,2004,"삭제되거나 휴면인 계정의 접근입니다."),
     INVALID_USER_PASSWORD(false,2005,"잘못된 비밀번호입니다."),
 
-    // [PATCH] /users
-    PATCH_PRE_DELETED_USER(false,2040,"이미 탈퇴한 회원입니다."),
-
-    // [GET] /products
-    EMPTY_IDX(false,2050,"IDX 값을 입력해주세요."),
-    EMPTY_OFFSET(false,2051,"Offset(페이지번호)를 입력해주세요."),
-
     // [POST] /products
     POST_PRODUCTS_EMPTY_BRANDIDX(false,2100,"브랜드 IDX 를 입력해주세요."),
     POST_PRODUCTS_EMPTY_CATEGORYIDX(false,2101,"카테고리 IDX 를 입력해주세요."),
@@ -32,9 +25,16 @@ public enum BaseResponseStatus {
 
     POST_PRODUCTS_INVALID_DELIVERYTYPE(false,2110,"잘못된 배송유형이 입력되었습니다."),
     POST_PRODUCTS_INVALID_ISTODAYDEAL(false,2111,"잘못된 오늘의딜 여부가 입력되었습니다."),
-
+    POST_PRODUCTS_INVALID_FILES(false,2112,"파일 형식을 다시 확인해 주세요."),
     POST_PRODUCTS_PRE_EXIST_PRODUCT(false,2120,"이미 존재하는 상품의 이름이 입력되었습니다."),
 
+
+    // [PATCH] /users
+    PATCH_PRE_DELETED_USER(false,2040,"이미 탈퇴한 회원입니다."),
+
+    // [GET] /products
+    EMPTY_IDX(false,2050,"IDX 값을 입력해주세요."),
+    EMPTY_OFFSET(false,2051,"Offset(페이지번호)를 입력해주세요."),
 
 
     // 5000
@@ -43,6 +43,7 @@ public enum BaseResponseStatus {
     KAKAO_LOGIN_REQUEST_FAILED(false, 5002, "카카오 소셜 로그인 중 응답 받기에 실패했습니다."),
     INVALID_IDX(false, 5003, "잘못된 IDX 값입니다."),
     INVALID_OFFSET(false, 5004, "잘못된 OFFSET 값입니다."),
+    NULL_STRING(false, 5003, "검색어가 없습니다.."),
 
     // 7000
     FAIL(false, 7000, "실패.");
