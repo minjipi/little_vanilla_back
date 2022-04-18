@@ -81,6 +81,7 @@ public class MemberDao {
                         rs.getObject("idx", int.class),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getString("nickname"),
                         //Arrays.asList(new SimpleGrantedAuthority("ROLE_MEMBER"))
                         Arrays.asList(new SimpleGrantedAuthority(Authority.values()[rs.getObject("role", int.class)].toString()))
                 ), email);
@@ -94,6 +95,7 @@ public class MemberDao {
                             rs.getObject("idx", int.class),
                             rs.getString("email"),
                             rs.getString("password"),
+                            rs.getString("nickname"),
                             new ArrayList<>()
                     ), email);
             if (userLoginRes.getEmail() != null) {

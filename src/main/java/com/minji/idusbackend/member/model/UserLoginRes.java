@@ -13,12 +13,14 @@ import java.util.Collection;
 public class UserLoginRes extends User {
     int idx;
     String email;
+    String nickname;
 
-    public UserLoginRes(int idx, String username, String password, Collection<?
+    public UserLoginRes(int idx, String username, String password, String nickname,Collection<?
             extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.idx = idx;
         this.email = username;
+        this.nickname = nickname;
 
     }
 }

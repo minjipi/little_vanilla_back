@@ -1,14 +1,14 @@
-package com.minji.idusbackend.authLogin;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-
-@RestController
-@RequestMapping("/auth")
-@RequiredArgsConstructor
-public class AuthController {
+//package com.minji.idusbackend.authLogin;
+//
+//import lombok.RequiredArgsConstructor;
+//import org.springframework.web.bind.annotation.*;
+//
+//import javax.servlet.http.HttpServletRequest;
+//
+//@RestController
+//@RequestMapping("/auth")
+//@RequiredArgsConstructor
+//public class AuthController {
 //    private final KakaoAuthService kakaoAuthService;
 //    private final AuthTokenProvider authTokenProvider;
 //    private final AuthService authService;
@@ -43,4 +43,4 @@ public class AuthController {
 //        }
 //        return ApiResponse.success(authResponse);
 //    }
-}
+//}

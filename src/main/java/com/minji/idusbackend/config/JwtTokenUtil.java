@@ -1,5 +1,6 @@
 package com.minji.idusbackend.config;
 
+import com.minji.idusbackend.member.model.UserLoginRes;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,13 +47,17 @@ public class JwtTokenUtil implements Serializable {
 
     //Jwt 생성.
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(userDetails);
     }
 
     //Jwt 발급.
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(UserDetails userDetails) {
+        UserLoginRes userLoginRes= (UserLoginRes)userDetails;
+        Map<String, Object> idx = new HashMap<>();
+        Map<String, Object> nickname = new HashMap<>();
+        nickname.put("idx",userLoginRes.getIdx());
+        nickname.put("nickname",userLoginRes.getNickname());
+        return Jwts.builder().setClaims(idx).setClaims(nickname).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
