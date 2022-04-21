@@ -15,12 +15,11 @@ public class UserLoginRes extends User {
     String email;
     String nickname;
 
-    public UserLoginRes(int idx, String username, String password, String nickname,Collection<?
+    public UserLoginRes(int idx, String username, String password, String nickname, Collection<?
             extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.idx = idx;
         this.email = username;
         this.nickname = nickname;
-
     }
 }

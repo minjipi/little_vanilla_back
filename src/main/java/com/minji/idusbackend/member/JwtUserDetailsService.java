@@ -22,7 +22,6 @@ public class JwtUserDetailsService implements UserDetailsService {
         UserLoginRes userLoginRes = memberDao.findByEmail(username);
         System.out.println("userLoginRes: " + userLoginRes);
 
-
         if (userLoginRes != null) {
             return userLoginRes;
         }

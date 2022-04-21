@@ -1,5 +1,6 @@
 package com.minji.idusbackend.product;
 
+import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.product.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -254,6 +255,24 @@ public class ProductDao {
             return "deleted";
         }
     }
+
+    public List<GetCbnProductRes> likeList(int member_idx) {
+        String getCbnQuery = "select * from likes left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where cabinet_idx is NULL and member_idx=?";
+
+        return this.jdbcTemplate.query(getCbnQuery,
+                (rs, rowNum) -> new GetCbnProductRes(
+                        rs.getObject("idx", BigInteger.class),
+                        rs.getString("name"),
+                        rs.getObject("brandIdx", BigInteger.class),
+                        rs.getObject("categoryIdx", BigInteger.class),
+                        rs.getObject("price", BigInteger.class),
+                        rs.getObject("salePrice", BigInteger.class),
+                        rs.getString("deliveryType"),
+                        rs.getString("isTodayDeal"),
+                        rs.getString("filename")
+                ), member_idx);
+    }
+
 
     public int getProductPrice(int idx) {
         String findEmailQuery = "SELECT * FROM product WHERE idx=?";

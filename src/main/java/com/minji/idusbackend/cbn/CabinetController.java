@@ -1,12 +1,12 @@
 package com.minji.idusbackend.cbn;
 
 import com.minji.idusbackend.cbn.model.GetCbnProductRes;
+import com.minji.idusbackend.cbn.model.GetMyCbnList;
+import com.minji.idusbackend.cbn.model.GetOneCbnRes;
 import com.minji.idusbackend.cbn.model.PatchCbnRes;
 import com.minji.idusbackend.config.BaseResponse;
 import com.minji.idusbackend.config.BaseResponseStatus;
 import com.minji.idusbackend.member.model.UserLoginRes;
-import com.minji.idusbackend.product.model.PatchProductRes;
-import com.minji.idusbackend.product.model.PostProductReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +21,21 @@ public class CabinetController {
     CabinetProductService cabinetProductService;
 
     @ResponseBody
-    @GetMapping("/list/{idx}")
-    public BaseResponse<List<GetCbnProductRes>> cabinetProduct(@AuthenticationPrincipal UserLoginRes userLoginRes) {
-        List<GetCbnProductRes> getCbnProductResList = cabinetProductService.cabinetProductList(userLoginRes.getIdx());
-        return new BaseResponse<>(getCbnProductResList);
-    }
-
-    @ResponseBody
     @GetMapping("/add/{cbn_name}")
     public String addCbn(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable String cbn_name) {
         return cabinetProductService.addCbn(userLoginRes.getIdx(), cbn_name);
+    }
+
+    @ResponseBody
+    @GetMapping("/cbnlist")
+    public List<GetMyCbnList> cbnList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
+        return cabinetProductService.cbnList(userLoginRes.getIdx());
+    }
+
+    @ResponseBody
+    @GetMapping("/{cabinet_idx}")
+    public List<GetOneCbnRes> getCbn(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int cabinet_idx) {
+        return cabinetProductService.getCbn(userLoginRes.getIdx(), cabinet_idx);
     }
 
     @ResponseBody

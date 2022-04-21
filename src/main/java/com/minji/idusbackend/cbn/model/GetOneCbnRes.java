@@ -9,7 +9,9 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetCbnProductRes {
+public class GetOneCbnRes {
+    private BigInteger product_idx;
+    private BigInteger cabinet_idx;
     private BigInteger idx;
     private String name;
     private BigInteger brandIdx;
@@ -19,4 +21,5 @@ public class GetCbnProductRes {
     private String deliveryType;
     private String isTodayDeal;
     private String filename;
+
 }

@@ -47,20 +47,30 @@ public class JwtTokenUtil implements Serializable {
 
     //Jwt 생성.
     public String generateToken(UserDetails userDetails) {
-        return doGenerateToken(userDetails);
+        UserLoginRes userLoginRes = (UserLoginRes) userDetails;
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("nickname", userLoginRes.getNickname());
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
     //Jwt 발급.
-    private String doGenerateToken(UserDetails userDetails) {
-        UserLoginRes userLoginRes= (UserLoginRes)userDetails;
-        Map<String, Object> idx = new HashMap<>();
-        Map<String, Object> nickname = new HashMap<>();
-        nickname.put("idx",userLoginRes.getIdx());
-        nickname.put("nickname",userLoginRes.getNickname());
-        return Jwts.builder().setClaims(idx).setClaims(nickname).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
+//    private String doGenerateToken(UserDetails userDetails) {
+//        UserLoginRes userLoginRes = (UserLoginRes) userDetails;
+//        Map<String, Object> idx = new HashMap<>();
+//        Map<String, Object> nickname = new HashMap<>();
+//        Map<String, Object> claims = new HashMap<>();
+//        nickname.put("idx", userLoginRes.getIdx());
+//        nickname.put("nickname", userLoginRes.getNickname());
+//        nickname.put("username", userDetails.getUsername());
+//        return Jwts.builder().setClaims(idx).setClaims(nickname).setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+//                .signWith(SignatureAlgorithm.HS512, secret).compact();
+//    }
 
     // 토큰유효성 + 만료일자 확인.
     public Boolean validateToken(String token, UserDetails userDetails) {

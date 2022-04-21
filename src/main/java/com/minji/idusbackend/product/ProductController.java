@@ -1,6 +1,7 @@
 package com.minji.idusbackend.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.config.BaseResponse;
 
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
@@ -267,7 +268,6 @@ public class ProductController {
                                                                @RequestParam(required = false, defaultValue = "0") Integer isDelFree,
                                                                @RequestParam(required = false, defaultValue = "-1") Integer gte,
                                                                @RequestParam(required = false, defaultValue = "-1") Integer lte) {
-
         if (!isValidatedSearchWord(word)) {
             return new BaseResponse<>(NULL_STRING);
         }
@@ -302,6 +302,18 @@ public class ProductController {
     @ResponseBody
     @GetMapping("/like/{idx}")
     public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx) {
+        System.out.println("userLoginRes: " + userLoginRes);
+        String user = String.valueOf(userLoginRes.getIdx());
+        if (user == null) {
+            System.out.println("user is NULL.");
+        }
         return productService.likeProduct(userLoginRes.getIdx(), idx);
+    }
+
+    @ResponseBody
+    @GetMapping("/likelist")
+    public BaseResponse<List<GetCbnProductRes>> likeList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
+        List<GetCbnProductRes> getCbnProductResList = productService.likeList(userLoginRes.getIdx());
+        return new BaseResponse<>(getCbnProductResList);
     }
 }

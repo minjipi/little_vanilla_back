@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class PostOrderReq {
-
     String status;
     List<ProductAmount> productAmountList = new ArrayList<>();
 }
