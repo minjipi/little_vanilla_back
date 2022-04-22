@@ -26,11 +26,9 @@ public class MemberController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-
     @ResponseBody
     @PostMapping("/signup")
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
-
         try {
             System.out.println("========================== Req: " + postMemberReq);
 

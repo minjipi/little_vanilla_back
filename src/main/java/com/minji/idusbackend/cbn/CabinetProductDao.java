@@ -47,7 +47,6 @@ public class CabinetProductDao {
 
         return this.jdbcTemplate.query(cbnListQuery,
                 (rs, rowNum) -> new GetOneCbnRes(
-
                         rs.getObject("product_idx", BigInteger.class),
                         rs.getObject("cabinet_idx", BigInteger.class),
                         rs.getObject("idx", BigInteger.class),

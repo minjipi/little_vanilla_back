@@ -256,6 +256,7 @@ public class ProductDao {
         }
     }
 
+//    수정 해야함 !
     public List<GetCbnProductRes> likeList(int member_idx) {
         String getCbnQuery = "select * from likes left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where cabinet_idx is NULL and member_idx=?";
 

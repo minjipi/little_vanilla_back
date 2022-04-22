@@ -67,6 +67,7 @@ public class ProductService {
         return productDao.createProductImage(poductIdx, productImage);
     }
 
+
     public List<GetProductWithImageAndLikesRes> getProductsWithProductImage() throws Exception {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

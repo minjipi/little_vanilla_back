@@ -3,8 +3,6 @@ package com.minji.idusbackend.order;
 import com.minji.idusbackend.config.BaseResponse;
 
 import static com.minji.idusbackend.config.BaseResponseStatus.FAIL;
-
-import com.minji.idusbackend.config.BaseResponseStatus;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.order.model.GetOrderList;
 import com.minji.idusbackend.order.model.PostOrderReq;
@@ -13,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/order")
@@ -39,7 +36,8 @@ public class OrderController {
     @ResponseBody
     @GetMapping("/list")
     public BaseResponse<List<GetOrderList>> orderList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
-        System.out.println("== controller userLoginRes: " + userLoginRes);
+
+
         try {
             List<GetOrderList> getOrderLists = orderService.orderList(userLoginRes.getIdx());
             System.out.println("userLoginRes.getIdx(): ======"+userLoginRes.getIdx());
