@@ -45,6 +45,28 @@ public class MemberDao {
     }
 
 
+    public Integer createMemberKakao(String kakaoemail) {
+
+        String createMemberQuery = "insert into Member (email) VALUES (?)";
+
+        Object[] createMemberParams = new Object[]{kakaoemail
+        };
+
+        this.jdbcTemplate.update(createMemberQuery, createMemberParams);
+
+        String getLastInsertIdxQuery = "select last_insert_id()";
+        int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+
+        String createAuthorityQuery = "insert into authority values(?, ?)";
+
+        Object[] createAuthorityParams = new Object[]{lastInsertIdx, 0};
+
+        this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
+
+        return lastInsertIdx;
+    }
+
+
     public PostMemberRes createSeller(PostMemberReq postMemberReq) {
 
         String createMemberQuery = "insert into Member (email, password, nickname ) VALUES (?, ?, ?)";
@@ -108,6 +130,15 @@ public class MemberDao {
         } catch (EmptyResultDataAccessException e) {
             return false;
         }
+    }
+
+    public int checkEmail(String email) {
+        String checkEmailQuery = "select exists(select email from member where email = ?)";
+        String checkEmailParams = email;
+        return this.jdbcTemplate.queryForObject(checkEmailQuery,
+                int.class,
+                checkEmailParams);
+
     }
 
     public MemberInfo getUserGradeAndPoint(int idx) {
