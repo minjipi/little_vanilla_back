@@ -1,6 +1,5 @@
 package com.minji.idusbackend.config;
 
-import com.minji.idusbackend.authLogin.AuthTokenProvider;
 import com.minji.idusbackend.member.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private final AuthTokenProvider tokenProvider;
+
 
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
@@ -27,9 +26,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public JwtRequestFilter(AuthTokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

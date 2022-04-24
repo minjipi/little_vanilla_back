@@ -45,11 +45,11 @@ public class MemberDao {
     }
 
 
-    public Integer createMemberKakao(String kakaoemail) {
+    public Integer createMemberKakao(String kakaoemail, String nickname) {
 
-        String createMemberQuery = "insert into Member (email) VALUES (?)";
+        String createMemberQuery = "insert into Member (email, password, nickname) VALUES (?, ?, ?)";
 
-        Object[] createMemberParams = new Object[]{kakaoemail
+        Object[] createMemberParams = new Object[]{kakaoemail,"kakao", nickname
         };
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
