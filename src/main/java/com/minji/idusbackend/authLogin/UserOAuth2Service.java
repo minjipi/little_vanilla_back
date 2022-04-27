@@ -1,7 +1,6 @@
 package com.minji.idusbackend.authLogin;
 
 
-import com.minji.idusbackend.cbn.model.GetOneCbnRes;
 import com.minji.idusbackend.member.MemberDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +13,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -24,8 +21,6 @@ import java.util.Map;
 @Service
 
 public class UserOAuth2Service extends DefaultOAuth2UserService {
-
-    private final HttpSession httpSession;
 
     @Autowired
     MemberDao memberDao;
@@ -36,6 +31,9 @@ public class UserOAuth2Service extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         log.info("attributes :: " + attributes);
+
+//        동의철회시 필요한 AccessToken 값.
+        System.out.println("getAccessToken: "+userRequest.getAccessToken().getTokenValue());
 
         Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");
         String email = (String) kakao_account.get("email");
@@ -52,6 +50,5 @@ public class UserOAuth2Service extends DefaultOAuth2UserService {
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_MEMBER")), attributes, "id");
     }
-
 
 }

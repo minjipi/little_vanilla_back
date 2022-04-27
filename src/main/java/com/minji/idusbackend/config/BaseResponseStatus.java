@@ -36,6 +36,14 @@ public enum BaseResponseStatus {
     EMPTY_IDX(false,2050,"IDX 값을 입력해주세요."),
     EMPTY_OFFSET(false,2051,"Offset(페이지번호)를 입력해주세요."),
 
+    /**
+     * 4000 : Database, Server 오류
+     */
+    DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
+    SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다."),
+
+    //[PATCH] /users/{userIdx}
+    MODIFY_FAIL_USERNAME(false,4014,"유저네임 수정 실패"),
 
     // 5000
     LOGOUT_JWT(false, 5000, "이미 로그아웃 된 JWT 입니다."),

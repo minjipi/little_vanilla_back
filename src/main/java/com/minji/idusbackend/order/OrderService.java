@@ -6,6 +6,7 @@ import com.minji.idusbackend.order.model.PostOrderReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -13,15 +14,15 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
-    public String createOrder(int userLoginRes, PostOrderReq postOrderReq) {
+    public String createOrder(BigInteger userLoginRes, PostOrderReq postOrderReq) {
         return orderDao.createOrder(userLoginRes, postOrderReq);
     }
 
-    public String cancelOrder(int userLoginRes, int idx) {
+    public String cancelOrder(BigInteger userLoginRes, int idx) {
         return orderDao.cancelOrder(userLoginRes, idx);
     }
 
-    public List<GetOrderList> orderList(int userLoginRes) throws Exception {
+    public List<GetOrderList> orderList(BigInteger userLoginRes) throws Exception {
 
         try {
             List<GetOrderList> getOrderLists = orderDao.orderList(userLoginRes);

@@ -30,7 +30,7 @@ public class OrderDao {
     }
 
 
-    public String createOrder(int userLoginRes, PostOrderReq postOrderReq) {
+    public String createOrder(BigInteger userLoginRes, PostOrderReq postOrderReq) {
 
         for (int i = 0; i < postOrderReq.getProductAmountList().size(); i++) {
 
@@ -45,14 +45,14 @@ public class OrderDao {
         return "성공";
     }
 
-    public String cancelOrder(int userLoginRes, int idx) {
+    public String cancelOrder(BigInteger userLoginRes, int idx) {
         String cancelOrderQuery = "update orders set status = ? where member_idx = ? and idx = ?";
         Object[] cancelOrderParams = new Object[]{"주문취소", userLoginRes, idx};
         this.jdbcTemplate.update(cancelOrderQuery, cancelOrderParams);
         return "성공";
     }
 
-    public List<GetOrderList> orderList(int userLoginRes) {
+    public List<GetOrderList> orderList(BigInteger userLoginRes) {
         String orderListQuery = "select * from orders left outer join product on product.idx=orders.product_idx where member_idx=?";
 
         return this.jdbcTemplate.query(orderListQuery,
@@ -66,7 +66,7 @@ public class OrderDao {
                 ), userLoginRes);
     }
 
-    public void plusUserPointByGrade(int userLoginRes, PostOrderReq postOrderReq) {
+    public void plusUserPointByGrade(BigInteger userLoginRes, PostOrderReq postOrderReq) {
         MemberInfo memberinfo = memberDao.getUserGradeAndPoint(userLoginRes);
         int getPoint = memberinfo.getPoint();
         int totalPrice = 0;

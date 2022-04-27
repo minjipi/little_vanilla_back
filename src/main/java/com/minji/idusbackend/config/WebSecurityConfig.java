@@ -47,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -72,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
-                .antMatchers("/product/**", "/member/authenticate", "/auth/**", "/order/**").permitAll()
+                .antMatchers("/product/**", "/member/authenticate", "/auth/**", "/order/**", "/**").permitAll()
 
                 .antMatchers("/productwrite").hasAuthority("SELLER")
                 .anyRequest().authenticated().and().
@@ -80,10 +81,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
-                .oauth2Login().successHandler(oAuth2AuthenticationSuccessHandler).userInfoEndpoint().userService(userOAuth2Service);
+                .logout().logoutSuccessUrl("/")
+
+                .and()
+                .oauth2Login()  // 동의 화면 띄우기
+//                .defaultSuccessUrl("/login-success")
+                .successHandler(oAuth2AuthenticationSuccessHandler)
+                .userInfoEndpoint().userService(userOAuth2Service);
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
+

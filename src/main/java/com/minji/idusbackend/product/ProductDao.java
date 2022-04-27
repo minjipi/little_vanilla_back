@@ -139,7 +139,7 @@ public class ProductDao {
                 ));
     }
 
-    public List<GetProductWithImageAndLikesRes> getProductsWithProductImageAndLikes(int member_idx) {
+    public List<GetProductWithImageAndLikesRes> getProductsWithProductImageAndLikes(BigInteger member_idx) {
         String getProductsQuery = "SELECT *, ifnull(product_idx, false) as like_ckeck FROM product left JOIN (SELECT productIdx, group_concat(filename) as filenames FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx LEFT JOIN (SELECT product_idx FROM likes WHERE member_idx=?) as likes ON likes.product_idx=product.idx";
 
         return this.jdbcTemplate.query(getProductsQuery,
@@ -184,7 +184,7 @@ public class ProductDao {
                         rs.getString("group_concat(filename)")), "%" + word + "%");
     }
 
-//    public String likeProduct(int userLoginResIdx, int idx, String cabinetIdx) {
+//    public String likeProduct(BigInteger userLoginResIdx, int idx, String cabinetIdx) {
 //
 //        System.out.println(userLoginResIdx);
 //        System.out.println(idx);
@@ -226,7 +226,7 @@ public class ProductDao {
 //            return "deleted";
 //        }
 //    }
-    public String likeProduct(int userLoginResIdx, int idx) {
+    public String likeProduct(BigInteger userLoginResIdx, int idx) {
         System.out.println(userLoginResIdx + ", " + idx);
 
         String getLikeQuery = "select * from likes where member_idx=? and product_idx=?";
@@ -257,7 +257,7 @@ public class ProductDao {
     }
 
 //    수정 해야함 !
-    public List<GetCbnProductRes> likeList(int member_idx) {
+    public List<GetCbnProductRes> likeList(BigInteger member_idx) {
         String getCbnQuery = "select * from likes left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where cabinet_idx is NULL and member_idx=?";
 
         return this.jdbcTemplate.query(getCbnQuery,

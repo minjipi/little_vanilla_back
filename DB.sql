@@ -13,13 +13,31 @@ create table product (
 
 create table member (
     idx int auto_increment primary key,
-    email varchar(50),
+    email varchar(50)  not null unique,
     nickname varchar(30),
     password varchar(200),
     point int  NOT NULL DEFAULT 0,
     grade VARCHAR(45) NOT NULL DEFAULT 'WELCOME',
+
+    phoneNum varchar(11),
+    gender varchar(1),
+    birthday varchar(11),
+    notification varchar(3),
+    status tinyint default 0,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `emailcert`
+(
+    `token`            varchar(200) NOT NULL,
+    `user_email`       varchar(200) NOT NULL,
+    `expired`          tinyint(1) NOT NULL,
+    `created_at` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `expired_at` timestamp    NOT NULL,
+    PRIMARY KEY (`token`)
 );
 
 create table authority (

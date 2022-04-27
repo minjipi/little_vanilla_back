@@ -20,7 +20,7 @@ public class CabinetProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public String addCbn(int userLoginResIdx, String cbn_name) {
+    public String addCbn(BigInteger userLoginResIdx, String cbn_name) {
         String addCbnQuery = "insert into cabinet (member_idx, cabinetName) VALUES(?,?)";
         Object[] addCbnParams = new Object[]{userLoginResIdx, cbn_name};
         this.jdbcTemplate.update(addCbnQuery, addCbnParams);
@@ -29,7 +29,7 @@ public class CabinetProductDao {
         return "addCbn";
     }
 
-    public List<GetMyCbnList> cbnList(int member_idx) {
+    public List<GetMyCbnList> cbnList(BigInteger member_idx) {
         String cbnListQuery = "select * from likes left outer join cabinet on cabinet.idx=likes.cabinet_idx where likes.member_idx=?";
 
         return this.jdbcTemplate.query(cbnListQuery,
@@ -42,7 +42,7 @@ public class CabinetProductDao {
                 ), member_idx);
     }
 
-    public List<GetOneCbnRes> getCbn(int member_idx, int cabinet_idx) {
+    public List<GetOneCbnRes> getCbn(BigInteger member_idx, int cabinet_idx) {
         String cbnListQuery = " select * from likes left outer join cabinet on cabinet.idx=likes.cabinet_idx left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where likes.member_idx=? and cabinet.idx=?";
 
         return this.jdbcTemplate.query(cbnListQuery,
@@ -62,7 +62,7 @@ public class CabinetProductDao {
     }
 
 
-    public PatchCbnRes updateCbn(int userLoginResIdx, int product_idx, String cbn_idx) {
+    public PatchCbnRes updateCbn(BigInteger userLoginResIdx, int product_idx, String cbn_idx) {
         String updateCbnQuery = "update likes set cabinet_idx=? where member_idx=? and product_idx=?;";
         Object[] updateCbnParams = new Object[]{cbn_idx, userLoginResIdx, product_idx};
         this.jdbcTemplate.update(updateCbnQuery, updateCbnParams);

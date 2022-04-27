@@ -8,9 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 
 @Repository
@@ -49,7 +49,7 @@ public class MemberDao {
 
         String createMemberQuery = "insert into Member (email, password, nickname) VALUES (?, ?, ?)";
 
-        Object[] createMemberParams = new Object[]{kakaoemail,"kakao", nickname
+        Object[] createMemberParams = new Object[]{kakaoemail, "kakao", nickname
         };
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
@@ -96,11 +96,11 @@ public class MemberDao {
     }
 
     public UserLoginRes findByEmail(String email) {
-        String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=?";
+        String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=1";
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
                 , (rs, rowNum) -> new UserLoginRes(
-                        rs.getObject("idx", int.class),
+                        rs.getObject("idx", BigInteger.class),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("nickname"),
@@ -114,7 +114,7 @@ public class MemberDao {
         try {
             UserLoginRes userLoginRes = this.jdbcTemplate.queryForObject(findEmailQuery
                     , (rs, rowNum) -> new UserLoginRes(
-                            rs.getObject("idx", int.class),
+                            rs.getObject("idx", BigInteger.class),
                             rs.getString("email"),
                             rs.getString("password"),
                             rs.getString("nickname"),
@@ -141,7 +141,7 @@ public class MemberDao {
 
     }
 
-    public MemberInfo getUserGradeAndPoint(int idx) {
+    public MemberInfo getUserGradeAndPoint(BigInteger idx) {
         String findEmailQuery = "SELECT * FROM member WHERE idx=?";
         return this.jdbcTemplate.queryForObject(findEmailQuery
                 , (rs, rowNum) -> new MemberInfo(
@@ -152,10 +152,20 @@ public class MemberDao {
                 ), idx);
     }
 
-    public void setMemberPoint(int idx, int point) {
+    public void setMemberPoint(BigInteger idx, int point) {
         String plusUserPointQuery = "update member set point = ? where idx = ?";
         Object[] plusUserPointParams = new Object[]{point, idx};
         this.jdbcTemplate.update(plusUserPointQuery, plusUserPointParams);
+    }
+
+    public int modifyMemberInfo(PatchMemberModityReq patchMemberModityReq) {
+
+        String modifyMemberQuery = "update Member set nickname=? where idx=?";
+        Object[] modifyMemberParams = new Object[]{patchMemberModityReq.getNickname(), patchMemberModityReq.getIdx()
+        };
+
+        return this.jdbcTemplate.update(modifyMemberQuery, modifyMemberParams);
+
     }
 
 

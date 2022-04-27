@@ -102,12 +102,12 @@ public class ProductService {
         }
     }
 
-    public List<GetCbnProductRes> likeList(int userLoginResIdx) {
+    public List<GetCbnProductRes> likeList(BigInteger userLoginResIdx) {
         return productDao.likeList(userLoginResIdx);
     }
 
 
-    public String likeProduct(int userLoginResIdx, int idx) {
+    public String likeProduct(BigInteger userLoginResIdx, int idx) {
         return productDao.likeProduct(userLoginResIdx, idx);
     }
 }

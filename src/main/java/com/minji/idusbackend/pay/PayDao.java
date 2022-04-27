@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,7 @@ public class PayDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public String chargePay(int userLoginRes, int money) {
+    public String chargePay(BigInteger userLoginRes, int money) {
 
         // createMemberQuery에 insert~ 쿼리문 저장
         String createMemberQuery = "insert into pay (member_idx, money ) VALUES (?, ?)";
@@ -48,7 +49,7 @@ public class PayDao {
 //                , member_idx);
 //    }
 
-    public int showTotalPay2(int member_idx) {
+    public int showTotalPay2(BigInteger member_idx) {
         String showPayQuery = "select total from pay where member_idx=? order by idx desc limit 1";
 
         return this.jdbcTemplate.queryForObject(showPayQuery,
@@ -56,7 +57,7 @@ public class PayDao {
                 , member_idx);
     }
 
-    public List<PostPayRes> showPayChargeList(int member_idx) {
+    public List<PostPayRes> showPayChargeList(BigInteger member_idx) {
         String showPayQuery = "select * from pay where member_idx=?";
 
         return this.jdbcTemplate.query(showPayQuery,
@@ -67,7 +68,7 @@ public class PayDao {
                 ), member_idx);
     }
 
-    public String chargePay2(int userLoginRes, int money) {
+    public String chargePay2(BigInteger userLoginRes, int money) {
         String createMemberQuery = "insert into pay (member_idx, money, total, in_out) select member_idx, ?, total+?, 1  from pay where member_idx=? order by idx desc limit 1";
 
         Object[] createMemberParams = new Object[]{money, money, userLoginRes};
@@ -77,7 +78,7 @@ public class PayDao {
         return "성공";
     }
 
-    public String withdrawPay(int userLoginRes, int money) {
+    public String withdrawPay(BigInteger userLoginRes, int money) {
         String createMemberQuery = "insert into pay (member_idx, money, total, in_out) select member_idx, ?, total-?, 0  from pay where member_idx=? order by idx desc limit 1";
 
         Object[] createMemberParams = new Object[]{money, money, userLoginRes};
