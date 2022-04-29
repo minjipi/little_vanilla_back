@@ -18,13 +18,25 @@ create table member (
     password varchar(200),
     point int  NOT NULL DEFAULT 0,
     grade VARCHAR(45) NOT NULL DEFAULT 'WELCOME',
-
     phoneNum varchar(11),
     gender varchar(1),
     birthday varchar(11),
     notification varchar(3),
     status tinyint default 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
+create table seller (
+    idx int auto_increment primary key,
+    email varchar(50)  not null unique,
+    brandname varchar(30),
+    password varchar(200),
+    phoneNum varchar(11),
+    gender varchar(1),
+    birthday varchar(11),
+    notification varchar(3),
+    status tinyint default 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -54,6 +66,15 @@ create table pay(
     member_idx int,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foreign key (member_idx) references member (idx)
+);
+
+CREATE TABLE productImage (
+   idx int NOT NULL AUTO_INCREMENT,
+   filename varchar(100) NOT NULL,
+   productIdx int DEFAULT NULL,
+   PRIMARY KEY (idx),
+   KEY productIdx (productIdx),
+   CONSTRAINT productimage_ibfk_1 FOREIGN KEY (productIdx) REFERENCES product (idx)
 );
 
 create table orders(

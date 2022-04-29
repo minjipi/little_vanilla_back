@@ -5,6 +5,7 @@ import com.minji.idusbackend.config.BaseResponse;
 import com.minji.idusbackend.config.BaseResponseStatus;
 import com.minji.idusbackend.config.JwtTokenUtil;
 import com.minji.idusbackend.member.model.*;
+import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -97,12 +98,12 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/sellersignup")
-    public BaseResponse<PostMemberRes> createSeller(@RequestBody PostMemberReq postMemberReq) {
+    public BaseResponse<PostMemberRes> createSeller(@RequestBody PostSellerReq postSellerReq) {
 
         try {
-            System.out.println("========================== Req: " + postMemberReq);
+            System.out.println("========================== Req: " + postSellerReq);
 
-            PostMemberRes postMemberRes = memberService.createSeller(postMemberReq);
+            PostMemberRes postMemberRes = memberService.createSeller(postSellerReq);
             return new BaseResponse<>(postMemberRes);
 
         } catch (Exception exception) {

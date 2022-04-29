@@ -1,6 +1,7 @@
 package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.member.model.*;
+import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,9 +26,9 @@ public class MemberDao {
 
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
 
-        String createMemberQuery = "insert into Member (email, password, nickname ) VALUES (?, ?, ?)";
+        String createMemberQuery = "(email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(),
+        Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(), postMemberReq.getPhoneNum(), postMemberReq.getGender(), postMemberReq.getBirthday(), postMemberReq.getNotification()
         };
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
@@ -67,11 +68,13 @@ public class MemberDao {
     }
 
 
-    public PostMemberRes createSeller(PostMemberReq postMemberReq) {
+    public PostMemberRes createSeller(PostSellerReq postSellerReq) {
 
-        String createMemberQuery = "insert into Member (email, password, nickname ) VALUES (?, ?, ?)";
+        System.out.println("====="+postSellerReq);
 
-        Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(),
+        String createMemberQuery = "insert into seller (email, password, brandname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        Object[] createMemberParams = new Object[]{postSellerReq.getEmail(), postSellerReq.getPassword(), postSellerReq.getBrandname(), postSellerReq.getPhoneNum(), postSellerReq.getGender(), postSellerReq.getBirthday(), postSellerReq.getNotification()
         };
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
@@ -88,7 +91,6 @@ public class MemberDao {
         createAuthorityQuery = "insert into authority values(?, ?)";
 
         createAuthorityParams = new Object[]{lastInsertIdx, 1};
-//        createAuthorityParams = new Object[]{111, 1};
 
         this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
 

@@ -1,4 +1,6 @@
-package com.minji.idusbackend.member.model;
+package com.minji.idusbackend.seller;
+
+import com.minji.idusbackend.member.model.Authority;
 import lombok.*;
 
 @Getter
@@ -6,12 +8,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PostMemberReq {
+public class PostSellerReq {
     private String email;
     private String password;
-    private String nickname;
+    private String brandname;
     private String phoneNum;
     private String gender;
     private String birthday;
     private String notification;
+
 }
+
+

@@ -2,6 +2,7 @@ package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.config.BaseException;
 import com.minji.idusbackend.member.model.*;
+import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,9 +37,9 @@ public class MemberService {
     }
 
     @Transactional
-    public PostMemberRes createSeller(PostMemberReq postMemberReq) {
-        postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
-        return memberDao.createSeller(postMemberReq);
+    public PostMemberRes createSeller(PostSellerReq postSellerReq) {
+        postSellerReq.setPassword(passwordEncoder.encode(postSellerReq.getPassword()));
+        return memberDao.createSeller(postSellerReq);
     }
 
     public PostMemberRes createMember(PostMemberReq postMemberReq, String token) {
