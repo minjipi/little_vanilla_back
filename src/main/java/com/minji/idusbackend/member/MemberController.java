@@ -8,10 +8,7 @@ import com.minji.idusbackend.member.model.*;
 import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -39,16 +36,13 @@ public class MemberController {
     private EmailCertService emailCertService;
 
 
-
     @ResponseBody
     @PostMapping("/signup")
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
 
-
         try {
-
             String token = UUID.randomUUID().toString();
-            System.out.println("========================== Req: " + postMemberReq);
+            System.out.println("============ Controller : createMember : Req: " + postMemberReq);
 
             PostMemberRes postMemberRes = memberService.createMember(postMemberReq, token);
             emailCertService.createEmailConfirmationToken(token, postMemberReq.getEmail());
@@ -73,7 +67,7 @@ public class MemberController {
     @PatchMapping("/modify/{idx}")
 
 //    JWT 확인.
-    public BaseResponse<String> modifyMemberInfo(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable("idx") BigInteger idx, @RequestBody PatchMemberModityReq patchMemberModityReq) throws BaseException {
+    public BaseResponse<String> modifyMemberInfo(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable("idx") BigInteger idx, @RequestBody PatchMemberModityReq patchMemberModityReq){
 
         if (idx == null) {
             return new BaseResponse<>(EMPTY_IDX);
@@ -84,11 +78,13 @@ public class MemberController {
 
         try {
             BigInteger userIdx = userLoginRes.getIdx();
+            System.out.println("===== userLoginRes: " + userLoginRes.getIdx() + ", Idx: " + idx);
+
             if (!userIdx.equals(idx)) {
                 return new BaseResponse<>(INVALID_USER_JWT);
             }
 
-            memberService.modifyMemberInfo(patchMemberModityReq);
+            memberService.modifyMemberInfo(patchMemberModityReq, idx);
             String result = patchMemberModityReq.getNickname() + "로 변경 완료.";
             return new BaseResponse<>(result);
         } catch (BaseException exception) {
@@ -139,6 +135,9 @@ public class MemberController {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
+        } catch (InternalAuthenticationServiceException e) {
+            System.out.println("InternalAuthenticationServiceException");
+            throw new Exception("InternalAuthenticationServiceException", e);
         }
     }
 }

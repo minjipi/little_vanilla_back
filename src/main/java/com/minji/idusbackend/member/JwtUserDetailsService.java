@@ -2,6 +2,7 @@ package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.member.model.UserLoginRes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         System.out.println("username : " + username);
         UserLoginRes userLoginRes = memberDao.findByEmail(username);
         System.out.println("userLoginRes: " + userLoginRes);
+
+
+
 
         if (userLoginRes != null) {
             return userLoginRes;

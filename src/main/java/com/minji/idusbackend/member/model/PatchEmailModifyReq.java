@@ -4,17 +4,14 @@ import lombok.*;
 
 import java.math.BigInteger;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PatchMemberModityReq {
-    private String nickname;
+public class PatchEmailModifyReq {
+    private BigInteger idx;
     private String email;
-    private String phoneNum;
-    private String gender;
-    private String birthday;
-    private String notification;
 }
+
+

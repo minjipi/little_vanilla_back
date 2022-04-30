@@ -26,7 +26,7 @@ public class MemberDao {
 
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
 
-        String createMemberQuery = "(email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String createMemberQuery = "insert into Member (email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(), postMemberReq.getPhoneNum(), postMemberReq.getGender(), postMemberReq.getBirthday(), postMemberReq.getNotification()
         };
@@ -36,7 +36,7 @@ public class MemberDao {
         String getLastInsertIdxQuery = "select last_insert_id()";
         int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
 
-        String createAuthorityQuery = "insert into authority values(?, ?)";
+        String createAuthorityQuery = "insert into authority values (?, ?)";
 
         Object[] createAuthorityParams = new Object[]{lastInsertIdx, 0};
 
@@ -70,8 +70,6 @@ public class MemberDao {
 
     public PostMemberRes createSeller(PostSellerReq postSellerReq) {
 
-        System.out.println("====="+postSellerReq);
-
         String createMemberQuery = "insert into seller (email, password, brandname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Object[] createMemberParams = new Object[]{postSellerReq.getEmail(), postSellerReq.getPassword(), postSellerReq.getBrandname(), postSellerReq.getPhoneNum(), postSellerReq.getGender(), postSellerReq.getBirthday(), postSellerReq.getNotification()
@@ -81,18 +79,6 @@ public class MemberDao {
 
         String getLastInsertIdxQuery = "select last_insert_id()";
         int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
-
-        String createAuthorityQuery = "insert into authority values(?, ?)";
-
-        Object[] createAuthorityParams = new Object[]{lastInsertIdx, 0};
-
-        this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
-
-        createAuthorityQuery = "insert into authority values(?, ?)";
-
-        createAuthorityParams = new Object[]{lastInsertIdx, 1};
-
-        this.jdbcTemplate.update(createAuthorityQuery, createAuthorityParams);
 
         return new PostMemberRes(lastInsertIdx, 1);
     }
@@ -106,7 +92,6 @@ public class MemberDao {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("nickname"),
-                        //Arrays.asList(new SimpleGrantedAuthority("ROLE_MEMBER"))
                         Arrays.asList(new SimpleGrantedAuthority(Authority.values()[rs.getObject("role", int.class)].toString()))
                 ), email);
     }
@@ -155,21 +140,19 @@ public class MemberDao {
     }
 
     public void setMemberPoint(BigInteger idx, int point) {
-        String plusUserPointQuery = "update member set point = ? where idx = ?";
+        String plusUserPointQuery = "update member set point = ?  where idx = ?";
         Object[] plusUserPointParams = new Object[]{point, idx};
         this.jdbcTemplate.update(plusUserPointQuery, plusUserPointParams);
     }
 
-    public int modifyMemberInfo(PatchMemberModityReq patchMemberModityReq) {
-
-        String modifyMemberQuery = "update Member set nickname=? where idx=?";
-        Object[] modifyMemberParams = new Object[]{patchMemberModityReq.getNickname(), patchMemberModityReq.getIdx()
+    public int modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) {
+        System.out.println(patchMemberModityReq.toString());
+        String modifyMemberQuery = "update Member set nickname=?, email=?, phoneNum=?, gender=?, birthday=?, notification=? where idx=?";
+        Object[] modifyMemberParams = new Object[]{patchMemberModityReq.getNickname(), patchMemberModityReq.getEmail(), patchMemberModityReq.getPhoneNum(), patchMemberModityReq.getGender(), patchMemberModityReq.getBirthday(), patchMemberModityReq.getNotification(), idx
         };
 
         return this.jdbcTemplate.update(modifyMemberQuery, modifyMemberParams);
 
     }
-
-
 }
 

@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+
 import static com.minji.idusbackend.config.BaseResponseStatus.DATABASE_ERROR;
 import static com.minji.idusbackend.config.BaseResponseStatus.MODIFY_FAIL_USERNAME;
 
@@ -23,9 +25,9 @@ public class MemberService {
     @Autowired
     private EmailCertDao emailCertDao;
 
-    public void modifyMemberInfo(PatchMemberModityReq patchMemberModityReq) throws BaseException {
+    public void modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) throws BaseException {
         try {
-            int result = memberDao.modifyMemberInfo(patchMemberModityReq);
+            int result = memberDao.modifyMemberInfo(patchMemberModityReq, idx);
 
             if (result == 0) {
                 throw new BaseException(MODIFY_FAIL_USERNAME);
