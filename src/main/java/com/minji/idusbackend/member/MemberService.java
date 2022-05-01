@@ -35,7 +35,6 @@ public class MemberService {
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
-
     }
 
     @Transactional

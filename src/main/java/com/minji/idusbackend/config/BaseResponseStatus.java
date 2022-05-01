@@ -51,10 +51,12 @@ public enum BaseResponseStatus {
     KAKAO_LOGIN_REQUEST_FAILED(false, 5002, "카카오 소셜 로그인 중 응답 받기에 실패했습니다."),
     INVALID_IDX(false, 5003, "잘못된 IDX 값입니다."),
     INVALID_OFFSET(false, 5004, "잘못된 OFFSET 값입니다."),
-    NULL_STRING(false, 5003, "검색어가 없습니다.."),
+    NULL_STRING(false, 5005, "검색어가 없습니다.."),
 
     // 7000
     FAIL(false, 7000, "실패.");
+
+
 
 
     private final boolean isSuccess;

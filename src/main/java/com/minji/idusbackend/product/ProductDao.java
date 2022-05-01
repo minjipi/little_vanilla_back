@@ -5,6 +5,7 @@ import com.minji.idusbackend.product.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import javax.sql.DataSource;
 import java.math.BigInteger;
 import java.util.List;
@@ -19,12 +20,12 @@ public class ProductDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public PostProductRes createProduct(PostProductReq postProductReq) {
+    public PostProductRes createProduct(BigInteger useridx, PostProductReq postProductReq) {
         System.out.println(postProductReq.toString());
 
-        String createProductQuery = "insert into Product (name, brandIdx, categoryIdx, price, salePrice, deliveryType, isTodayDeal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String createProductQuery = "insert into product (name, brandIdx, categoryIdx, price, salePrice, deliveryType, isTodayDeal) values (?,?,?,?,?,?,?)";
 
-        Object[] createProductParams = new Object[]{postProductReq.getName(), postProductReq.getBrandIdx(), postProductReq.getCategoryIdx()
+        Object[] createProductParams = new Object[]{postProductReq.getName(), useridx, postProductReq.getCategoryIdx()
                 , postProductReq.getPrice(), postProductReq.getSalePrice(), postProductReq.getDeliveryType(), postProductReq.getIsTodayDeal()};
 
         this.jdbcTemplate.update(createProductQuery, createProductParams);
@@ -34,22 +35,6 @@ public class ProductDao {
 
         return new PostProductRes(lastInsertIdx, 1);
     }
-
-//    public List<GetProductRes> getProducts() {
-//        String getProductsQuery = "select * from Product";
-//
-//        return this.jdbcTemplate.query(getProductsQuery,
-//                (rs, rowNum) -> new GetProductRes(
-//                        rs.getObject("idx", BigInteger.class),
-//                        rs.getString("name"),
-//                        rs.getObject("brandIdx", BigInteger.class),
-//                        rs.getObject("categoryIdx", BigInteger.class),
-//                        rs.getObject("price", int.class),
-//                        rs.getObject("salePrice", int.class),
-//                        rs.getString("deliveryType"),
-//                        rs.getString("isTodayDeal"),
-//                        rs.getString("group_concat(filename)")));
-//    }
 
     public GetProductRes getProduct(BigInteger idx) {
         String getProductQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx where idx = ?";
@@ -91,9 +76,9 @@ public class ProductDao {
 
     public PatchProductRes updateProduct(int idx, PostProductReq postProductReq) {
 
-        String updateProductQuery = "update Product set name=?, brandIdx=?, categoryIdx=?, price=?, salePrice=?, deliveryType=?, isTodayDeal=? where idx = ?";
+        String updateProductQuery = "update Product set name=?, categoryIdx=?, price=?, salePrice=?, deliveryType=?, isTodayDeal=? where idx = ?";
 
-        Object[] createProductParams = new Object[]{postProductReq.getName(), postProductReq.getBrandIdx(), postProductReq.getCategoryIdx()
+        Object[] createProductParams = new Object[]{postProductReq.getName(), postProductReq.getCategoryIdx()
                 , postProductReq.getPrice(), postProductReq.getSalePrice(), postProductReq.getDeliveryType(), postProductReq.getIsTodayDeal(), idx};
 
         this.jdbcTemplate.update(updateProductQuery, createProductParams);
@@ -184,7 +169,7 @@ public class ProductDao {
                         rs.getString("group_concat(filename)")), "%" + word + "%");
     }
 
-//    public String likeProduct(BigInteger userLoginResIdx, int idx, String cabinetIdx) {
+    //    public String likeProduct(BigInteger userLoginResIdx, int idx, String cabinetIdx) {
 //
 //        System.out.println(userLoginResIdx);
 //        System.out.println(idx);
@@ -256,7 +241,7 @@ public class ProductDao {
         }
     }
 
-//    수정 해야함 !
+    //    수정 해야함 !
     public List<GetCbnProductRes> likeList(BigInteger member_idx) {
         String getCbnQuery = "select * from likes left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where cabinet_idx is NULL and member_idx=?";
 

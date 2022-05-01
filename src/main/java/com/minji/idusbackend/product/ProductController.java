@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.FileCopyUtils;
@@ -116,23 +117,16 @@ public class ProductController {
     private String uploadPath;
 
     @ResponseBody
-    @PostMapping("/create")
-    public BaseResponse<PostProductRes> createProduct(String body, MultipartFile[] uploadFiles) {
-        System.out.println("body : " + body);
+    @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public BaseResponse<PostProductRes> createProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @RequestPart PostProductReq postProductReq, @RequestPart MultipartFile[] uploadFiles) {
 
         try {
-            PostProductReq postProductReq = new ObjectMapper().readValue(body, PostProductReq.class);
-//            일반적으로 controller가 dto를 통해서 (dto에 값을 담아서)받는데, 이건 파일을 전달 받아야하기 때문에
-//            body, uploadFiles 이런 파일을 전달 받음. 여기의 body에서 파일 이름이나 이런걸 postProductReq에 저장하는 것임.
-
-            if (postProductReq.getBrandIdx() == null) {
+            if (userLoginRes.getIdx() == null) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_BRANDIDX);
             }
-
             if (postProductReq.getCategoryIdx() == 0) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_CATEGORYIDX);
             }
-
             if (postProductReq.getName() == null) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_NAME);
             }
@@ -147,36 +141,38 @@ public class ProductController {
             }
             if (postProductReq.getIsTodayDeal() == null) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_ISTODAYDEAL);
-            } else {
-
-                PostProductRes postProductRes = productService.createProduct(postProductReq);
-                List<ProductImage> resultDTOList = new ArrayList<>();
-
-                for (MultipartFile uploadFile : uploadFiles) {
-                    if (uploadFile.getContentType().startsWith("image") == false) {
-                        return new BaseResponse<>(POST_PRODUCTS_INVALID_FILES);
-                    }
-
-                    String originalName = uploadFile.getOriginalFilename();
-                    String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
-
-                    String saveName = uploadPath + File.separator + fileName;
-                    Path savePath = Paths.get(saveName);
-
-                    try {
-                        uploadFile.transferTo(savePath);
-                        ProductImage productImage = new ProductImage(fileName);
-                        resultDTOList.add(productImage);
-                        productService.createProductImage(postProductRes.getIdx(), productImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return new BaseResponse<>(postProductRes);
             }
+            System.out.println("postProductReq : " + postProductReq.toString());
+            System.out.println("userLoginRes : " + userLoginRes.toString());
+
+            PostProductRes postProductRes = productService.createProduct(userLoginRes.getIdx(), postProductReq);
+            List<ProductImage> resultDTOList = new ArrayList<>();
+
+            for (MultipartFile uploadFile : uploadFiles) {
+                if (uploadFile.getContentType().startsWith("image") == false) {
+                    return new BaseResponse<>(POST_PRODUCTS_INVALID_FILES);
+                }
+
+                String originalName = uploadFile.getOriginalFilename();
+                String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
+
+                String saveName = uploadPath + File.separator + fileName;
+                Path savePath = Paths.get(saveName);
+
+                try {
+                    uploadFile.transferTo(savePath);
+                    ProductImage productImage = new ProductImage(fileName);
+                    resultDTOList.add(productImage);
+                    productService.createProductImage(postProductRes.getIdx(), productImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return new BaseResponse<>(postProductRes);
+
 
         } catch (Exception exception) {
-            System.out.println("ex :" + exception);
+            System.out.println("exception :" + exception);
             return new BaseResponse<>(FAIL);
         }
     }

@@ -16,8 +16,8 @@ public class ProductService {
     @Autowired
     private ProductDao productDao;
 
-    public PostProductRes createProduct(PostProductReq postProductReq) {
-        return productDao.createProduct(postProductReq);
+    public PostProductRes createProduct(BigInteger useridx, PostProductReq postProductReq) {
+        return productDao.createProduct(useridx, postProductReq);
     }
 
 //    public List<GetProductRes> getProducts() throws Exception {

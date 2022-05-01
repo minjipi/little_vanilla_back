@@ -117,6 +117,11 @@ public class MemberController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
+        if (authenticationRequest.getUsername().length() == 0){
+            System.out.println("username is NULL");
+
+        }
         System.out.println(authenticationRequest.getUsername());
         System.out.println(authenticationRequest.getPassword());
 
@@ -129,15 +134,21 @@ public class MemberController {
     }
 
     private Authentication authenticate(String username, String password) throws Exception {
+
+//        if (username.length() == 0){
+//            System.out.println("username is NULL");
+//        }
+
         try {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
+        } catch (AccountExpiredException e) {
+            throw new Exception("AccountExpiredException", e);
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         } catch (InternalAuthenticationServiceException e) {
-            System.out.println("InternalAuthenticationServiceException");
-            throw new Exception("InternalAuthenticationServiceException", e);
+            throw new InternalAuthenticationServiceException("InternalAuthenticationServiceException", e);
         }
     }
 }

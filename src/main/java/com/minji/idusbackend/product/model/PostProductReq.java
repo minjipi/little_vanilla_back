@@ -11,7 +11,6 @@ import java.math.BigInteger;
 @ToString
 public class PostProductReq {
     private String name;
-    private Integer brandIdx;
     private Integer categoryIdx;
     private Integer price;
     private Integer salePrice;
