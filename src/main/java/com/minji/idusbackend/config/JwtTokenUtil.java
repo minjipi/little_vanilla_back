@@ -54,6 +54,7 @@ public class JwtTokenUtil implements Serializable {
         claims.put("nickname", userLoginRes.getNickname());
         return doGenerateToken(claims, userLoginRes.getUsername());
     }
+
     //Jwt 생성.
     public String generateTokenForOAuth(String social, String email, String nickname) {
         Map<String, Object> claims = new HashMap<>();
@@ -66,8 +67,8 @@ public class JwtTokenUtil implements Serializable {
 
     //Jwt 발급.
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis() * 1000))
+                .setExpiration(new Date((System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000) * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 //    private String doGenerateToken(UserDetails userDetails) {
