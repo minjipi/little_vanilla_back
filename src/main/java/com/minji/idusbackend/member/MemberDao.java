@@ -1,6 +1,8 @@
 package com.minji.idusbackend.member;
 
+import com.minji.idusbackend.config.BaseResponse;
 import com.minji.idusbackend.member.model.*;
+import com.minji.idusbackend.product.model.GetProductRes;
 import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,6 +14,8 @@ import javax.sql.DataSource;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.minji.idusbackend.config.BaseResponseStatus.NULL_ID;
 
 
 @Repository
@@ -86,6 +90,7 @@ public class MemberDao {
     public UserLoginRes findByEmail(String email) {
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=1";
 
+
         return this.jdbcTemplate.queryForObject(getEmailQuery
                 , (rs, rowNum) -> new UserLoginRes(
                         rs.getObject("idx", BigInteger.class),
@@ -145,10 +150,25 @@ public class MemberDao {
         this.jdbcTemplate.update(plusUserPointQuery, plusUserPointParams);
     }
 
+    public GetMemberRes getModifyMemberInfo(BigInteger userIdx) {
+
+        String modifyMemberQuery = "select email,nickname, phoneNum, gender, birthday, notification from member where idx=?";
+
+        return this.jdbcTemplate.queryForObject(modifyMemberQuery
+                , (rs, rowNum) -> new GetMemberRes(
+                        rs.getString("email"),
+                        rs.getString("nickname"),
+                        rs.getString("phoneNum"),
+                        rs.getString("gender"),
+                        rs.getString("birthday"),
+                        rs.getString("notification")), userIdx);
+
+    }
+
     public int modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) {
         System.out.println(patchMemberModityReq.toString());
-        String modifyMemberQuery = "update Member set nickname=?, email=?, phoneNum=?, gender=?, birthday=?, notification=? where idx=?";
-        Object[] modifyMemberParams = new Object[]{patchMemberModityReq.getNickname(), patchMemberModityReq.getEmail(), patchMemberModityReq.getPhoneNum(), patchMemberModityReq.getGender(), patchMemberModityReq.getBirthday(), patchMemberModityReq.getNotification(), idx
+        String modifyMemberQuery = "update Member set nickname=?, phoneNum=?, gender=?, birthday=?, notification=? where idx=?";
+        Object[] modifyMemberParams = new Object[]{patchMemberModityReq.getNickname(), patchMemberModityReq.getPhoneNum(), patchMemberModityReq.getGender(), patchMemberModityReq.getBirthday(), patchMemberModityReq.getNotification(), idx
         };
 
         return this.jdbcTemplate.update(modifyMemberQuery, modifyMemberParams);

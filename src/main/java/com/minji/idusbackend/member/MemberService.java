@@ -37,6 +37,10 @@ public class MemberService {
         }
     }
 
+    public GetMemberRes getModifyMemberInfo(BigInteger userIdx){
+        return memberDao.getModifyMemberInfo(userIdx);
+    }
+
     @Transactional
     public PostMemberRes createSeller(PostSellerReq postSellerReq) {
         postSellerReq.setPassword(passwordEncoder.encode(postSellerReq.getPassword()));

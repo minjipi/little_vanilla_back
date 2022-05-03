@@ -2,14 +2,13 @@ package com.minji.idusbackend.member.model;
 
 import lombok.*;
 
-
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PatchMemberModityReq {
+public class GetMemberRes {
+    private String email;
     private String nickname;
     private String phoneNum;
     private String gender;

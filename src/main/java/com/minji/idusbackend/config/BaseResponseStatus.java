@@ -52,6 +52,8 @@ public enum BaseResponseStatus {
     INVALID_IDX(false, 5003, "잘못된 IDX 값입니다."),
     INVALID_OFFSET(false, 5004, "잘못된 OFFSET 값입니다."),
     NULL_STRING(false, 5005, "검색어가 없습니다.."),
+    NOT_LOGIN(false, 5006, "NOT_LOGIN."),
+    NULL_ID(false, 5007, "아이디가 존재하지 않습니다."),
 
     // 7000
     FAIL(false, 7000, "실패.");

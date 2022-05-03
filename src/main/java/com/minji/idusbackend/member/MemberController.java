@@ -19,7 +19,7 @@ import java.util.UUID;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -63,17 +63,37 @@ public class MemberController {
         return new BaseResponse<>(getEmailCertRes);
     }
 
+
+    @ResponseBody
+    @GetMapping("/modify")
+    public BaseResponse<GetMemberRes> getModifyMemberInfo(@AuthenticationPrincipal UserLoginRes userLoginRes) {
+
+        if (userLoginRes == null) {
+            return new BaseResponse<>(NOT_LOGIN);
+        }
+        try {
+            BigInteger userIdx = userLoginRes.getIdx();
+            GetMemberRes getMemberRes = memberService.getModifyMemberInfo(userIdx);
+            return new BaseResponse<>(getMemberRes);
+
+        } catch (Exception exception) {
+            return new BaseResponse<>(EMPTY_IDX);
+        }
+    }
+
+
     @ResponseBody
     @PatchMapping("/modify/{idx}")
-
-//    JWT 확인.
-    public BaseResponse<String> modifyMemberInfo(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable("idx") BigInteger idx, @RequestBody PatchMemberModityReq patchMemberModityReq){
+    public BaseResponse<String> modifyMemberInfo(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable("idx") BigInteger idx, @RequestBody PatchMemberModityReq patchMemberModityReq) {
 
         if (idx == null) {
             return new BaseResponse<>(EMPTY_IDX);
         }
         if (!isValidatedIdx(idx)) {
             return new BaseResponse<>(INVALID_IDX);
+        }
+        if (userLoginRes == null) {
+            return new BaseResponse<>(NOT_LOGIN);
         }
 
         try {
@@ -118,7 +138,7 @@ public class MemberController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        if (authenticationRequest.getUsername().length() == 0){
+        if (authenticationRequest.getUsername().length() == 0) {
             System.out.println("username is NULL");
 
         }
