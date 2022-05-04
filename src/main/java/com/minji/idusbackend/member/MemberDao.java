@@ -15,8 +15,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.minji.idusbackend.config.BaseResponseStatus.NULL_ID;
-
 
 @Repository
 public class MemberDao {
@@ -87,9 +85,21 @@ public class MemberDao {
         return new PostMemberRes(lastInsertIdx, 1);
     }
 
+    public UserLoginRes findByEmailStatusZero(String email) {
+        String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=0";
+
+        return this.jdbcTemplate.queryForObject(getEmailQuery
+                , (rs, rowNum) -> new UserLoginRes(
+                        rs.getObject("idx", BigInteger.class),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("nickname"),
+                        Arrays.asList(new SimpleGrantedAuthority(Authority.values()[rs.getObject("role", int.class)].toString()))
+                ), email);
+    }
+
     public UserLoginRes findByEmail(String email) {
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=1";
-
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
                 , (rs, rowNum) -> new UserLoginRes(

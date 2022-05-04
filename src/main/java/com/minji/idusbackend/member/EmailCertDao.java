@@ -2,6 +2,7 @@ package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.member.model.GetEmailCertReq;
 import com.minji.idusbackend.member.model.GetEmailCertRes;
+import com.minji.idusbackend.member.model.GetEmailConfirmReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,11 +26,11 @@ public class EmailCertDao {
         return this.jdbcTemplate.update(createTokenQuery, createTokenParams);
     }
 
-    public Boolean tokenCheck(GetEmailCertReq getEmailCertReq) {
+    public Boolean tokenCheck(GetEmailConfirmReq getEmailConfirmReq) {
         String selectEmailCertQuery = "SELECT EXISTS(SELECT * FROM emailcert WHERE token=? AND user_email=? AND expired=FALSE AND expired_at>CURRENT_TIMESTAMP)";
         Object[] selectEmailCertParams = new Object[]{
-                getEmailCertReq.getToken(),
-                getEmailCertReq.getEmail()
+                getEmailConfirmReq.getToken(),
+                getEmailConfirmReq.getEmail()
         };
         Integer exist = this.jdbcTemplate.queryForObject(selectEmailCertQuery, Integer.class, selectEmailCertParams);
 

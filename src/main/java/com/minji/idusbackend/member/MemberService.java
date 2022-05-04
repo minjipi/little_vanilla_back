@@ -4,6 +4,8 @@ import com.minji.idusbackend.config.BaseException;
 import com.minji.idusbackend.member.model.*;
 import com.minji.idusbackend.seller.PostSellerReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,10 +53,29 @@ public class MemberService {
         postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
         PostMemberRes postMemberRes = memberDao.createMember(postMemberReq);
         emailCertDao.createToken(new GetEmailCertReq(token, postMemberReq.getEmail()));
-
         return postMemberRes;
     }
 
+
+    public UserDetails findByEmailStatusZero(String username) throws UsernameNotFoundException {
+
+        try {
+            UserLoginRes userLoginRes = memberDao.findByEmailStatusZero(username);
+            System.out.println("== JwtUserDetailsService, loadUserByUsername, userLoginRes: ==" + userLoginRes);
+
+            if (userLoginRes != null) {
+                return userLoginRes;
+            }
+
+            else {
+                throw new UsernameNotFoundException("User not found with username: " + username);
+            }
+        } catch (Exception exception) {
+            System.out.println("본인 인증 실패2");
+            return (UserDetails) exception;
+        }
+
+    }
 
     public Boolean getUserEmail(String email) {
         return memberDao.getUserEmail(email);

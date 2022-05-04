@@ -32,6 +32,9 @@ public enum BaseResponseStatus {
     // [PATCH] /users
     PATCH_PRE_DELETED_USER(false,2040,"이미 탈퇴한 회원입니다."),
 
+    // [POST] /users
+    POST_USER_NICKNAME_NULL(false,2041,"닉네임을 입력해주세요."),
+
     // [GET] /products
     EMPTY_IDX(false,2050,"IDX 값을 입력해주세요."),
     EMPTY_OFFSET(false,2051,"Offset(페이지번호)를 입력해주세요."),

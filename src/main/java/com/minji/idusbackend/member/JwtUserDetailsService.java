@@ -21,16 +21,21 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        System.out.println("== JwtUserDetailsService, loadUserByUsername, username : " + username);
 
-        UserLoginRes userLoginRes = memberDao.findByEmail(username);
-        System.out.println("== JwtUserDetailsService, loadUserByUsername, userLoginRes: " + userLoginRes);
+        try {
+            UserLoginRes userLoginRes = memberDao.findByEmail(username);
+            System.out.println("== JwtUserDetailsService, loadUserByUsername, userLoginRes: ==" + userLoginRes);
 
-        if (userLoginRes != null) {
-            return userLoginRes;
+            if (userLoginRes != null) {
+                return userLoginRes;
+            }
+
+            else {
+                throw new UsernameNotFoundException("User not found with username: " + username);
+            }
+        } catch (Exception exception) {
+            System.out.println("본인 인증 실패");
+            return (UserDetails) exception;
         }
 
-        else {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-
-        }
     }
 }

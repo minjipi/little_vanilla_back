@@ -2,6 +2,7 @@ package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.member.model.GetEmailCertReq;
 import com.minji.idusbackend.member.model.GetEmailCertRes;
+import com.minji.idusbackend.member.model.GetEmailConfirmReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,20 +21,20 @@ public class EmailCertService {
     private EmailCertDao emailCertDao;
 
     @Async
-    public String createEmailConfirmationToken(String token, String receiverEmail) {
+    public String createEmailConfirmationToken(String token, String receiverEmail, String jwt) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
-        mailMessage.setSubject("회원가입 이메일 인증");
-        mailMessage.setText("http://localhost:8080/member/confirm?email="+receiverEmail+"&token="+token);
+        mailMessage.setSubject("회원가입 이메일 인증 메일!");
+        mailMessage.setText("http://localhost:8080/member/confirm?email="+receiverEmail+"&token="+token+"&jwt="+jwt );
         javaMailSender.send(mailMessage);
 
         return "test";
     }
 
-    public GetEmailCertRes signupConfirm(GetEmailCertReq getEmailCertReq) {
-        if (emailCertDao.tokenCheck(getEmailCertReq)) {
-            GetEmailCertRes getEmailCertRes = emailCertDao.signupConfirm(getEmailCertReq.getEmail());
+    public GetEmailCertRes signupConfirm(GetEmailConfirmReq getEmailConfirmReq) {
+        if (emailCertDao.tokenCheck(getEmailConfirmReq)) {
+            GetEmailCertRes getEmailCertRes = emailCertDao.signupConfirm(getEmailConfirmReq.getEmail());
             return getEmailCertRes;
         }
         else {

@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigInteger;
 import java.util.UUID;
@@ -41,11 +43,22 @@ public class MemberController {
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
 
         try {
+            if (postMemberReq.getNickname() == null) {
+                return new BaseResponse<>(POST_USER_NICKNAME_NULL);
+            }
+
             String token = UUID.randomUUID().toString();
-            System.out.println("============ Controller : createMember : Req: " + postMemberReq);
+            System.out.println("====== Controller : createMember : Req ====== " + postMemberReq);
+
+
+
 
             PostMemberRes postMemberRes = memberService.createMember(postMemberReq, token);
-            emailCertService.createEmailConfirmationToken(token, postMemberReq.getEmail());
+            UserDetails userDetails = memberService.findByEmailStatusZero(postMemberReq.getEmail());
+
+            final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+            emailCertService.createEmailConfirmationToken(token, postMemberReq.getEmail(), jwt);
 
             return new BaseResponse<>(postMemberRes);
 
@@ -55,14 +68,12 @@ public class MemberController {
         }
     }
 
-
     @ResponseBody
     @GetMapping("/confirm")
-    public BaseResponse<GetEmailCertRes> signupConfirm(GetEmailCertReq getEmailCertReq) throws Exception {
-        GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailCertReq);
-        return new BaseResponse<>(getEmailCertRes);
+    public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) throws Exception {
+        GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
+        return new RedirectView("http://localhost:3000/emailconfirm/"+getEmailConfirmReq.getJwt());
     }
-
 
     @ResponseBody
     @GetMapping("/modify")
@@ -140,7 +151,6 @@ public class MemberController {
 
         if (authenticationRequest.getUsername().length() == 0) {
             System.out.println("username is NULL");
-
         }
         System.out.println(authenticationRequest.getUsername());
         System.out.println(authenticationRequest.getPassword());
@@ -154,10 +164,6 @@ public class MemberController {
     }
 
     private Authentication authenticate(String username, String password) throws Exception {
-
-//        if (username.length() == 0){
-//            System.out.println("username is NULL");
-//        }
 
         try {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
