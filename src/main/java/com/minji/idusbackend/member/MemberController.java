@@ -50,9 +50,6 @@ public class MemberController {
             String token = UUID.randomUUID().toString();
             System.out.println("====== Controller : createMember : Req ====== " + postMemberReq);
 
-
-
-
             PostMemberRes postMemberRes = memberService.createMember(postMemberReq, token);
             UserDetails userDetails = memberService.findByEmailStatusZero(postMemberReq.getEmail());
 
@@ -72,7 +69,7 @@ public class MemberController {
     @GetMapping("/confirm")
     public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) throws Exception {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
-        return new RedirectView("http://localhost:3000/emailconfirm/"+getEmailConfirmReq.getJwt());
+        return new RedirectView("http://localhost:3000/emailconfirm/" + getEmailConfirmReq.getJwt());
     }
 
     @ResponseBody
@@ -109,7 +106,7 @@ public class MemberController {
 
         try {
             BigInteger userIdx = userLoginRes.getIdx();
-            System.out.println("===== userLoginRes: " + userLoginRes.getIdx() + ", Idx: " + idx);
+            System.out.println("== userLoginRes.getIdx: " + userLoginRes.getIdx() + ", Idx: " + idx);
 
             if (!userIdx.equals(idx)) {
                 return new BaseResponse<>(INVALID_USER_JWT);
@@ -136,6 +133,26 @@ public class MemberController {
         } catch (Exception exception) {
             System.out.println(exception);
             return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+
+    //     계정 탈퇴 API
+    @ResponseBody
+    @PatchMapping("/delete/{idx}")
+    public BaseResponse<GetMemberRes> deleteUser(@PathVariable BigInteger idx) {
+        if (idx == null) {
+            return new BaseResponse<>(EMPTY_IDX);
+        }
+        if (!isValidatedIdx(idx)) {
+            return new BaseResponse<>(INVALID_IDX);
+        }
+
+        try {
+            GetMemberRes getMemberRes = memberService.deleteUser(idx);
+            return new BaseResponse<>(getMemberRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
         }
     }
 

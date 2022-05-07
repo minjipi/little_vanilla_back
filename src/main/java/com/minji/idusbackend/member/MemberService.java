@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 
-import static com.minji.idusbackend.config.BaseResponseStatus.DATABASE_ERROR;
-import static com.minji.idusbackend.config.BaseResponseStatus.MODIFY_FAIL_USERNAME;
+import static com.minji.idusbackend.config.BaseResponseStatus.*;
 
 @Service
 public class MemberService {
@@ -58,7 +57,6 @@ public class MemberService {
 
 
     public UserDetails findByEmailStatusZero(String username) throws UsernameNotFoundException {
-
         try {
             UserLoginRes userLoginRes = memberDao.findByEmailStatusZero(username);
             System.out.println("== JwtUserDetailsService, loadUserByUsername, userLoginRes: ==" + userLoginRes);
@@ -74,7 +72,28 @@ public class MemberService {
             System.out.println("본인 인증 실패2");
             return (UserDetails) exception;
         }
+    }
 
+    public GetMemberRes deleteUser(BigInteger idx) throws BaseException {
+        System.out.println(idx);
+        System.out.println(memberDao.isNotExistedUser(idx));
+
+        if (memberDao.isNotExistedUser(idx)) {
+            throw new BaseException(RESPONSE_NULL_ERROR_BY_IDX);
+        }
+
+        if (memberDao.isDeletedUser(idx)) {
+            System.out.println("PATCH_PRE_DELETED_USER");
+            throw new BaseException(PATCH_PRE_DELETED_USER);
+        }
+
+        try {
+            memberDao.deleteUser(idx);
+            GetMemberRes getMemberRes = memberDao.getDeletedUser(idx);
+            return getMemberRes;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 
     public Boolean getUserEmail(String email) {

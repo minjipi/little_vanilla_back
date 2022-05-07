@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.minji.idusbackend.config.JwtTokenUtil;
+import com.minji.idusbackend.member.MemberDao;
+import com.minji.idusbackend.member.MemberService;
+import com.minji.idusbackend.member.model.UserLoginRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -17,7 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-
+    @Autowired
+    MemberDao memberDao;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -27,9 +31,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         Map<String, Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
         String email = (String) kakao_account.get("email");
-        Map<String, Object> properties = (Map<String, Object>) oAuth2User.getAttributes().get("properties");
-        String nickname = (String) properties.get("nickname");
-        String jwt = jwtTokenUtil.generateTokenForOAuth("kakao", email, nickname);
+        UserLoginRes userLoginRes = memberDao.findByEmail(email);
+
+        String jwt = jwtTokenUtil.generateToken(userLoginRes);
 
         String url = makeRedirectUrl(jwt);
         System.out.println("url: " + url);

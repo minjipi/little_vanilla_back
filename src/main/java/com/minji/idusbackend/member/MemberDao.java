@@ -172,7 +172,6 @@ public class MemberDao {
                         rs.getString("gender"),
                         rs.getString("birthday"),
                         rs.getString("notification")), userIdx);
-
     }
 
     public int modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) {
@@ -182,7 +181,45 @@ public class MemberDao {
         };
 
         return this.jdbcTemplate.update(modifyMemberQuery, modifyMemberParams);
+    }
 
+    //    삭제
+    public void deleteUser(BigInteger idx) {
+        String deleteUserQuery = "update member set status = ? where idx = ?";
+        Object[] deleteUserParams = new Object[]{0, idx};
+
+        this.jdbcTemplate.update(deleteUserQuery, deleteUserParams);
+    }
+
+    public GetMemberRes getDeletedUser(BigInteger idx) {
+        String getDeletedUserQuery = "select * from member where idx = ? and status = 0";
+        BigInteger getDeletedUserParams = idx;
+        return this.jdbcTemplate.queryForObject(getDeletedUserQuery,
+                (rs, rowNum) -> new GetMemberRes(
+                        rs.getString("email"),
+                        rs.getString("nickname"),
+                        rs.getString("phoneNum"),
+                        rs.getString("gender"),
+                        rs.getString("birthday"),
+                        rs.getString("notification")),
+                getDeletedUserParams);
+    }
+
+    public boolean isNotExistedUser(BigInteger idx) {
+        String checkNullQuery = "select count(case when idx = ? and status = 1 then 1 end) from member";
+        Integer isExistedNum = this.jdbcTemplate.queryForObject(checkNullQuery, Integer.class, idx);
+        return (isExistedNum.equals(0));
+    }
+
+    public boolean isDeletedUser(BigInteger idx) {
+        String checkDeletedUserQuery = "select status from member where idx = ?";
+        BigInteger checkDeletedUserParams = idx;
+
+        Integer status = this.jdbcTemplate.queryForObject(checkDeletedUserQuery
+                , Integer.class
+                , checkDeletedUserParams);
+
+        return (status == 0);
     }
 }
 
