@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.minji.idusbackend.config.JwtTokenUtil;
 import com.minji.idusbackend.member.MemberDao;
+import com.minji.idusbackend.member.MemberProvider;
 import com.minji.idusbackend.member.MemberService;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private final MemberProvider memberProvider;
+
+    @Autowired
+    public OAuth2AuthenticationSuccessHandler(MemberProvider memberProvider){
+        this.memberProvider = memberProvider;
+    }
+
     @Autowired
     JwtTokenUtil jwtTokenUtil;
     @Autowired
     MemberDao memberDao;
+
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -31,7 +41,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         Map<String, Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
         String email = (String) kakao_account.get("email");
-        UserLoginRes userLoginRes = memberDao.findByEmail(email);
+        UserLoginRes userLoginRes = memberProvider.findByEmail(email);
 
         String jwt = jwtTokenUtil.generateToken(userLoginRes);
 
