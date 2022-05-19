@@ -1,4 +1,4 @@
-package com.minji.idusbackend.order;
+package com.minji.idusbackend.order.model;
 
 
 import lombok.AllArgsConstructor;

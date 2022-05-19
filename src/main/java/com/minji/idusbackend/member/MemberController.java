@@ -25,6 +25,8 @@ import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 @RestController
 @RequestMapping("/member")
 public class MemberController {
+    private final MemberDao memberDao;
+
     @Autowired
     MemberService memberService;
 
@@ -36,6 +38,11 @@ public class MemberController {
 
     @Autowired
     private EmailCertService emailCertService;
+
+    @Autowired
+    public MemberController(MemberDao memberDao) {
+        this.memberDao = memberDao;
+    }
 
 
     @ResponseBody
@@ -169,8 +176,17 @@ public class MemberController {
         if (authenticationRequest.getUsername().length() == 0) {
             System.out.println("username is NULL");
         }
-        System.out.println(authenticationRequest.getUsername());
-        System.out.println(authenticationRequest.getPassword());
+
+        if (authenticationRequest.getPassword().length() == 0) {
+            System.out.println("Password is NULL");
+        }
+
+// 탈퇴한 회원인지 확인.
+//        if (!memberDao.isValidStatus(authenticationRequest)) {
+//            System.out.println("탈퇴한 회원");
+//        }
+
+        System.out.println(authenticationRequest.getUsername() + ", " + authenticationRequest.getPassword());
 
         Authentication authentication = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         UserLoginRes userLoginRes = (UserLoginRes) authentication.getPrincipal();
@@ -185,13 +201,16 @@ public class MemberController {
         try {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            throw new DisabledException("USER_DISABLED", e);
         } catch (AccountExpiredException e) {
-            throw new Exception("AccountExpiredException", e);
+            throw new AccountExpiredException("AccountExpiredException", e);
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+            throw new BadCredentialsException("비민번호 오류 입니다. INVALID_CREDENTIALS", e);
         } catch (InternalAuthenticationServiceException e) {
-            throw new InternalAuthenticationServiceException("InternalAuthenticationServiceException", e);
+            throw new InternalAuthenticationServiceException("존재하지 않는 아이디 입니다. InternalAuthenticationServiceException", e);
+        }
+        catch (AuthenticationCredentialsNotFoundException e) {
+            throw new AuthenticationCredentialsNotFoundException("인증 요구 거부.", e);
         }
     }
 }

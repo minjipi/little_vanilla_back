@@ -1,21 +1,20 @@
 package com.minji.idusbackend.pay;
 
 import com.minji.idusbackend.config.BaseResponse;
-import com.minji.idusbackend.config.BaseResponseStatus;
-import com.minji.idusbackend.config.JwtTokenUtil;
-import com.minji.idusbackend.member.MemberService;
 import com.minji.idusbackend.member.model.*;
+import com.minji.idusbackend.order.OrderService;
+import com.minji.idusbackend.pay.model.PostOrderInfo;
+import com.minji.idusbackend.pay.model.PostOrderResponse;
+import com.minji.idusbackend.pay.model.PostPayReq;
+import com.minji.idusbackend.pay.model.PostPayRes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+
+import static com.minji.idusbackend.config.BaseResponseStatus.*;
 
 @RestController
 @RequestMapping("/pay")
@@ -23,19 +22,34 @@ public class PayController {
     @Autowired
     PayService payService;
 
-//    @ResponseBody
-//    @PostMapping("/charge")
-//    public BaseResponse<String> chargePay(@AuthenticationPrincipal UserLoginRes userLoginRes, @RequestBody PostPayReq postPayReq) {
-//        String result = payService.chargePay(userLoginRes.getIdx(), postPayReq.getMoney());
-//        return new BaseResponse<>(result);
-//    }
+    @Autowired
+    OrderService orderService;
 
-//    @ResponseBody
-//    @GetMapping("/showtotal")
-//    public BaseResponse<Integer> showTotalPay(@AuthenticationPrincipal UserLoginRes userLoginRes) {
-//        int result = payService.showTotalPay(userLoginRes.getIdx());
-//        return new BaseResponse<>(result);
-//    }
+    @PostMapping("/complete")
+    public BaseResponse<PostOrderResponse> paymentComplete(@RequestBody PostOrderInfo postOrderInfo, @AuthenticationPrincipal UserLoginRes userLoginRes) throws IOException {
+
+        String token = payService.getToken();   // 아임포트에서 정보를 가져오기 위한 토큰 얻어오기
+
+        Integer amount = payService.paymentInfo(postOrderInfo.getImpUid(), token);  //얻어온 토큰과 결제 Uid로 결제 금액 정보 가져오기
+        try {
+            Integer orderPriceCheck = orderService.orderPriceCheck(postOrderInfo.getIdx());  // 주문한 상품 idx로 상품의 실제 가격 가져오기
+
+            if (!orderPriceCheck.equals(amount)) {  // 가격 비교해서 일치하지 않으면 에러
+                payService.payMentCancle(token, postOrderInfo.getImpUid(), amount, "결제 실패");
+                return new BaseResponse<>(PRICE_MISMATCH);
+            }
+
+            // 주문 테이블에 정보 저장, 어떤 상품을 누가 어떻게 결제했나
+            PostOrderResponse postOrderResponse = orderService.createOrder(postOrderInfo.getIdx(), userLoginRes.getIdx(), postOrderInfo.getImpUid());
+            return new BaseResponse<>(postOrderResponse);
+
+        } catch (Exception e) {
+            System.out.println("결제 에러 : " + e);
+            payService.payMentCancle(token, postOrderInfo.getImpUid(), amount, "결제 에러");
+            return new BaseResponse<>(FAILED_TO_PAY);
+        }
+    }
+
 
     @ResponseBody
     @GetMapping("/showtotal")

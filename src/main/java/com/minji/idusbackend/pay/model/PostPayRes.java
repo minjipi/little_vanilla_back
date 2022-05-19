@@ -1,4 +1,4 @@
-package com.minji.idusbackend.pay;
+package com.minji.idusbackend.pay.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

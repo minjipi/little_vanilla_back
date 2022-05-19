@@ -20,7 +20,7 @@ public class EmailCertDao {
 
     public Integer createToken(GetEmailCertReq getEmailCertReq) {
 
-        String createTokenQuery = "INSERT INTO emailcert (token,user_email,expired,expired_at) VALUES (?,?,FALSE, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL +5 MINUTE));";
+        String createTokenQuery = "INSERT INTO emailcert (token,user_email,expired,expired_at) VALUES (?,?,FALSE, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL +5 MINUTE))";
         Object[] createTokenParams = new Object[]{getEmailCertReq.getToken(), getEmailCertReq.getEmail()};
 
         return this.jdbcTemplate.update(createTokenQuery, createTokenParams);

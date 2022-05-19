@@ -1,21 +1,12 @@
 package com.minji.idusbackend.pay;
 
-import com.minji.idusbackend.member.model.Authority;
-import com.minji.idusbackend.member.model.PostMemberReq;
-import com.minji.idusbackend.member.model.PostMemberRes;
-import com.minji.idusbackend.member.model.UserLoginRes;
-import com.minji.idusbackend.product.model.GetProductRes;
-import com.minji.idusbackend.product.model.ProductImage;
+import com.minji.idusbackend.pay.model.PostPayRes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

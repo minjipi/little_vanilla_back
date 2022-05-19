@@ -98,6 +98,18 @@ public class MemberDao {
                 ), email);
     }
 
+    public boolean isValidStatus(JwtRequest authenticationRequest) {
+        String checkStatusQuery = "select status from member where email = ?";
+        String checkStatusParams = authenticationRequest.getUsername();
+
+        Integer status = this.jdbcTemplate.queryForObject(checkStatusQuery
+                , Integer.class
+                , checkStatusParams);
+
+        return (status == 1);
+    }
+
+
     public UserLoginRes findByEmail(String email) {
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=1";
 
