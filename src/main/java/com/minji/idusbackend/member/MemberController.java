@@ -73,11 +73,6 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping("/jenkins")
-    public void jenkins() throws Exception {
-    }
-
-    @ResponseBody
     @GetMapping("/confirm")
     public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) throws Exception {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
