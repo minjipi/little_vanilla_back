@@ -44,7 +44,6 @@ public class MemberController {
         this.memberDao = memberDao;
     }
 
-
     @ResponseBody
     @PostMapping("/signup")
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
@@ -55,6 +54,7 @@ public class MemberController {
             }
 
             String token = UUID.randomUUID().toString();
+
             System.out.println("====== Controller : createMember : Req ====== " + postMemberReq);
 
             PostMemberRes postMemberRes = memberService.createMember(postMemberReq, token);
@@ -70,6 +70,11 @@ public class MemberController {
             System.out.println(exception);
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/jenkins")
+    public void jenkins() throws Exception {
     }
 
     @ResponseBody
@@ -208,8 +213,7 @@ public class MemberController {
             throw new BadCredentialsException("비민번호 오류 입니다. INVALID_CREDENTIALS", e);
         } catch (InternalAuthenticationServiceException e) {
             throw new InternalAuthenticationServiceException("존재하지 않는 아이디 입니다. InternalAuthenticationServiceException", e);
-        }
-        catch (AuthenticationCredentialsNotFoundException e) {
+        } catch (AuthenticationCredentialsNotFoundException e) {
             throw new AuthenticationCredentialsNotFoundException("인증 요구 거부.", e);
         }
     }
