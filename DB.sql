@@ -116,10 +116,6 @@ create table cabinet (
 
 -- select * from likes left outer join product on product.idx=likes.product_idx where cabinet_idx is NULL and member_idx=3;
 
-
-
-
-
 CREATE TABLE `order`
 (
     `idx`              int NOT NULL AUTO_INCREMENT,
@@ -128,6 +124,17 @@ CREATE TABLE `order`
     `imp_uid`           varchar(16) NOT NULL,
     `create_timestamp` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `update_timestamp` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`idx`),
+    foreign key (product_idx) references product (idx),
+    foreign key (member_idx) references member (idx)
+);
+
+CREATE TABLE `cart`
+(
+    `idx`              int NOT NULL AUTO_INCREMENT,
+    `product_idx`      int NOT NULL,
+    `member_idx`       int NOT NULL,
+    `amount`           int NOT NULL,
     PRIMARY KEY (`idx`),
     foreign key (product_idx) references product (idx),
     foreign key (member_idx) references member (idx)

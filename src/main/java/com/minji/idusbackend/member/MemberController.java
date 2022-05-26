@@ -68,6 +68,8 @@ public class MemberController {
 
         } catch (Exception exception) {
             System.out.println(exception);
+
+
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }

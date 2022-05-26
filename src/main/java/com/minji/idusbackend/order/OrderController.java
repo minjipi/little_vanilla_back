@@ -19,10 +19,10 @@ public class OrderController {
     OrderService orderService;
 
     @ResponseBody
-    @PostMapping("/order")
+    @PostMapping("/create")
     public BaseResponse<String> order(@AuthenticationPrincipal UserLoginRes userLoginRes, @RequestBody PostOrderReq postOrderReq) {
         System.out.println("postOrderReq: " + postOrderReq);
-         String result = orderService.createOrderBy(userLoginRes.getIdx(), postOrderReq);
+        String result = orderService.createOrderBy(userLoginRes.getIdx(), postOrderReq);
         return new BaseResponse<>(result);
     }
 
