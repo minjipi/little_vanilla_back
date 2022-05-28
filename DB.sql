@@ -129,12 +129,16 @@ CREATE TABLE `order`
     foreign key (member_idx) references member (idx)
 );
 
+
+
+
 CREATE TABLE `cart`
 (
     `idx`              int NOT NULL AUTO_INCREMENT,
     `product_idx`      int NOT NULL,
     `member_idx`       int NOT NULL,
     `amount`           int NOT NULL,
+    status tinyint default 0,
     PRIMARY KEY (`idx`),
     foreign key (product_idx) references product (idx),
     foreign key (member_idx) references member (idx)

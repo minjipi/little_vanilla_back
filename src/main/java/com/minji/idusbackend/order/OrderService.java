@@ -2,7 +2,6 @@ package com.minji.idusbackend.order;
 
 import com.minji.idusbackend.order.model.GetOrderList;
 import com.minji.idusbackend.order.model.PostOrderReq;
-import com.minji.idusbackend.order.model.PostOrderRes;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ public class OrderService {
     }
 
     public List<GetOrderList> orderList(BigInteger userLoginRes) throws Exception {
-
         try {
             List<GetOrderList> getOrderLists = orderDao.orderList(userLoginRes);
             return getOrderLists;

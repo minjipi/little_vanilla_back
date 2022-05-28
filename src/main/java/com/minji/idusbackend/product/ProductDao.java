@@ -211,6 +211,7 @@ public class ProductDao {
 //            return "deleted";
 //        }
 //    }
+
     public String likeProduct(BigInteger userLoginResIdx, int idx) {
         System.out.println(userLoginResIdx + ", " + idx);
 
@@ -227,16 +228,14 @@ public class ProductDao {
             String createProductQuery = "insert into likes (member_idx, product_idx) VALUES (?, ?)";
             Object[] createProductParams = new Object[]{userLoginResIdx, idx};
             this.jdbcTemplate.update(createProductQuery, createProductParams);
-            String getLastInsertIdxQuery = "select last_insert_id()";
-            int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+//            String getLastInsertIdxQuery = "select last_insert_id()";
+//            int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
             return "added";
 
         } else {
-            String createProductQuery = "DELETE FROM likes WHERE member_idx=? and product_idx=?";
-            Object[] createProductParams = new Object[]{userLoginResIdx, idx};
-            this.jdbcTemplate.update(createProductQuery, createProductParams);
-            String getLastInsertIdxQuery = "select last_insert_id()";
-            int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
+            String deleteProductQuery = "DELETE FROM likes WHERE member_idx=? and product_idx=?";
+            Object[] deleteProductParams = new Object[]{userLoginResIdx, idx};
+            this.jdbcTemplate.update(deleteProductQuery, deleteProductParams);
             return "deleted";
         }
     }

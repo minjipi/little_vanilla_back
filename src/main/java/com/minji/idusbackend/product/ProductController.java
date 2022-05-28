@@ -1,6 +1,7 @@
 package com.minji.idusbackend.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.minji.idusbackend.cart.CartService;
 import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.config.BaseResponse;
 
@@ -8,6 +9,7 @@ import static com.minji.idusbackend.config.BaseResponseStatus.*;
 
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -34,10 +36,10 @@ import static com.minji.idusbackend.utils.Validation.isValidatedSearchWord;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
-    @Autowired
-    ProductService productService;
+    private final ProductService productService;
 
     @ResponseBody
     @GetMapping("/{idx}")
@@ -108,7 +110,6 @@ public class ProductController {
             return new BaseResponse<>(getProductImageResList);
         } catch (Exception exception) {
             System.out.println(exception);
-
             return new BaseResponse<>(FAIL);
         }
     }
@@ -287,13 +288,6 @@ public class ProductController {
             return new BaseResponse<>(FAIL);
         }
     }
-
-//    @ResponseBody
-//    @GetMapping("/like/{idx}")
-//    public String likeProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable int idx, @Nullable String cabinetIdx) {
-//        System.out.println("cabinetIdx: "+cabinetIdx);
-//        return productService.likeProduct(userLoginRes.getIdx(),idx, cabinetIdx);
-//    }
 
     @ResponseBody
     @GetMapping("/like/{idx}")

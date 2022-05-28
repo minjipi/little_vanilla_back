@@ -1,6 +1,5 @@
 package com.minji.idusbackend.cbn;
 
-import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.cbn.model.GetMyCbnList;
 import com.minji.idusbackend.cbn.model.GetOneCbnRes;
 import com.minji.idusbackend.cbn.model.PatchCbnRes;

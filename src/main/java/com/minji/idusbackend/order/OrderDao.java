@@ -4,9 +4,9 @@ import com.minji.idusbackend.member.MemberDao;
 import com.minji.idusbackend.member.model.MemberInfo;
 import com.minji.idusbackend.order.model.GetOrderList;
 import com.minji.idusbackend.order.model.PostOrderReq;
-import com.minji.idusbackend.order.model.PostOrderRes;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
 import com.minji.idusbackend.product.ProductDao;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,11 +17,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class OrderDao {
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    MemberDao memberDao;
+    private final MemberDao memberDao;
 
     @Autowired
     ProductDao productDao;
@@ -31,7 +31,7 @@ public class OrderDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Integer orderPriceCheck(BigInteger productIdx){
+    public Integer orderPriceCheck(BigInteger productIdx) {
         String orderPriceCheckQuery = "SELECT salePrice FROM product WHERE idx=?";
 
         Integer price = this.jdbcTemplate.queryForObject(orderPriceCheckQuery, Integer.class, productIdx);
@@ -41,18 +41,15 @@ public class OrderDao {
 
     public PostOrderResponse createOrder(BigInteger productIdx, BigInteger memberIdx, String impUid) {
         String createOrderQuery = "insert into `order` (product_idx, member_idx, imp_uid) VALUES (?, ?, ?)";
-        Object[] createOrderParams = new Object[] {
+        Object[] createOrderParams = new Object[]{
                 productIdx,
                 memberIdx,
                 impUid
         };
 
         this.jdbcTemplate.update(createOrderQuery, createOrderParams);
-
         String getLastInsertIdxQuery = "select last_insert_id()";
-
         Integer lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, Integer.class);
-
         return new PostOrderResponse(lastInsertIdx, 1);
     }
 
@@ -60,10 +57,8 @@ public class OrderDao {
     public String createOrderBy(BigInteger userLoginRes, PostOrderReq postOrderReq) {
 
         for (int i = 0; i < postOrderReq.getProductAmountList().size(); i++) {
-
             String createOrderQuery = "insert into orders (member_idx, product_idx, amount, status) VALUES (?, ?, ?,?) ";
             Object[] createOrderParams = new Object[]{userLoginRes, postOrderReq.getProductAmountList().get(i).getProduct_idx(), postOrderReq.getProductAmountList().get(i).getAmount(), postOrderReq.getStatus()};
-
             this.jdbcTemplate.update(createOrderQuery, createOrderParams);
         }
         if (postOrderReq.getStatus().equals("결제완료")) {
