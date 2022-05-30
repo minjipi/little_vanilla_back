@@ -35,6 +35,8 @@
 
 [JWT](https://blog.naver.com/ghdalswl77/222517833354)
 [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877)
+[Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513)
+[springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045)
 <br />
 
 ### 상품
@@ -46,7 +48,7 @@
 | 상품수정 | PATCH | /product/{idx} | 상품 정보 수정 | ☑️ |
 | 상품목록 | GET | /product/list | 상품 목록 조회. 상품명, 판매자, 상품 사진 등 정보 포함. | ☑️ |
 | 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함. [검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) | ☑️ |
-| 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능 | ☑️ |
+| 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능. [Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891) | ☑️ |
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 | ☑️ |
 <br />
 
