@@ -1,4 +1,4 @@
-A Little Vanilla
+🍦 A Little Vanilla
 ================
 
 > 👉🏻 Summary <br />
@@ -10,7 +10,7 @@ A Little Vanilla
 
 
 
-## 사용 기술 스택
+## 📍 사용 기술 스택
 + Spring Boot 2.6.3
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + Spring Security
@@ -20,7 +20,7 @@ A Little Vanilla
 
 <hr/>
 
-##  🍎 API 설계 및 진행상황
+## 📍 API 설계 및 진행상황
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | GET | / |iOS 기초, H.I.G를 통한 컴포넌트의 이해, 화면 전환 | ☑️ |
