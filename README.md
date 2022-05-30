@@ -16,7 +16,7 @@
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + Spring Security
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
-  + [JWT]([https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE](https://blog.naver.com/ghdalswl77/222517833354), "link") 
+  + JWT
   + Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다.
 + MySQL 8.0.26
   + 구현할 프로젝트가 규모가 큰 서비스가 아니며, 문자열 비교에서 대소 문자를 구분하지 않는다는 장점이 있는 MySQL을 사용했습니다.
@@ -32,12 +32,17 @@
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | GET | / | 회원가입 웹 페이지 | ☑️ |
-| 회원가입 | POST | / | user form DB 전송 | ☑️ |
-| 회원가입 | POST | / | seller form DB 전송 | ☑️ |
-| 로그인 | GET | / | 로그인 페이지 | ☑️ |
-| 회원가입 | GET | / | 회원가입 중복 방지 | ☑️ |
-| 회원가입 | GET | / | 소셜 회원가입 | ☑️ |
-| 로그인 | GET | / | 소셜 회원가입 | ☑️ |
+| 회원가입 | POST | / | user form DB 전송, seller form DB 전송, 회원가입 중복 방지 | ☑️ |
+| 회원가입 | GET/POST | / | 카카오 소셜 회원가입 | ☑️ |
+
+### 회원 정보
+| Feature | Request | API | 설명 | 체크 |
+| ------ | -- | -- | -- | ----------- |
+| 정보수정 | GET | / | 정보수정 웹 페이지 | ☑️ |
+| 정보수정 | POST | / | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
+| 회원탈퇴 | GET/POST | / | 회원 탈퇴 | ☑️ |
+
+[JWT]([https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE](https://blog.naver.com/ghdalswl77/222517833354), "link") 
 
 
 ### 로그인/회원가입
