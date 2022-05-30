@@ -27,29 +27,29 @@
 <hr/>
 
 ## API 설계 및 진행상황
-### 로그인/회원가입
+### 로그인/회원가입 및 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | POST | / | 일반회원 form DB 전송, 판매자 회원 form DB 전송, 회원가입 중복 방지 | ☑️ |
 | 회원가입 | GET/POST | / | 카카오 소셜 회원가입 | ☑️ |
 | 이메일 인증 | GET | / | 이메일 인증, 중복 가입 방지 | ☑️ |
-
-[JWT](https://blog.naver.com/ghdalswl77/222517833354, "link") 
-
-
-### 회원 정보
-| Feature | Request | API | 설명 | 체크 |
-| ------ | -- | -- | -- | ----------- |
 | 정보수정 | GET | /modify | 회원 정보 수정을 위한 본인 확인 | ☑️ |
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | 회원 탈퇴 | ☑️ |
 
+[JWT](https://blog.naver.com/ghdalswl77/222517833354, "link") 
 
 ### 상품
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
-| 회원가입 | GET | /product/{idx} | 상품 조회 | ☑️ |
-| 회원가입 | POST | / | user form DB 전송 | ☑️ |
-| 회원가입 | POST | / | seller form DB 전송 | ☑️ |
-| 로그인 | GET | / | 로그인 페이지 | ☑️ |
+| 상품작성 | POST | /product/create | 상품 1개 작성 | ☑️ |
+| 상품조회 | GET | /product/{idx} | 상품 idx를 통한 상품 1개 조회 | ☑️ |
+| 상품삭제 | PATCH | /product/delete/{idx} | 상품 idx를 통한 상품 1개 삭제 | ☑️ |
+| 상품수정 | PATCH | /product/{idx} | 상품 정보 수정 | ☑️ |
+| 상품목록 | GET | /product/list | 상품 목록 조회. 상품명, 판매자, 상품 사진 등 정보 포함. | ☑️ |
+| 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함. | ☑️ |
+| 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능 | ☑️ |
+| 내좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 | ☑️ |
+
+
 | 회원가입 | GET | / | 회원가입 중복 방지 | ☑️ |
