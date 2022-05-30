@@ -24,7 +24,7 @@
 <hr/>
 
 ## API 설계 및 진행상황
-### 로그인/회원가입 및 회원 정보
+### 🎩 로그인/회원가입 및 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | POST | /member/signup | 일반회원 form DB 전송, 판매자 회원 form DB 전송, 회원가입 중복 방지 | ☑️ |
@@ -36,7 +36,7 @@
 
 [JWT](https://blog.naver.com/ghdalswl77/222517833354, "link") 
 
-### 상품
+### 🛍 상품
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 상품작성 | POST | /product/create | 상품 1개 작성 | ☑️ |
@@ -49,8 +49,8 @@
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 | ☑️ |
 
 
-### 서랍 🧺
-['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link")기능이란?
+### 🧺 서랍
+['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link") 기능이란?
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
@@ -58,7 +58,7 @@
 | 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
 
 
-### 장바구니
+### 🛒 장바구니
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
@@ -69,7 +69,8 @@
 ### 상품주문
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
-| 상품주문 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
-| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
-| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+| 상품주문 | POST | /order/create | 상품 주문 | ☑️ |
+*** ????? 
+| 주문취소 | GET | /order/cancel/{idx} | 상품 idx를 통한 상품 주문 취소 | ☑️ |
+| 주문목록 | POST | /order/list | 내 주문 목록 조회 | ☑️ |
 
