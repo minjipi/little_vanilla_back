@@ -49,8 +49,8 @@
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 | ☑️ |
 
 
-### 서랍
-'서랍' 기능이란?
+### 서랍 🧺
+['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link")기능이란?
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
