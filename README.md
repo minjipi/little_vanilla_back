@@ -13,7 +13,6 @@
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + **Spring Security**
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
-  + [스프링시큐리티 동작 구조]([https://blog.naver.com/ghdalswl77/222517833354])
 + JWT
   + Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다.
 + **MySQL 8.0.26**
@@ -35,6 +34,7 @@
 | 회원탈퇴 | PATCH | /delete/{idx} | 회원 탈퇴 | ☑️ |
 
 [JWT](https://blog.naver.com/ghdalswl77/222517833354)
+[Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877)
 <br />
 
 ### 상품
