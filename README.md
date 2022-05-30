@@ -13,18 +13,17 @@
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + **Spring Security**
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
-  + JWT
++ JWT
   + Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다.
 + **MySQL 8.0.26**
-  + 구현할 프로젝트가 규모가 큰 서비스가 아니며, 문자열 비교에서 대소 문자를 구분하지 않는다는 장점이 있는 MySQL을 사용했습니다.
+  + 상품 검색 기능을 지원하기 때문에 보다 편리한 검색을 위해 문자열 비교에서 대소 문자를 구분하지 않는다는 장점이 있는 MySQL을 사용했습니다.
 
 + AWS EC2 단일 배포
   + ㅁㄴㅇ
-
-<hr/>
+<br />
 
 ## API 설계 및 진행상황
-### 🎩 로그인/회원가입 및 회원 정보
+### 로그인/회원가입 및 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | POST | /member/signup | 일반회원 form DB 전송, 판매자 회원 form DB 전송, 회원가입 중복 방지 | ☑️ |
@@ -34,9 +33,10 @@
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | 회원 탈퇴 | ☑️ |
 
-[JWT](https://blog.naver.com/ghdalswl77/222517833354, "link") 
+[JWT](https://blog.naver.com/ghdalswl77/222517833354, "link")
+<br />
 
-### 🛍 상품
+### 상품
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 상품작성 | POST | /product/create | 상품 1개 작성 | ☑️ |
@@ -47,30 +47,42 @@
 | 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함. | ☑️ |
 | 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능 | ☑️ |
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 | ☑️ |
+<br />
 
 
-### 🧺 서랍
-['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link") 기능이란?
+### 서랍 🧺
+['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link")기능이란?
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
 | 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
 | 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+<br />
 
 
-### 🛒 장바구니
+### 장바구니
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
 | 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
 | 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+<br />
 
 
 ### 상품주문
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
-| 상품주문 | POST | /order/create | 상품 주문 | ☑️ |
-*** ????? 
-| 주문취소 | GET | /order/cancel/{idx} | 상품 idx를 통한 상품 주문 취소 | ☑️ |
-| 주문목록 | POST | /order/list | 내 주문 목록 조회 | ☑️ |
+| 상품주문 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
+| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
+| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+<br />
+
+### 결제
+| Feature | Request | API | 설명 | 체크 |
+| ------ | -- | -- | -- | ----------- |
+| 상품결제 | POST | /cart/in | 상품 결제 | ☑️ |
+| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
+| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+<br />
+
 
