@@ -1,4 +1,4 @@
-🍦 A Little Vanilla
+🍦 A Little Vanilla : Backend
 ================
 
 > 👉🏻 Summary <br />
@@ -7,11 +7,8 @@
 > 현재 [I am port](https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE, "Iamport link") 결제 API를 연동하여 실제 거래까지 이루어지지만, 현재 배포된 사이트에서는 당일 자정에 모두 환불됩니다.<br />
 > 안심하고 테스트 해보세요!
 
-
-
-
+<hr/>
 ## 사용 기술 스택
-### Backend
 + Spring Boot 2.6.3
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + Spring Security
@@ -23,7 +20,8 @@
 
 
 ### 배포
-+ AWS EC2
++ AWS EC2 단일 배포
+  + ㅁㄴㅇ
 
 <hr/>
 
@@ -35,14 +33,15 @@
 | 회원가입 | POST | / | user form DB 전송, seller form DB 전송, 회원가입 중복 방지 | ☑️ |
 | 회원가입 | GET/POST | / | 카카오 소셜 회원가입 | ☑️ |
 
+[JWT](https://blog.naver.com/ghdalswl77/222517833354, "link") 
+
+
 ### 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 정보수정 | GET | / | 정보수정 웹 페이지 | ☑️ |
 | 정보수정 | POST | / | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | GET/POST | / | 회원 탈퇴 | ☑️ |
-
-[JWT]([https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE](https://blog.naver.com/ghdalswl77/222517833354), "link") 
 
 
 ### 로그인/회원가입
@@ -53,10 +52,3 @@
 | 회원가입 | POST | / | seller form DB 전송 | ☑️ |
 | 로그인 | GET | / | 로그인 페이지 | ☑️ |
 | 회원가입 | GET | / | 회원가입 중복 방지 | ☑️ |
-| 회원가입 | GET | / | 소셜 회원가입 | ☑️ |
-| 로그인 | GET | / | 소셜 회원가입 | ☑️ |
-| 4주차 | GET | / | qwer | ☑️ |
-| 5주차 | GET | / |디자인 합동 세미나 | ☑️ |
-| 6주차 | GET | / |서버 합동 세미나 + 솝커톤  | ☑️ |
-| 7주차 | GET | / |클론 코딩을 통한 실전 UI 구성, Animation, 통신 보충  | ☑️ |
-| 8주차 | GET | / | e기획 경선 + 앱잼 전 보충 세미나 + 앱스토어 배포 가이드  | ☑️ |
