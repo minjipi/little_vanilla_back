@@ -15,6 +15,7 @@
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
 + JWT
   + Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다.
+  + [JWT](https://blog.naver.com/ghdalswl77/222517833354) 
 + **MySQL 8.0.26**
   + 상품 검색 기능을 지원하기 때문에 보다 편리한 검색을 위해 문자열 비교에서 대소 문자를 구분하지 않는다는 장점이 있는 MySQL을 사용했습니다.
 
@@ -33,10 +34,10 @@
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | 회원 탈퇴 | ☑️ |
 
-[JWT](https://blog.naver.com/ghdalswl77/222517833354)
-[Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877)
-[Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513)
-[springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045)
+
+[Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
+[Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
+[springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045) <br />
 <br />
 
 ### 상품
