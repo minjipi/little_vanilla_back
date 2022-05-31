@@ -1,6 +1,6 @@
 package com.minji.idusbackend.cart;
 
-import com.minji.idusbackend.cart.model.GetCartList;
+import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.cart.model.PostCartReq;
 import com.minji.idusbackend.cart.model.PostCartRes;
 import com.minji.idusbackend.config.BaseResponse;
@@ -60,11 +60,12 @@ public class CartController {
     }
 
 
+
     @ResponseBody
     @GetMapping("/list")
-    public BaseResponse<List<GetCartList>> cartList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
+    public BaseResponse<List<GetCart>> cartList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
         try {
-            List<GetCartList> getCartLists = cartService.cartList(userLoginRes.getIdx());
+            List<GetCart> getCartLists = cartService.cartList(userLoginRes.getIdx());
             System.out.println("cartController: " + userLoginRes.getIdx());
             return new BaseResponse<>(getCartLists);
         } catch (Exception exception) {

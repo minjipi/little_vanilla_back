@@ -136,20 +136,6 @@ public class PayService {
         conn.disconnect();
     }
 
-
-
-
-
-
-
-//    public String chargePay(BigInteger userLoginRes, int money) {
-//        return payDao.chargePay(userLoginRes, money);
-//    }
-
-//    public int showTotalPay(int member_idx){
-//        return payDao.showTotalPay(member_idx);
-//    }
-
     public List<PostPayRes> showPayChargeList(BigInteger member_idx){
         return payDao.showPayChargeList(member_idx);
     }

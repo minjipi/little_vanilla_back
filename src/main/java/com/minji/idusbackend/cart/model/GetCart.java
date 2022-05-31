@@ -10,8 +10,9 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetCartList {
+public class GetCart {
     private BigInteger idx;
+    private BigInteger productIdx;
     private BigInteger brandIdx;
     private int amount;
     private String name;

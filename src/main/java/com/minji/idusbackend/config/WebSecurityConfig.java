@@ -92,7 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .oauth2Login()  // 동의 화면 띄우기
-//                .defaultSuccessUrl("/login-success")
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .userInfoEndpoint().userService(userOAuth2Service);
 

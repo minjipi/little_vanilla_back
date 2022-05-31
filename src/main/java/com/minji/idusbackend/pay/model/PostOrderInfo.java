@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +23,5 @@ public class PostOrderInfo {
     private String buyer_name;
     private String buyer_tel;
     private String buyer_email;
-    private BigInteger idx;
+    private List<BigInteger> idxList = new ArrayList<>();
 }

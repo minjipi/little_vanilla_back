@@ -54,9 +54,9 @@ public class ProductService {
         }
     }
 
-    public PatchProductRes updateProduct(int idx, PostProductReq postProductReq) throws Exception {
+    public void updateProduct(PatchProductReq patchProductReq, BigInteger idx) throws Exception {
         try {
-            return productDao.updateProduct(idx, postProductReq);
+            productDao.updateProduct(patchProductReq, idx);
         } catch (Exception exception) {
             throw new Exception();
         }

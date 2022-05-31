@@ -1,8 +1,9 @@
 package com.minji.idusbackend.order;
 
+import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.member.MemberDao;
 import com.minji.idusbackend.member.model.MemberInfo;
-import com.minji.idusbackend.order.model.GetOrderList;
+import com.minji.idusbackend.order.model.GetOrder;
 import com.minji.idusbackend.order.model.PostOrderReq;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
 import com.minji.idusbackend.product.ProductDao;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -74,17 +74,21 @@ public class OrderDao {
         return "성공";
     }
 
-    public List<GetOrderList> orderList(BigInteger userLoginRes) {
-        String orderListQuery = "select * from orders left outer join product on product.idx=orders.product_idx where member_idx=?";
+    public List<GetOrder> orderList(BigInteger userLoginRes) {
+        String orderListQuery = "select * from `order` left outer join product on product.idx=`order`.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=?";
 
         return this.jdbcTemplate.query(orderListQuery,
-                (rs, rowNum) -> new GetOrderList(
+                (rs, rowNum) -> new GetOrder(
                         rs.getObject("idx", BigInteger.class),
-                        rs.getObject("amount", int.class),
-                        rs.getString("status"),
-                        rs.getObject("ordered_at", Timestamp.class),
+                        rs.getObject("productIdx", BigInteger.class),
+                        rs.getObject("brandIdx", BigInteger.class),
                         rs.getString("name"),
-                        rs.getObject("brandIdx", BigInteger.class)
+                        rs.getObject("price", BigInteger.class),
+                        rs.getObject("salePrice", BigInteger.class),
+                        rs.getString("deliveryType"),
+                        rs.getString("isTodayDeal"),
+                        rs.getString("filename"),
+                        rs.getTimestamp("create_timestamp")
                 ), userLoginRes);
     }
 

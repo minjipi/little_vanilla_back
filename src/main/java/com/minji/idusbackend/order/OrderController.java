@@ -1,13 +1,13 @@
 package com.minji.idusbackend.order;
 
+import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.config.BaseResponse;
 
 import static com.minji.idusbackend.config.BaseResponseStatus.FAIL;
 import com.minji.idusbackend.member.model.UserLoginRes;
-import com.minji.idusbackend.order.model.GetOrderList;
+import com.minji.idusbackend.order.model.GetOrder;
 import com.minji.idusbackend.order.model.PostOrderReq;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,11 +36,11 @@ public class OrderController {
 
     @ResponseBody
     @GetMapping("/list")
-    public BaseResponse<List<GetOrderList>> orderList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
+    public BaseResponse<List<GetOrder>> orderList(@AuthenticationPrincipal UserLoginRes userLoginRes) {
         try {
-            List<GetOrderList> getOrderLists = orderService.orderList(userLoginRes.getIdx());
+            List<GetOrder> getOrderList = orderService.orderList(userLoginRes.getIdx());
             System.out.println("userLoginRes: "+userLoginRes.getIdx());
-            return new BaseResponse<>(getOrderLists);
+            return new BaseResponse<>(getOrderList);
         } catch (Exception exception) {
             System.out.println("controller exception: " + exception);
             return new BaseResponse<>(FAIL);

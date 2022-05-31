@@ -32,14 +32,6 @@ public class PayDao {
         return "성공";
     }
 
-//    public int showTotalPay(int member_idx) {
-//        String showPayQuery = "select sum(money) from pay where member_idx=? group by member_idx";
-//
-//        return this.jdbcTemplate.queryForObject(showPayQuery,
-//                (rs, rowNum) -> rs.getObject("sum(money)", int.class)
-//                , member_idx);
-//    }
-
     public int showTotalPay2(BigInteger member_idx) {
         String showPayQuery = "select total from pay where member_idx=? order by idx desc limit 1";
 

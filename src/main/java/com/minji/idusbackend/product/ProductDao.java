@@ -23,10 +23,10 @@ public class ProductDao {
     public PostProductRes createProduct(BigInteger useridx, PostProductReq postProductReq) {
         System.out.println(postProductReq.toString());
 
-        String createProductQuery = "insert into product (name, brandIdx, categoryIdx, price, salePrice, deliveryType, isTodayDeal) values (?,?,?,?,?,?,?)";
+        String createProductQuery = "insert into product (name, brandIdx, categoryIdx, price, salePrice, deliveryType, isTodayDeal, contents) values (?,?,?,?,?,?,?,?)";
 
         Object[] createProductParams = new Object[]{postProductReq.getName(), useridx, postProductReq.getCategoryIdx()
-                , postProductReq.getPrice(), postProductReq.getSalePrice(), postProductReq.getDeliveryType(), postProductReq.getIsTodayDeal()};
+                , postProductReq.getPrice(), postProductReq.getSalePrice(), postProductReq.getDeliveryType(), postProductReq.getIsTodayDeal(), postProductReq.getContents()};
 
         this.jdbcTemplate.update(createProductQuery, createProductParams);
 
@@ -37,7 +37,7 @@ public class ProductDao {
     }
 
     public GetProductRes getProduct(BigInteger idx) {
-        String getProductQuery = "SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx where idx = ?";
+        String getProductQuery = "SELECT * FROM (SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx where idx = ?) as A, (SELECT COUNT(*) as likeCount FROM likes WHERE product_idx=?) as B;";
 
         return this.jdbcTemplate.queryForObject(getProductQuery
                 , (rs, rowNum) -> new GetProductRes(
@@ -49,7 +49,10 @@ public class ProductDao {
                         rs.getObject("salePrice", int.class),
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
-                        rs.getString("group_concat(filename)")), idx);
+                        rs.getString("contents"),
+                        rs.getString("group_concat(filename)"),
+                        rs.getObject("likeCount", BigInteger.class)
+                        ), idx,idx);
     }
 
     public List<ProductImage> getProductImages(BigInteger idx) {
@@ -63,9 +66,21 @@ public class ProductDao {
                 ), idx);
     }
 
+//    public PatchProductRes deleteProduct(BigInteger idx) {
+//        String deleteProductQuery = "delete from Product where idx = ?";
+//        this.jdbcTemplate.update(deleteProductQuery, idx);
+//
+//        String getLastInsertIdxQuery = "select last_insert_id()";
+//        BigInteger lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, BigInteger.class);
+//
+//        return new PatchProductRes(lastInsertIdx, 0);
+//    }
+
+
     public PatchProductRes deleteProduct(BigInteger idx) {
-        String deleteProductQuery = "delete from Product where idx = ?";
-        this.jdbcTemplate.update(deleteProductQuery, idx);
+        String deleteProductQuery = "update Product set status = ? where idx = ?";
+        Object[] deleteProductParams = new Object[]{0, idx};
+        this.jdbcTemplate.update(deleteProductQuery, deleteProductParams);
 
         String getLastInsertIdxQuery = "select last_insert_id()";
         BigInteger lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, BigInteger.class);
@@ -74,20 +89,14 @@ public class ProductDao {
     }
 
 
-    public PatchProductRes updateProduct(int idx, PostProductReq postProductReq) {
+    public int updateProduct(PatchProductReq patchProductReq, BigInteger idx) {
 
-        String updateProductQuery = "update Product set name=?, categoryIdx=?, price=?, salePrice=?, deliveryType=?, isTodayDeal=? where idx = ?";
+        String updateProductQuery = "update Product set name=?, categoryIdx=?, price=?, salePrice=?, deliveryType=?, isTodayDeal=?, contents=? where idx = ?";
 
-        Object[] createProductParams = new Object[]{postProductReq.getName(), postProductReq.getCategoryIdx()
-                , postProductReq.getPrice(), postProductReq.getSalePrice(), postProductReq.getDeliveryType(), postProductReq.getIsTodayDeal(), idx};
+        Object[] createProductParams = new Object[]{patchProductReq.getName(), patchProductReq.getCategoryIdx()
+                , patchProductReq.getPrice(), patchProductReq.getSalePrice(), patchProductReq.getDeliveryType(), patchProductReq.getIsTodayDeal(), patchProductReq.getContents(), idx};
 
-        this.jdbcTemplate.update(updateProductQuery, createProductParams);
-
-        String getLastInsertIdxQuery = "select last_insert_id()";
-
-        BigInteger lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, BigInteger.class);
-
-        return new PatchProductRes(lastInsertIdx, 0);
+        return this.jdbcTemplate.update(updateProductQuery, createProductParams);
     }
 
 
@@ -166,7 +175,9 @@ public class ProductDao {
                         rs.getObject("salePrice", int.class),
                         rs.getString("deliveryType"),
                         rs.getString("isTodayDeal"),
-                        rs.getString("group_concat(filename)")), "%" + word + "%");
+                        rs.getString("contents"),
+                        rs.getString("group_concat(filename)"),
+                        rs.getObject("likeCount", BigInteger.class)), "%" + word + "%");
     }
 
     //    public String likeProduct(BigInteger userLoginResIdx, int idx, String cabinetIdx) {

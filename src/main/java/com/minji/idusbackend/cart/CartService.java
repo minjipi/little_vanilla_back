@@ -1,6 +1,6 @@
 package com.minji.idusbackend.cart;
 
-import com.minji.idusbackend.cart.model.GetCartList;
+import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.cart.model.PostCartReq;
 import com.minji.idusbackend.cart.model.PostCartRes;
 import com.minji.idusbackend.config.BaseException;
@@ -31,11 +31,19 @@ public class CartService {
         }
     }
 
+    public PostCartRes cancelCartByMemberIdx(BigInteger userLoginRes) throws BaseException {
 
-
-    public List<GetCartList> cartList(BigInteger userLoginRes) throws Exception {
         try {
-            List<GetCartList> getCartLists = cartDao.cartList(userLoginRes);
+            PostCartRes postCartRes = cartDao.cancelCartByMemberIdx(userLoginRes);
+            return postCartRes;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<GetCart> cartList(BigInteger userLoginRes) throws Exception {
+        try {
+            List<GetCart> getCartLists = cartDao.cartList(userLoginRes);
             System.out.println("CartService: ");
             return getCartLists;
         } catch (Exception exception) {
@@ -43,5 +51,7 @@ public class CartService {
             throw new Exception();
         }
     }
+
+
 
 }

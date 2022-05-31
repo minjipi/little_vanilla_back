@@ -19,7 +19,6 @@ public class AdminController {
 
     @PostMapping("/write")
     public String write_post(ProductDTO productDTO) {
-
         adminService.saveService(productDTO);
         return "redirect:/";
     }

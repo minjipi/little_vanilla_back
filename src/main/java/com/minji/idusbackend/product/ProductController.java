@@ -64,12 +64,18 @@ public class ProductController {
 
     @ResponseBody
     @PatchMapping("/delete/{idx}")
-    public BaseResponse<PatchProductRes> deleteProduct(@PathVariable BigInteger idx) {
+    public BaseResponse<PatchProductRes> deleteProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable BigInteger idx) {
         if (idx == null) {
             return new BaseResponse<>(EMPTY_IDX);
         }
         if (!isValidatedIdx(idx)) {
             return new BaseResponse<>(INVALID_IDX);
+        }
+
+        BigInteger userIdx = userLoginRes.getIdx();
+        if (Integer.parseInt(String.valueOf(userIdx)) != (Integer.parseInt(String.valueOf(idx)))) {
+            System.out.println(userIdx + " " + idx);
+            return new BaseResponse<>(USER_NOT_MATCH);
         }
 
         try {
@@ -83,11 +89,19 @@ public class ProductController {
 
     @ResponseBody
     @PatchMapping("/update/{idx}")
-    public BaseResponse<PatchProductRes> updateProduct(@PathVariable int idx, @RequestBody PostProductReq postProductReq) {
+    public BaseResponse<String> updateProduct(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable BigInteger idx, @RequestBody PatchProductReq patchProductReq) {
 
         try {
-            PatchProductRes patchProductRes = productService.updateProduct(idx, postProductReq);
-            return new BaseResponse<>(patchProductRes);
+            BigInteger userIdx = userLoginRes.getIdx();
+            System.out.println("글 수정 확인: " + patchProductReq.getBrandIdx() + "," + userIdx);
+
+            if (Integer.parseInt(String.valueOf(userIdx)) != patchProductReq.getBrandIdx()) {
+                return new BaseResponse<>(INVALID_USER_JWT);
+            }
+
+            productService.updateProduct(patchProductReq, idx);
+            String result = idx + " 변경 완료.";
+            return new BaseResponse<>(result);
         } catch (Exception exception) {
             System.out.println(exception);
             return new BaseResponse<>(FAIL);
@@ -143,6 +157,10 @@ public class ProductController {
             if (postProductReq.getIsTodayDeal() == null) {
                 return new BaseResponse<>(POST_PRODUCTS_EMPTY_ISTODAYDEAL);
             }
+            if (postProductReq.getContents() == null) {
+                return new BaseResponse<>(POST_PRODUCTS_EMPTY_CONTENTS);
+            }
+
             System.out.println("postProductReq : " + postProductReq.toString());
             System.out.println("userLoginRes : " + userLoginRes.toString());
 
@@ -178,37 +196,6 @@ public class ProductController {
         }
     }
 
-
-//    @PostMapping("/imgUpload/{productIdx}")
-//    public BaseResponse<List<ProductImage>> uploadFile(@PathVariable int productIdx, MultipartFile[] uploadFiles) {
-//
-//        List<ProductImage> resultDTOList = new ArrayList<>();
-//
-//        for (MultipartFile uploadFile : uploadFiles) {
-//
-//            if (uploadFile.getContentType().startsWith("image") == false) {
-//                return new BaseResponse<>(FAIL);
-//            }
-//
-//            String originalName = uploadFile.getOriginalFilename();
-//            String fileName = originalName.substring(originalName.lastIndexOf("\\") + 1);
-//
-//            String saveName = uploadPath + File.separator + fileName;
-//            Path savePath = Paths.get(saveName);
-//
-//            try {
-//                uploadFile.transferTo(savePath);
-//                ProductImage productImage = new ProductImage(fileName);
-//                resultDTOList.add(productImage);
-//                productService.createProductImage(productIdx, productImage);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        return new BaseResponse<>(resultDTOList);
-//    }
-
     @GetMapping("/display")
     public ResponseEntity<byte[]> getFile(String fileName, String size) {
 
@@ -234,18 +221,6 @@ public class ProductController {
         }
         return result;
     }
-//
-//    @ResponseBody
-//    @GetMapping("/list")
-//    public BaseResponse<List<GetProductRes>> getProducts() {
-//        try {
-//            List<GetProductRes> getProductResList = productService.getProducts();
-//            return new BaseResponse<>(getProductResList);
-//        } catch (Exception exception) {
-//            System.out.println(exception);
-//            return new BaseResponse<>(FAIL);
-//        }
-//    }
 
     @ResponseBody
     @GetMapping("/list")

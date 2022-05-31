@@ -115,7 +115,6 @@ public class MemberController {
 
         try {
             BigInteger userIdx = userLoginRes.getIdx();
-            System.out.println("== userLoginRes.getIdx: " + userLoginRes.getIdx() + ", Idx: " + idx);
 
             if (!userIdx.equals(idx)) {
                 return new BaseResponse<>(INVALID_USER_JWT);

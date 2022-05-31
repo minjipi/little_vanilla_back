@@ -1,6 +1,7 @@
 package com.minji.idusbackend.order;
 
-import com.minji.idusbackend.order.model.GetOrderList;
+import com.minji.idusbackend.cart.model.GetCart;
+import com.minji.idusbackend.order.model.GetOrder;
 import com.minji.idusbackend.order.model.PostOrderReq;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class OrderService {
         return orderDao.cancelOrder(userLoginRes, idx);
     }
 
-    public List<GetOrderList> orderList(BigInteger userLoginRes) throws Exception {
+    public List<GetOrder> orderList(BigInteger userLoginRes) throws Exception {
         try {
-            List<GetOrderList> getOrderLists = orderDao.orderList(userLoginRes);
-            return getOrderLists;
+            List<GetOrder> getOrderList = orderDao.orderList(userLoginRes);
+            return getOrderList;
         } catch (Exception exception) {
             System.out.println("service : " + exception);
             throw new Exception();

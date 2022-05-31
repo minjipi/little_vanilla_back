@@ -1,25 +1,26 @@
-package com.minji.idusbackend.product.model;
+package com.minji.idusbackend.order.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigInteger;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetProductRes {
+public class GetOrder {
     private BigInteger idx;
-    private String name;
+    private BigInteger productIdx;
     private BigInteger brandIdx;
-    private BigInteger categoryIdx;
-    private Integer price;
-    private Integer salePrice;
+    private String name;
+    private BigInteger price;
+    private BigInteger salePrice;
     private String deliveryType;
     private String isTodayDeal;
-    private String contents;
     private String filename;
-    private BigInteger likeCount;
-
+    private Timestamp create_timestamp;
 }

@@ -21,9 +21,10 @@ public enum BaseResponseStatus {
     POST_PRODUCTS_EMPTY_PRICE(false, 2103, "가격을 입력해주세요."),
     POST_PRODUCTS_EMPTY_SALEPRICE(false, 2104, "할인가격을 입력해주세요."),
     POST_PRODUCTS_EMPTY_DELIVERYTYPE(false, 2105, "배송유형을 입력해주세요."),
-    POST_PRODUCTS_EMPTY_ISTODAYDEAL(false, 2106, "오늘의딜 여부를 입력해주세요."),
+    POST_PRODUCTS_EMPTY_ISTODAYDEAL(false, 2106, "세일 여부를 입력해주세요."),
+    POST_PRODUCTS_EMPTY_CONTENTS(false, 2106, "오늘의 세일 여부를 입력해주세요."),
     POST_PRODUCTS_INVALID_DELIVERYTYPE(false, 2110, "잘못된 배송유형이 입력되었습니다."),
-    POST_PRODUCTS_INVALID_ISTODAYDEAL(false, 2111, "잘못된 오늘의딜 여부가 입력되었습니다."),
+    POST_PRODUCTS_INVALID_ISTODAYDEAL(false, 2111, "잘못된 오늘의세일 여부가 입력되었습니다."),
     POST_PRODUCTS_INVALID_FILES(false, 2112, "파일 형식을 다시 확인해 주세요."),
     POST_PRODUCTS_PRE_EXIST_PRODUCT(false, 2120, "이미 존재하는 상품의 이름이 입력되었습니다."),
 
@@ -67,6 +68,7 @@ public enum BaseResponseStatus {
     NULL_STRING(false, 5005, "검색어가 없습니다.."),
     NOT_LOGIN(false, 5006, "NOT_LOGIN."),
     NULL_ID(false, 5007, "아이디가 존재하지 않습니다."),
+    USER_NOT_MATCH(false, 5008, "아이디가 존재하지 않습니다."),
 
     // 7000
     FAIL(false, 7000, "실패.");

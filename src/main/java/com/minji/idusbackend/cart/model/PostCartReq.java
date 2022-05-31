@@ -13,5 +13,4 @@ import java.math.BigInteger;
 public class PostCartReq {
     private BigInteger productIdx;
     private BigInteger amount;
-
 }
