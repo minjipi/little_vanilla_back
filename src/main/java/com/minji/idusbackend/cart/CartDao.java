@@ -27,8 +27,8 @@ public class CartDao {
 
 
     public PostCartRes createCart(BigInteger userLoginRes, PostCartReq postCartReq) {
-        String createCartQuery = "insert into `cart` (member_idx, product_idx, amount, status) VALUES (?, ?, ?, ?)";
-        Object[] createCartParams = new Object[]{userLoginRes, postCartReq.getProductIdx(), postCartReq.getAmount(), 1 };
+        String createCartQuery = "insert into `cart` (member_idx, product_idx, amount) VALUES (?, ?, ?)";
+        Object[] createCartParams = new Object[]{userLoginRes, postCartReq.getProductIdx(), postCartReq.getAmount()};
         this.jdbcTemplate.update(createCartQuery, createCartParams);
 
         String getLastInsertIdxQuery = "select last_insert_id()";
@@ -38,14 +38,16 @@ public class CartDao {
     }
 
     public PostCartRes cancelCart(BigInteger userLoginRes, BigInteger idx) {
-        String deleteQuery = "update cart set status = 0 where  member_idx=? and idx = ?";
+        String deleteQuery = "DELETE FROM cart WHERE member_idx=? and idx = ?";
+
+
         this.jdbcTemplate.update(deleteQuery, userLoginRes, idx);
 
         return new PostCartRes(idx, 0);
     }
 
     public PostCartRes cancelCartByMemberIdx(BigInteger userLoginRes) {
-        String deleteQuery = "update cart set status = 0 where  member_idx=?";
+        String deleteQuery = "DELETE FROM cart where member_idx=?";
         this.jdbcTemplate.update(deleteQuery, userLoginRes);
 
         return new PostCartRes(new BigInteger("1"), 0);
@@ -53,7 +55,7 @@ public class CartDao {
 
 
     public List<GetCart> cartList(BigInteger userLoginRes) {
-        String cartListQuery = "select * from cart left outer join product on product.idx=cart.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=? and status=1";
+        String cartListQuery = "select * from cart left outer join product on product.idx=cart.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=?";
 
         return this.jdbcTemplate.query(cartListQuery,
                 (rs, rowNum) -> new GetCart(

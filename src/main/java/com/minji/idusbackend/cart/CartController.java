@@ -40,7 +40,7 @@ public class CartController {
     }
 
     @ResponseBody
-    @PatchMapping("/cancel/{idx}")
+    @GetMapping("/cancel/{idx}")
     public BaseResponse<PostCartRes> cancelCart(@AuthenticationPrincipal UserLoginRes userLoginRes, @PathVariable BigInteger idx) {
         if (userLoginRes == null) {
             System.out.println("user is NULL.");
@@ -58,8 +58,6 @@ public class CartController {
             return new BaseResponse<>(FAIL);
         }
     }
-
-
 
     @ResponseBody
     @GetMapping("/list")

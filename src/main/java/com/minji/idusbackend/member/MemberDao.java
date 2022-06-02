@@ -28,7 +28,7 @@ public class MemberDao {
 
     public PostMemberRes createMember(PostMemberReq postMemberReq) {
 
-        String createMemberQuery = "insert into Member (email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String createMemberQuery = "insert into member (email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Object[] createMemberParams = new Object[]{postMemberReq.getEmail(), postMemberReq.getPassword(), postMemberReq.getNickname(), postMemberReq.getPhoneNum(), postMemberReq.getGender(), postMemberReq.getBirthday(), postMemberReq.getNotification()
         };
@@ -50,7 +50,7 @@ public class MemberDao {
 
     public Integer createMemberKakao(String kakaoemail, String nickname) {
 
-        String createMemberQuery = "insert into Member (email, password, nickname) VALUES (?, ?, ?)";
+        String createMemberQuery = "insert into member (email, password, nickname, status) VALUES (?, ?, ?, 1)";
 
         Object[] createMemberParams = new Object[]{kakaoemail, "kakao", nickname
         };

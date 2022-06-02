@@ -72,6 +72,7 @@ public class ProductService {
 
         if (principal.toString() == "anonymousUser") {
             try {
+                System.out.println("로그인 안됨");
                 List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImage();
                 return getProductWithImageResList;
             } catch (Exception exception) {
@@ -82,6 +83,7 @@ public class ProductService {
         } else {
             UserLoginRes userDetails = (UserLoginRes) principal;
             try {
+                System.out.println("getProductsWithProductImageAndLikes");
                 List<GetProductWithImageAndLikesRes> getProductWithImageResList = productDao.getProductsWithProductImageAndLikes(userDetails.getIdx());
                 return getProductWithImageResList;
             } catch (Exception exception) {
@@ -97,6 +99,8 @@ public class ProductService {
             List<GetProductRes> getProductResList = productDao.getSearchProducts(word, isDelFree, gte, lte);
             return getProductResList;
         } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+
             throw new Exception();
         }
     }

@@ -152,16 +152,16 @@ public class ProductDao {
     }
 
     public List<GetProductRes> getSearchProducts(String word, Integer isDelFree, Integer gte, Integer lte) {
-        String getProductsQuery = "select * from product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx WHERE name LIKE ?";
+        String getProductsQuery = "SELECT * FROM (SELECT * FROM product left JOIN (SELECT productIdx, group_concat(filename) FROM productImage group by productIdx) as pi ON product.idx=pi.productIdx where name LIKE ?";
 
         if (gte != -1 && lte != -1) {
-            getProductsQuery += "AND salePrice >= " + gte + " AND salePrice <= " + lte;
+            getProductsQuery += " AND salePrice >= " + gte + " AND salePrice <= " + lte;
         }
 
         if (isDelFree == 1) {
-            getProductsQuery += " AND deliveryType='T'";
+            getProductsQuery += " AND deliveryType='무료배송'";
         }
-
+        getProductsQuery += ") as A, (SELECT COUNT(*) as likeCount FROM likes ) as B";
         System.out.println(getProductsQuery);
         System.out.println("isDelFree" + isDelFree);
 

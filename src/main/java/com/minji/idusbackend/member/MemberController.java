@@ -21,7 +21,7 @@ import java.util.UUID;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://www.alittlevanilla.kro.kr")
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -78,7 +78,7 @@ public class MemberController {
     @GetMapping("/confirm")
     public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) throws Exception {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
-        return new RedirectView("http://localhost:3000/emailconfirm/" + getEmailConfirmReq.getJwt());
+        return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
     }
 
     @ResponseBody

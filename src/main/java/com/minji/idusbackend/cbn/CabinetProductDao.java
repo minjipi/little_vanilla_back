@@ -43,7 +43,7 @@ public class CabinetProductDao {
     }
 
     public List<GetOneCbnRes> getCbn(BigInteger member_idx, int cabinet_idx) {
-        String cbnListQuery = " select * from likes left outer join cabinet on cabinet.idx=likes.cabinet_idx left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where likes.member_idx=? and cabinet.idx=?";
+        String cbnListQuery = "select * from likes left outer join cabinet on cabinet.idx=likes.cabinet_idx left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where likes.member_idx=? and cabinet.idx=?";
 
         return this.jdbcTemplate.query(cbnListQuery,
                 (rs, rowNum) -> new GetOneCbnRes(
@@ -66,6 +66,7 @@ public class CabinetProductDao {
         String updateCbnQuery = "update likes set cabinet_idx=? where member_idx=? and product_idx=?;";
         Object[] updateCbnParams = new Object[]{cbn_idx, userLoginResIdx, product_idx};
         this.jdbcTemplate.update(updateCbnQuery, updateCbnParams);
+
         String getLastInsertIdxQuery = "select last_insert_id()";
         int lastInsertIdx = this.jdbcTemplate.queryForObject(getLastInsertIdxQuery, int.class);
         return new PatchCbnRes(lastInsertIdx, 0);

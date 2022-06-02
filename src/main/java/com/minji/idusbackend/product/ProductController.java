@@ -34,7 +34,7 @@ import java.util.List;
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 import static com.minji.idusbackend.utils.Validation.isValidatedSearchWord;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("http://www.alittlevanilla.kro.kr/")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/product")
@@ -259,7 +259,6 @@ public class ProductController {
             List<GetProductRes> getProductResList = productService.getSearchProducts(word, isDelFree, gte, lte);
             return new BaseResponse<>(getProductResList);
         } catch (Exception exception) {
-            System.out.println(exception);
             return new BaseResponse<>(FAIL);
         }
     }
