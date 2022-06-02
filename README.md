@@ -31,7 +31,8 @@
 | 이메일인증 | GET | / | 이메일 인증, 중복 가입 방지 | ☑️ |
 | 정보수정 | GET | /modify | 회원 정보 수정을 위한 본인 확인 | ☑️ |
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
-| 회원탈퇴 | PATCH | /delete/{idx} | 회원 탈퇴 | ☑️ |
+| 회원탈퇴 | PATCH | /delete/{idx} | status 수정으로 회원 탈퇴 처리 | ☑️ |
+| 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
 
 
 [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
