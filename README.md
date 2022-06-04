@@ -6,33 +6,32 @@
 > 현재 [I am port](https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE, "Iamport link") 결제 API를 연동하여 실제 거래까지 이루어지지만, 현재 배포된 사이트에서는 당일 자정에 모두 환불됩니다. 안심하고 테스트 해보세요!
 <br />
 
-## ⚒ 사용 기술 스택
+## 🎩 사용 기술 스택
 + **Spring Boot 2.6.3**
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + **Spring Security**
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
 + **JWT**
   + 토큰 기반 인증을 구현하기 위해 사용하였습니다. Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다. [JWT](https://blog.naver.com/ghdalswl77/222517833354)
-+ MySQL 8.0.26
 + **AWS EC2 배포**
   + 스프링부트 프로젝트와 AWS RDS 연동으로 ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 웹사이트를 배포했습니다. 
++ MySQL 8.0.26
 <br /><br />
 
 
 ## 🕹 API 설계 및 진행상황
-### 🎩 로그인/회원가입 및 회원 정보
+### 로그인/회원가입 및 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | POST | /member/signup | 일반회원 form DB 전송, 판매자 회원 form DB 전송, 회원가입 중복 방지 | ☑️ |
 | 회원가입 | GET/POST | /member | 카카오 소셜 회원가입 | ☑️ |
-| 이메일인증 | GET | /member/confirm | 이메일 인증, 중복 가입 방지 | ☑️ |
+| 메일인증 | GET | /member/confirm | 이메일 인증, 중복 가입 방지 | ☑️ |
 | 정보수정 | GET | /modify | 회원 정보 수정 | ☑️ |
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | status 수정으로 회원 탈퇴 처리 | ☑️ |
 | 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
 
-### 로그인/회원가입 및 회원 정보
-
+> 구현 과정과 후기 그리고 개선방향 <br />
 + **회원가입/로그인 구현**
   + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
 + **카카오 로그인 구현**
