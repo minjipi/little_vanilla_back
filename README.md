@@ -32,7 +32,7 @@
 | 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
  <br />
  
-> 구현 과정과 후기 그리고 개선방향 <br />
+> 후기 및 개선방향 <br />
 + **회원가입/로그인 구현**
   + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
 + **카카오 로그인 구현**
@@ -56,7 +56,7 @@
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 |
 <br />
 
-> 구현 과정과 후기 그리고 개선방향 <br />
+> 후기 및 개선방향 <br />
 + **검색 기능**
   + [검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) <br />
 + **좋아요 기능 구현**
