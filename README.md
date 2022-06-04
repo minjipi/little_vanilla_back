@@ -30,7 +30,8 @@
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | status 수정으로 회원 탈퇴 처리 | ☑️ |
 | 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
-
+ <br />
+ 
 > 구현 과정과 후기 그리고 개선방향 <br />
 + **회원가입/로그인 구현**
   + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
@@ -53,12 +54,13 @@
 | 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함.|
 | 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능. |
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 |
-
 <br />
 
-[검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) 
-[Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891)
-
+> 구현 과정과 후기 그리고 개선방향 <br />
++ **검색 기능**
+  + [검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) <br />
++ **좋아요 기능 구현**
+  + [Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891) <br />
 <br /><br />
 
 
