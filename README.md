@@ -13,10 +13,11 @@
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
 + **JWT**
   + 토큰 기반 인증을 구현하기 위해 사용하였습니다. Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 JWT를 사용했습니다. [JWT](https://blog.naver.com/ghdalswl77/222517833354)
-
++ MySQL 8.0.26
 + **AWS EC2 배포**
-  + 스프링부트 프로젝트와 AWS RDS 연동으로 웹사이트를 배포했습니다. ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 
-    <br />
+  + 스프링부트 프로젝트와 AWS RDS 연동으로 ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 웹사이트를 배포했습니다. 
+<br /><br />
+
 
 ## API 설계 및 진행상황
 ### 🎩 로그인/회원가입 및 회원 정보
