@@ -55,7 +55,7 @@ public class CartDao {
 
 
     public List<GetCart> cartList(BigInteger userLoginRes) {
-        String cartListQuery = "select * from cart left outer join product on product.idx=cart.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=?";
+        String cartListQuery = "select * from cart left outer join product on product.idx=cart.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=?  group by productImage.productIdx";
 
         return this.jdbcTemplate.query(cartListQuery,
                 (rs, rowNum) -> new GetCart(

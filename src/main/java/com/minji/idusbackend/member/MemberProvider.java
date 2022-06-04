@@ -2,6 +2,7 @@ package com.minji.idusbackend.member;
 
 import com.minji.idusbackend.config.BaseException;
 import com.minji.idusbackend.member.model.UserLoginRes;
+import com.minji.idusbackend.member.model.UserLoginResWithStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +41,12 @@ public class MemberProvider {
         }
     }
 
-    public UserLoginRes findByEmail(String email){
+    public UserLoginResWithStatus findByEmail(String email){
         try{
-            return memberDao.findByEmail(email);
+            System.out.println("MemberProvider...");
+            return memberDao.findByEmailWithStatus(email);
         } catch (Exception exception){
+
             throw exception;
         }
     }

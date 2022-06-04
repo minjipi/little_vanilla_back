@@ -68,15 +68,13 @@ public class MemberController {
 
         } catch (Exception exception) {
             System.out.println(exception);
-
-
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
 
     @ResponseBody
     @GetMapping("/confirm")
-    public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) throws Exception {
+    public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
         return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
     }
@@ -133,7 +131,7 @@ public class MemberController {
     public BaseResponse<PostMemberRes> createSeller(@RequestBody PostSellerReq postSellerReq) {
 
         try {
-            System.out.println("========================== Req: " + postSellerReq);
+            System.out.println("createSeller Req: " + postSellerReq);
 
             PostMemberRes postMemberRes = memberService.createSeller(postSellerReq);
             return new BaseResponse<>(postMemberRes);
@@ -143,7 +141,6 @@ public class MemberController {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
-
 
     //     계정 탈퇴 API
     @ResponseBody
@@ -182,11 +179,6 @@ public class MemberController {
             System.out.println("Password is NULL");
         }
 
-// 탈퇴한 회원인지 확인.
-//        if (!memberDao.isValidStatus(authenticationRequest)) {
-//            System.out.println("탈퇴한 회원");
-//        }
-
         System.out.println(authenticationRequest.getUsername() + ", " + authenticationRequest.getPassword());
 
         Authentication authentication = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -197,7 +189,7 @@ public class MemberController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    private Authentication authenticate(String username, String password) throws Exception {
+    private Authentication authenticate(String username, String password) {
 
         try {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -206,7 +198,7 @@ public class MemberController {
         } catch (AccountExpiredException e) {
             throw new AccountExpiredException("AccountExpiredException", e);
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("비민번호 오류 입니다. INVALID_CREDENTIALS", e);
+            throw new BadCredentialsException("비밀번호 오류 입니다. INVALID_CREDENTIALS", e);
         } catch (InternalAuthenticationServiceException e) {
             throw new InternalAuthenticationServiceException("존재하지 않는 아이디 입니다. InternalAuthenticationServiceException", e);
         } catch (AuthenticationCredentialsNotFoundException e) {

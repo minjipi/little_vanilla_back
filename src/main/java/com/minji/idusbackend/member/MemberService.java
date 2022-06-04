@@ -29,6 +29,7 @@ public class MemberService {
     public void modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) throws BaseException {
         try {
             int result = memberDao.modifyMemberInfo(patchMemberModityReq, idx);
+            System.out.println("modifyMemberInfo result: "+ result);
 
             if (result == 0) {
                 throw new BaseException(MODIFY_FAIL_USERNAME);

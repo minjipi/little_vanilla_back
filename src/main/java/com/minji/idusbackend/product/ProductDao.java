@@ -159,7 +159,7 @@ public class ProductDao {
         }
 
         if (isDelFree == 1) {
-            getProductsQuery += " AND deliveryType='무료배송'";
+            getProductsQuery += " AND deliveryType=''";
         }
         getProductsQuery += ") as A, (SELECT COUNT(*) as likeCount FROM likes ) as B";
         System.out.println(getProductsQuery);

@@ -31,9 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-    @Autowired
     private UserDetailsService jwtUserDetailsService;
 
     @Autowired
@@ -76,9 +73,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
-                .antMatchers("/product/**", "/member/authenticate", "/auth/**", "/order/**", "/**").permitAll()
+//                .antMatchers("/product/create").hasAuthority("SELLER")
 
-                .antMatchers("/productwrite").hasAuthority("SELLER")
+                .antMatchers("/product/**", "/member/**", "/auth/**", "/order/**", "/").permitAll()
+
                 .anyRequest().authenticated().and()
 
                 .cors().configurationSource(corsConfigurationSource())

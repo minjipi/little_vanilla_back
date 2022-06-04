@@ -75,7 +75,7 @@ public class OrderDao {
     }
 
     public List<GetOrder> orderList(BigInteger userLoginRes) {
-        String orderListQuery = "select * from `order` left outer join product on product.idx=`order`.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=?";
+        String orderListQuery = "select * from `order` left outer join product on product.idx=`order`.product_idx left outer join productImage on productImage.productIdx=product.idx where member_idx=? GROUP BY productImage.productIdx";
 
         return this.jdbcTemplate.query(orderListQuery,
                 (rs, rowNum) -> new GetOrder(

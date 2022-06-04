@@ -10,8 +10,10 @@ import com.minji.idusbackend.member.MemberDao;
 import com.minji.idusbackend.member.MemberProvider;
 import com.minji.idusbackend.member.MemberService;
 import com.minji.idusbackend.member.model.UserLoginRes;
+import com.minji.idusbackend.member.model.UserLoginResWithStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -41,9 +43,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         Map<String, Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
         String email = (String) kakao_account.get("email");
-        UserLoginRes userLoginRes = memberProvider.findByEmail(email);
+        UserLoginResWithStatus userLoginResWithStatus = memberProvider.findByEmail(email);
 
-        String jwt = jwtTokenUtil.generateToken(userLoginRes);
+        if(userLoginResWithStatus.getStatus()==2) {
+            getRedirectStrategy().sendRedirect(request, response, UriComponentsBuilder.fromUriString("http://www.alittlevanilla.kro.kr/leavemember")
+                    .build().toUriString());
+
+        }
+
+        String jwt = jwtTokenUtil.generateToken(userLoginResWithStatus.getUserLoginRes());
 
         String url = makeRedirectUrl(jwt);
         System.out.println("url: " + url);
@@ -57,7 +65,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 
     private String makeRedirectUrl(String token) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/redirect/"+token)
+        return UriComponentsBuilder.fromUriString("http://www.alittlevanilla.kro.kr/oauth2/redirect/"+token)
                 .build().toUriString();
     }
 }

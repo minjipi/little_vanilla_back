@@ -20,4 +20,5 @@ public class GetProductWithImageAndLikesRes {
     private String isTodayDeal;
     private String filename;
     private Boolean like_check;
+
 }

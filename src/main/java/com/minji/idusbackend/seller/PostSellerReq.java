@@ -11,12 +11,11 @@ import lombok.*;
 public class PostSellerReq {
     private String email;
     private String password;
-    private String brandname;
+    private String nickname;
     private String phoneNum;
     private String gender;
     private String birthday;
     private String notification;
-
 }
 
 

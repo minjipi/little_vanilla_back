@@ -72,9 +72,9 @@ public class MemberDao {
 
     public PostMemberRes createSeller(PostSellerReq postSellerReq) {
 
-        String createMemberQuery = "insert into seller (email, password, brandname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String createMemberQuery = "insert into seller (email, password, nickname, phoneNum, gender, birthday, notification) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] createMemberParams = new Object[]{postSellerReq.getEmail(), postSellerReq.getPassword(), postSellerReq.getBrandname(), postSellerReq.getPhoneNum(), postSellerReq.getGender(), postSellerReq.getBirthday(), postSellerReq.getNotification()
+        Object[] createMemberParams = new Object[]{postSellerReq.getEmail(), postSellerReq.getPassword(), postSellerReq.getNickname(), postSellerReq.getPhoneNum(), postSellerReq.getGender(), postSellerReq.getBirthday(), postSellerReq.getNotification()
         };
 
         this.jdbcTemplate.update(createMemberQuery, createMemberParams);
@@ -86,6 +86,7 @@ public class MemberDao {
     }
 
     public UserLoginRes findByEmailStatusZero(String email) {
+        System.out.println("Dao findByEmailStatusZero email: "+email);
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=0";
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
@@ -98,19 +99,8 @@ public class MemberDao {
                 ), email);
     }
 
-    public boolean isValidStatus(JwtRequest authenticationRequest) {
-        String checkStatusQuery = "select status from member where email = ?";
-        String checkStatusParams = authenticationRequest.getUsername();
-
-        Integer status = this.jdbcTemplate.queryForObject(checkStatusQuery
-                , Integer.class
-                , checkStatusParams);
-
-        return (status == 1);
-    }
-
-
     public UserLoginRes findByEmail(String email) {
+        System.out.println("Dao findByEmail email: "+email);
         String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=? AND status=1";
 
         return this.jdbcTemplate.queryForObject(getEmailQuery
@@ -120,6 +110,20 @@ public class MemberDao {
                         rs.getString("password"),
                         rs.getString("nickname"),
                         Arrays.asList(new SimpleGrantedAuthority(Authority.values()[rs.getObject("role", int.class)].toString()))
+                ), email);
+    }
+
+    public UserLoginResWithStatus findByEmailWithStatus(String email) {
+        System.out.println("Dao findByEmail email: "+email);
+        String getEmailQuery = "SELECT * FROM member LEFT OUTER JOIN authority on member.idx=authority.member_idx WHERE email=?";
+        return this.jdbcTemplate.queryForObject(getEmailQuery
+                , (rs, rowNum) -> new UserLoginResWithStatus(
+                        rs.getObject("idx", BigInteger.class),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("nickname"),
+                        Arrays.asList(new SimpleGrantedAuthority(Authority.values()[rs.getObject("role", int.class)].toString())),
+                        rs.getObject("status", Integer.class)
                 ), email);
     }
 
@@ -198,7 +202,7 @@ public class MemberDao {
     //    삭제
     public void deleteUser(BigInteger idx) {
         String deleteUserQuery = "update member set status = ? where idx = ?";
-        Object[] deleteUserParams = new Object[]{0, idx};
+        Object[] deleteUserParams = new Object[]{2, idx};
 
         this.jdbcTemplate.update(deleteUserQuery, deleteUserParams);
     }
