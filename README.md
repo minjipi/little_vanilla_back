@@ -6,7 +6,7 @@
 > 현재 [I am port](https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE, "Iamport link") 결제 API를 연동하여 실제 거래까지 이루어지지만, 현재 배포된 사이트에서는 당일 자정에 모두 환불됩니다. 안심하고 테스트 해보세요!
 <br />
 
-## 사용 기술 스택
+## ⚒ 사용 기술 스택
 + **Spring Boot 2.6.3**
   + Spring Framework에서 클래스패스의 라이브러리를 자동으로 인식하여 설정해주고 내장 서버를 제공하는 등 많은 편의성을 제공하기 때문에 빠른 개발이 가능하다고 생각하여 Spring Boot를 사용했습니다.
 + **Spring Security**
@@ -19,23 +19,29 @@
 <br /><br />
 
 
-## API 설계 및 진행상황
+## 🕹 API 설계 및 진행상황
 ### 🎩 로그인/회원가입 및 회원 정보
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
 | 회원가입 | POST | /member/signup | 일반회원 form DB 전송, 판매자 회원 form DB 전송, 회원가입 중복 방지 | ☑️ |
 | 회원가입 | GET/POST | /member | 카카오 소셜 회원가입 | ☑️ |
 | 이메일인증 | GET | /member/confirm | 이메일 인증, 중복 가입 방지 | ☑️ |
-| 정보수정 | GET | /modify | 회원 정보 수정을 위한 본인 확인 | ☑️ |
+| 정보수정 | GET | /modify | 회원 정보 수정 | ☑️ |
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | status 수정으로 회원 탈퇴 처리 | ☑️ |
 | 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
 
+### 로그인/회원가입 및 회원 정보
 
-[Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
-[Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
-[springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045) <br />
++ **회원가입/로그인 구현**
+  + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
++ **카카오 로그인 구현**
+  + [Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
++ **회원 가입 시 이메일 인증**
+  + [springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045) <br />
+
 <br />
+
 
 ### 🛍 상품
 | Feature | Request | API | 설명 |
@@ -45,10 +51,17 @@
 | 상품삭제 | PATCH | /product/delete/{idx} | 상품 idx를 통한 상품 1개 삭제 |
 | 상품수정 | PATCH | /product/{idx} | 상품 정보 수정 |
 | 상품목록 | GET | /product/list | 상품 목록 조회. 상품명, 판매자, 상품 사진 등 정보 포함. |
-| 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함. [검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) |
-| 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능. [Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891) |
+| 상품검색 | GET | /product/search | 상품 검색. 가격대, 배송타입, 이미지만 보기 등 정렬 검색 기능. 상품명, 판매자, 상품 사진 등 정보 포함.|
+| 상품좋아요 | GET | /product/like/{idx} | 상품 idx를 통한 상품 좋아요/좋아요 취소 기능. |
 | 좋아요목록 | GET | /product/likelist | 회원 idx를 통한 상품 좋아요 목록 조회 |
+
 <br />
+
+[검색 기능 구현](https://blog.naver.com/ghdalswl77/222661721733) 
+[Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891)
+
+<br /><br />
+
 
 
 ### 📝 상품주문
@@ -85,7 +98,7 @@
 | 결제 | POST | /order/create | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
 | 결제 취소 | GET | /order/cancel/{idx} | 상품 idx를 통한 상품 결제 취소 요청 | |
 | 결제 목록 | GET | /order/list | 구매 목록 조회 | ☑️ |
-| 결제 검증 | POST | /pay/complete | 상품 결제 금액과 실제 결제된 금액을 비교 후, 일치하면 거래 완료 처리/불일치 시 거래 실패 처리하는 결제 검증 기능.  |
+| 결제 검증 | POST | /pay/complete | 상품 결제 금액과 실제 결제된 금액을 비교 후, 일치하면 거래 완료 처리/불일치 시 거래 실패 처리하는 결제 검증 기능. | |
 <hr />
 
 ### 마일리지
