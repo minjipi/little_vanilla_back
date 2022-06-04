@@ -55,40 +55,52 @@
 
 
 ### 📝 상품주문
-| Feature | Request | API | 설명 | 체크 |
-| ------ | -- | -- | -- | ----------- |
-| 상품주문 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
-| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
-| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+| Feature | Request | API | 설명 |
+| ------ | -- | -- | ----------- |
+| 상품주문 | POST | /cart/in | 상품 1개 장바구니 담기 |
+| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 |
+| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 |
 <br />
 
 
 ###  🧺 서랍
 ['서랍'](https://blog.naver.com/ghdalswl77/222695713878, "link")기능이란?
-| Feature | Request | API | 설명 | 체크 |
-| ------ | -- | -- | -- | ----------- |
-| 서랍 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
-| 서랍 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
-| 서랍 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+| Feature | Request | API | 설명 |
+| ------ | -- | -- | ----------- |
+| 서랍 추가 | POST | /cart/in | 상품 1개 장바구니 담기 |
+| 서랍 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 |
+| 서랍 목록 | GET | /cart/list | 내 장바구니 목록 조회 |
 <br />
 
 
 ### 🛒 장바구니
-| Feature | Request | API | 설명 | 체크 |
-| ------ | -- | -- | -- | ----------- |
-| 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 | ☑️ |
-| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
-| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 | ☑️ |
+| Feature | Request | API | 설명 |
+| ------ | -- | -- | ----------- |
+| 장바구니 추가 | POST | /cart/in | 상품 1개 장바구니 담기 |
+| 장바구니 취소 | PATCH | /cart/cancel/{idx} | 상품 idx를 통한 상품 장바구니 취소 |
+| 장바구니 목록 | GET | /cart/list | 내 장바구니 목록 조회 |
 <br />
 
 
 ### 💳 결제
 | Feature | Request | API | 설명 | 체크 |
 | ------ | -- | -- | -- | ----------- |
-| 상품결제 | POST | / | 상품 결제 | ☑️ |
-| 장바구니 취소 | PATCH | / | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
-| 장바구니 목록 | GET | / | 내 장바구니 목록 조회 | ☑️ |
+| 결제 | POST | /order/create | 상품 idx를 통한 상품 장바구니 취소 | ☑️ |
+| 결제 취소 | GET | /order/cancel/{idx} | 상품 idx를 통한 상품 결제 취소 요청 | |
+| 결제 목록 | GET | /order/list | 구매 목록 조회 | ☑️ |
+| 결제 검증 | POST | /pay/complete | 상품 결제 금액과 실제 결제된 금액을 비교 후, 일치하면 거래 완료 처리/불일치 시 거래 실패 처리하는 결제 검증 기능.  |
 <hr />
+
+### 마일리지
+| Feature | Request | API | 설명 | 체크 |
+| ------ | -- | -- | -- | ----------- |
+| 마일리지 적립 | POST | /pay/chargePay | 상품 금액의 n% 금액 마일리지 적립 | |
+| 마일리지 사용 | POST | /pay/withdrawPay | 마일리지 사용 | |
+| 마일리지 목록 | GET | /pay/list | 구매 목록 조회 | |
+| 마일리지 잔액 조회 | GET | /pay/showtotal | 마일리지 잔액 조회 | |
+| 마일리지 확인 | GET | /pay/showlist | 마일리지 적립/지출 이력 조회 | |
+<hr />
+
 
 ## 개발 환경
 + Java
