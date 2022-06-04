@@ -101,7 +101,7 @@
 | 결제 취소 | GET | /order/cancel/{idx} | 상품 idx를 통한 상품 결제 취소 요청 | |
 | 결제 목록 | GET | /order/list | 구매 목록 조회 | ☑️ |
 | 결제 검증 | POST | /pay/complete | 상품 결제 금액과 실제 결제된 금액을 비교 후, 일치하면 거래 완료 처리/불일치 시 거래 실패 처리하는 결제 검증 기능. | |
-<hr />
+<br />
 
 ### 마일리지
 | Feature | Request | API | 설명 | 체크 |
@@ -111,6 +111,10 @@
 | 마일리지 목록 | GET | /pay/list | 구매 목록 조회 | |
 | 마일리지 잔액 조회 | GET | /pay/showtotal | 마일리지 잔액 조회 | |
 | 마일리지 확인 | GET | /pay/showlist | 마일리지 적립/지출 이력 조회 | |
+<hr />
+
+## ERD 구조
+![vnilla_ERD](https://user-images.githubusercontent.com/68539040/171995935-40d5b641-a053-462d-bc11-c3991ba8b9db.png)
 <hr />
 
 
