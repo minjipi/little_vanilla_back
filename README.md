@@ -42,7 +42,7 @@
 
 ### 🛍 상품
 | Feature | Request | API | 설명 |
-| ------ | -- | -- | -- | ----------- |
+| ------ | -- | -- | ----------- |
 | 상품작성 | POST | /product/create | 상품 1개 작성 |
 | 상품조회 | GET | /product/{idx} | 상품 idx를 통한 상품 1개 조회 |
 | 상품삭제 | PATCH | /product/delete/{idx} | 상품 idx를 통한 상품 1개 삭제 |
