@@ -48,12 +48,11 @@
  <br />
  
 > 후기 및 개선방향 <br />
-+ **회원가입/로그인 구현**
-  + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
-+ **카카오 로그인 구현**
-  + [Spring Boot 카카오 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
-+ **회원 가입 시 이메일 인증**
-  + [springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045) <br />
++ **[Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
++ **[Spring Boot 카카오 소셜 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
++ **[springboot 구글 이메일 gmail 인증 회원가입 구현](https://blog.naver.com/ghdalswl77/222739067045) <br />
++ **[언젠가 수많은 사용자가 서비스를 이용한다면, 과연 이 서버가 감당할수 있을까?](https://blog.naver.com/ghdalswl77/222533904073) <br />
+
 
 <br />
 
