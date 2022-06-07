@@ -6,8 +6,16 @@
 > 현재 [I am port](https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE, "Iamport link") 결제 API를 연동하여 실제 거래까지 이루어지지만, 현재 배포된 사이트에서는 당일 자정에 모두 환불됩니다. 안심하고 테스트 해보세요!
 <br />
 
+## 🚀 프로젝트 주요 관심사
++ 이유와 근거가 명확한 기술의 사용을 지향합니다.
++ 객체지향적 개념을 이해하고 이를 코드에 녹여내어 의미있는 설계를 지향하였습니다.
++ 대용량 트래픽의 상황에서 지속적인 서버 성능을 개선하기 위해 노력하였습니다.
++️ 반복적인 작업은 자동화하여 개발의 효율을 높이기 위해 노력하였습니다.
+<br /> 
+
 ## 개발 환경
 + Java, Mac, IntelliJ Ultimate(Educational License), Lombok, Gradle 7.x
+  <br />
 
 ## 🎩 사용 기술 스택
 + **Spring Boot 2.6.3**
@@ -15,11 +23,14 @@
 + **Spring Security**
   + 서비스에서 회원 기능을 지원하기 때문에 이에 필수적인 인증, 인가 기능을 적용하기 위해 사용했습니다.
 + **JWT**
-  + 토큰 기반 인증을 구현하기 위해 사용하였습니다. Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 [JWT](https://blog.naver.com/ghdalswl77/222517833354)를 사용했습니다.
-  > s 
+  + 토큰 기반 인증을 구현하기 위해 사용하였습니다. Session 방식보다 확장성이 높고, 자원낭비가 덜하다고 생각해 (세션 클러스터링 등) 로그인 방식으로 [JWT](https://blog.naver.com/ghdalswl77/222517833354, "link")를 사용했습니다.
+  > + [JWT와 session 기반 인증의 차이점](https://blog.naver.com/ghdalswl77/222713870678) <br />
+  > + [Refresh Token 도입의 필요성](http://www.alittlevanilla.kro.kr/)
 + **AWS EC2 배포**
   + 스프링부트 프로젝트와 AWS RDS 연동으로 ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 웹사이트를 배포했습니다. 
 + MySQL 8.0.26
++ Jenkins CI/CD
+  + git push가 발생 할 때마다 빌드와 테스트를 자동화 하여 개발 효율성을 높일 수 있도록 젠킨스를 활용하였습니다.
 <br /><br />
 
 
