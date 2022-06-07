@@ -15,7 +15,7 @@
 
 ## 개발 환경
 + Java, Mac, IntelliJ Ultimate(Educational License), Lombok, Gradle 7.x
-  <br />
+<br />
 
 ## 🎩 사용 기술 스택
 + **Spring Boot 2.6.3**
