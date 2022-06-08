@@ -8,6 +8,8 @@ create table product (
     salePrice int,
     deliveryType varchar(50),
     isTodayDeal varchar(1),
+    contents varchar(900),
+    status tinyint default 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 
@@ -30,13 +32,13 @@ create table member (
 create table seller (
     idx int auto_increment primary key,
     email varchar(50)  not null unique,
-    brandname varchar(30),
+    nickname varchar(30),
     password varchar(200),
     phoneNum varchar(11),
     gender varchar(1),
     birthday varchar(11),
     notification varchar(3),
-    status tinyint default 0,
+    status tinyint default 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -89,7 +91,7 @@ create table orders(
 );
 
 -- '6 : 리뷰쓰기 / 5 : 배송완료 / 4 : 배송중 / 3 : 배송준비 / 2 : 결제완료 / 1 : 입금대기 / 0 : 주문취소(유효하지 않은 상태)'
--- 뭘 찜했는지를 저장.
+
 create table likes (
     member_idx int,
     product_idx int,
@@ -113,7 +115,6 @@ create table cabinet (
 
 -- 상품 조회
 -- select * from likes left outer join product on product.idx=likes.product_idx left outer join productImage on productImage.productIdx=product.idx where cabinet_idx=1 and member_idx=3;
-
 -- select * from likes left outer join product on product.idx=likes.product_idx where cabinet_idx is NULL and member_idx=3;
 
 CREATE TABLE `order`
@@ -129,16 +130,12 @@ CREATE TABLE `order`
     foreign key (member_idx) references member (idx)
 );
 
-
-
-
 CREATE TABLE `cart`
 (
     `idx`              int NOT NULL AUTO_INCREMENT,
     `product_idx`      int NOT NULL,
     `member_idx`       int NOT NULL,
     `amount`           int NOT NULL,
-    status tinyint default 0,
     PRIMARY KEY (`idx`),
     foreign key (product_idx) references product (idx),
     foreign key (member_idx) references member (idx)

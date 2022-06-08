@@ -10,12 +10,12 @@
 + 이유와 근거가 명확한 기술의 사용을 지향합니다.
 + 객체지향적 개념을 이해하고 이를 코드에 녹여내어 의미있는 설계를 지향하였습니다.
 + 대용량 트래픽의 상황에서 지속적인 서버 성능을 개선하기 위해 노력하였습니다.
-+️ 반복적인 작업은 자동화하여 개발의 효율을 높이기 위해 노력하였습니다.
-<br /> 
+  +️ 반복적인 작업은 자동화하여 개발의 효율을 높이기 위해 노력하였습니다.
+  <br />
 
 ## 개발 환경
 + Java, Mac, IntelliJ Ultimate(Educational License), Lombok, Gradle 7.x
-<br />
+  <br />
 
 ## 🎩 사용 기술 스택
 + **Spring Boot 2.6.3**
@@ -27,11 +27,11 @@
   > + [JWT와 session 기반 인증의 차이점](https://blog.naver.com/ghdalswl77/222713870678) <br />
   > + [Refresh Token 도입의 필요성](http://www.alittlevanilla.kro.kr/)
 + **AWS EC2 배포**
-  + 스프링부트 프로젝트와 AWS RDS 연동으로 ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 웹사이트를 배포했습니다. 
+  + 스프링부트 프로젝트와 AWS RDS 연동으로 ['A Little Vanilla'](http://www.alittlevanilla.kro.kr/) 에 웹사이트를 배포했습니다.
 + MySQL 8.0.26
 + Jenkins CI/CD
   + git push가 발생 할 때마다 빌드와 테스트를 자동화 하여 개발 효율성을 높일 수 있도록 젠킨스를 활용하였습니다.
-<br /><br />
+    <br /><br />
 
 
 ## 🕹 API 설계 및 진행상황
@@ -45,8 +45,8 @@
 | 정보수정 | PATCH | /modify/{idx} | 닉네임, 아이디, 비밀번호, 성별 등의 정보 수정 | ☑️ |
 | 회원탈퇴 | PATCH | /delete/{idx} | status 수정으로 회원 탈퇴 처리 | ☑️ |
 | 재가입 | PATCH | /member/signup | 회원 가입 시 기존 회원 가입 이력이 있을 경우, status 변경으로 재가입 |  |
- <br />
- 
+<br />
+
 > 후기 및 개선방향 <br />
 + [Spring Boot + JWT + Security + Security '회원가입/로그인'](https://blog.naver.com/ghdalswl77/222675846877) <br />
 + [Spring Boot 카카오 소셜 로그인 하기 (JWT+OAuth2)](https://blog.naver.com/ghdalswl77/222711444513) <br />
@@ -73,7 +73,7 @@
 > 후기 및 개선방향 <br />
 + [검색 기능](https://blog.naver.com/ghdalswl77/222661721733) <br />
 + [Spring Boot 게시글 좋아요](https://blog.naver.com/ghdalswl77/222686567891) <br />
-<br /><br />
+  <br /><br />
 
 
 
