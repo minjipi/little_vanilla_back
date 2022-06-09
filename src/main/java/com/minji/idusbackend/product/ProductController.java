@@ -1,7 +1,5 @@
 package com.minji.idusbackend.product;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.minji.idusbackend.cart.CartService;
 import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.config.BaseResponse;
 
@@ -10,7 +8,6 @@ import static com.minji.idusbackend.config.BaseResponseStatus.*;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
