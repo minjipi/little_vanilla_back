@@ -6,6 +6,9 @@
 > 현재 [I am port](https://www.iamport.kr/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEawr0NbpwdG_4bW9KRPVRXXVEdwQ32yO8SyXEhMBfxiqHIml3c8uxhoC2nYQAvD_BwE, "Iamport link") 결제 API를 연동하여 실제 거래까지 이루어지지만, 현재 배포된 사이트에서는 당일 자정에 모두 환불됩니다. 안심하고 테스트 해보세요!
 <br />
 
+## 프로젝트 전체 구조 <br />
+<img width="1196" alt="스크린샷 2022-06-20 오후 5 36 33" src="https://user-images.githubusercontent.com/68539040/174560817-03b66bae-eaa0-46e5-8fdd-96770856d44c.png"> <br /> <br />
+
 ## 🚀 프로젝트 주요 관심사
 + 이유와 근거가 명확한 기술의 사용을 지향합니다.
 + 객체지향적 개념을 이해하고 이를 코드에 녹여내어 의미있는 설계를 지향합니다.
