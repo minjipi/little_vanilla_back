@@ -31,6 +31,8 @@ public class JwtUserDetailsService implements UserDetailsService {
                     // 인증을 아직 안받은애
                     System.out.println("인증이 필요합니다.");
 
+                    throw new UsernameNotFoundException("Email cert please. Id: " + username);
+
                 } else if (userLoginResWithStatus.getStatus()==1) {
                     // 인증을 받은 애
                     return userLoginResWithStatus.getUserLoginRes();
