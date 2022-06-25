@@ -76,7 +76,12 @@ public class MemberController {
     @GetMapping("/confirm")
     public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
-        return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
+
+        if (getEmailCertRes.getStatus() == 1) {
+            return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
+        } else {
+            return new RedirectView("http://www.alittlevanilla.kro.kr");
+        }
     }
 
     @ResponseBody
