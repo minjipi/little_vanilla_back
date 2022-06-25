@@ -20,20 +20,25 @@ public class EmailCertService {
     @Autowired
     private EmailCertDao emailCertDao;
 
+    @Autowired
+    private EmailCertRedisService emailCertRedisService;
+
     @Async
     public String createEmailConfirmationToken(String token, String receiverEmail, String jwt) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
         mailMessage.setSubject("가입 이메일 인증 메일!");
-        mailMessage.setText("http://www.alittlevanilla.kro.kr:8080/member/confirm?email="+receiverEmail+"&token="+token+"&jwt="+jwt );
+        mailMessage.setText("http://www.alittlevanilla.kro.kr/member/confirm?email="+receiverEmail+"&token="+token+"&jwt="+jwt );
         javaMailSender.send(mailMessage);
 
         return "test";
     }
 
     public GetEmailCertRes signupConfirm(GetEmailConfirmReq getEmailConfirmReq) {
-        if (emailCertDao.tokenCheck(getEmailConfirmReq)) {
+
+        // if (emailCertDao.tokenCheck(getEmailConfirmReq)) {  // 이부분을 redis에서 찾는 걸로 바꿔야 함.
+        if (emailCertRedisService.checkToken(getEmailConfirmReq.getToken(), getEmailConfirmReq.getEmail())) {
             GetEmailCertRes getEmailCertRes = emailCertDao.signupConfirm(getEmailConfirmReq.getEmail());
             return getEmailCertRes;
         }

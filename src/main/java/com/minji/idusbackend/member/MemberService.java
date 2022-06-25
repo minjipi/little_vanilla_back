@@ -26,6 +26,9 @@ public class MemberService {
     @Autowired
     private EmailCertDao emailCertDao;
 
+    @Autowired
+    private EmailCertRedisService emailCertRedisService;
+
     public void modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) throws BaseException {
         try {
             int result = memberDao.modifyMemberInfo(patchMemberModityReq, idx);
@@ -52,7 +55,12 @@ public class MemberService {
     public PostMemberRes createMember(PostMemberReq postMemberReq, String token) {
         postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
         PostMemberRes postMemberRes = memberDao.createMember(postMemberReq);
-        emailCertDao.createToken(new GetEmailCertReq(token, postMemberReq.getEmail()));
+
+
+        // DB에 토큰을 저장하는거 대신에 redis에 저장시키게 변경
+        //emailCertDao.createToken(new GetEmailCertReq(token, postMemberReq.getEmail()));
+        emailCertRedisService.saveToken(token, postMemberReq.getEmail(), 300);
+
         return postMemberRes;
     }
 
