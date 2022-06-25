@@ -29,7 +29,7 @@ public class EmailCertService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
         mailMessage.setSubject("가입 이메일 인증 메일!");
-        mailMessage.setText("http://www.alittlevanilla.kro.kr/member/confirm?email="+receiverEmail+"&token="+token+"&jwt="+jwt );
+        mailMessage.setText("http://3.39.23.145:8080/member/confirm?email="+receiverEmail+"&token="+token+"&jwt="+jwt );
         javaMailSender.send(mailMessage);
 
         return "test";
