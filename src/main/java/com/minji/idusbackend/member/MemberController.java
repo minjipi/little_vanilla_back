@@ -80,6 +80,7 @@ public class MemberController {
         if (getEmailCertRes.getStatus() == 1) {
             return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
         } else {
+//             수정 요청 : 인증 에러 페이지.
             return new RedirectView("http://www.alittlevanilla.kro.kr");
         }
     }

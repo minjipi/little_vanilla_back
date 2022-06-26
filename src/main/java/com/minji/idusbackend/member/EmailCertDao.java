@@ -44,7 +44,6 @@ public class EmailCertDao {
                 userEmail};
 
         return new GetEmailCertRes(this.jdbcTemplate.update(signupConfirmQuery, signupConfirmParams));
-
     }
 
 }

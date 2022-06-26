@@ -14,10 +14,8 @@ public class EmailCertRedisService {
     RedisTemplate redisTemplate;
 
     public void saveToken(String key, String email, long duration) {
-
         final ValueOperations<String, String> stringStringValueOperations = redisTemplate.opsForValue();
         Duration expireDuration = Duration.ofSeconds(duration);
-        System.out.println("리디스 테스트");
         stringStringValueOperations.set(key, email, expireDuration); // redis set 명령어
     }
 

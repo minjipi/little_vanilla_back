@@ -46,6 +46,5 @@ public class EmailCertService {
             GetEmailCertRes getEmailCertRes = new  GetEmailCertRes(0);
             return getEmailCertRes;
         }
-
     }
 }
