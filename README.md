@@ -18,7 +18,7 @@
   > + [다중 서버 환경에서의 Session 관리](https://blog.naver.com/PostView.naver?blogId=ghdalswl77&Redirect=View&logNo=222764535050&categoryNo=94&isAfterWrite=true&isMrblogPost=false&isHappyBeanLeverage=true&contentLength=25351&isWeeklyDiaryPopupEnabled=false) <br />
 + 반복적인 작업은 자동화하여 개발의 효율을 높이기 위해 노력하였습니다.
   > + [젠킨스 CI/CD 구축](https://blog.naver.com/ghdalswl77/222743600660) <br />
-
+  > + Swagger UI로 RESTful API 테스트 및 문서화 작업
   <br />
 
 ## 개발 환경

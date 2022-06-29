@@ -23,22 +23,24 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        version = "V1";
-        title = "littleVanilla API " + version;
+        version = "v1";
+        title = "aLittleVanilla API " + version;
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(false)
-                .groupName(version)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.minji.idusbackend"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .groupName(version)
+                .useDefaultResponseMessages(false)
+                .apiInfo(apiInfo(title, version))
+                .useDefaultResponseMessages(false);
     }
 
     private ApiInfo apiInfo(String title, String version) {
         return new ApiInfo(
                 title,
-                " A Little Vanilla API Docs",
+                "A Little Vanilla API Docs",
                 version,
                 "http://www.alittlevanilla.kro.kr/",
                 new Contact("Contact Me", "https://blog.naver.com/ghdalswl77", "ghdalswl77@naver.com"),
