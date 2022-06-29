@@ -1,5 +1,6 @@
 package com.minji.idusbackend.member;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 
 @Service
+@RequiredArgsConstructor
 public class EmailCertRedisService {
 
-    @Autowired
-    RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     public void saveToken(String key, String email, long duration) {
         final ValueOperations<String, String> stringStringValueOperations = redisTemplate.opsForValue();

@@ -1,6 +1,5 @@
 package com.minji.idusbackend.order;
 
-import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.config.BaseResponse;
 
 import static com.minji.idusbackend.config.BaseResponseStatus.FAIL;

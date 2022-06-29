@@ -8,7 +8,7 @@ import com.minji.idusbackend.member.model.*;
 import com.minji.idusbackend.seller.PostSellerReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -23,30 +23,17 @@ import java.util.UUID;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 
+@RequiredArgsConstructor
 @Api(value = "MemberController V1")
 @CrossOrigin("http://www.alittlevanilla.kro.kr")
 @RestController
 @RequestMapping("/member")
 public class MemberController {
     private final MemberDao memberDao;
-
-    @Autowired
-    MemberService memberService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private EmailCertService emailCertService;
-
-    @Autowired
-    public MemberController(MemberDao memberDao) {
-        this.memberDao = memberDao;
-    }
-
+    private final MemberService memberService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final EmailCertService emailCertService;
 
     @ResponseBody
     @ApiOperation(value = "회원 가입")

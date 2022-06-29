@@ -1,19 +1,18 @@
 package com.minji.idusbackend.order;
 
-import com.minji.idusbackend.cart.model.GetCart;
 import com.minji.idusbackend.order.model.GetOrder;
 import com.minji.idusbackend.order.model.PostOrderReq;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
-    @Autowired
-    OrderDao orderDao;
+    private final OrderDao orderDao;
 
     public String createOrderBy(BigInteger userLoginRes, PostOrderReq postOrderReq) {
         return orderDao.createOrderBy(userLoginRes, postOrderReq);
@@ -33,11 +32,11 @@ public class OrderService {
         }
     }
 
-    public Integer orderPriceCheck(BigInteger productIdx){
+    public Integer orderPriceCheck(BigInteger productIdx) {
         return orderDao.orderPriceCheck(productIdx);
     }
 
-    public PostOrderResponse createOrder(BigInteger productIdx, BigInteger memberIdx, String impUid){
+    public PostOrderResponse createOrder(BigInteger productIdx, BigInteger memberIdx, String impUid) {
         return orderDao.createOrder(productIdx, memberIdx, impUid);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 
 @Service
+
 public class MemberProvider {
     private final MemberDao memberDao;
 

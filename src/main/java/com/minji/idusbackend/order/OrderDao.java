@@ -20,11 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderDao {
     private JdbcTemplate jdbcTemplate;
-
     private final MemberDao memberDao;
-
-    @Autowired
-    ProductDao productDao;
+    private final ProductDao productDao;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {

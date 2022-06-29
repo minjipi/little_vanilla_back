@@ -9,6 +9,7 @@ import com.minji.idusbackend.pay.model.PostOrderInfo;
 import com.minji.idusbackend.pay.model.PostOrderResponse;
 import com.minji.idusbackend.pay.model.PostPayReq;
 import com.minji.idusbackend.pay.model.PostPayRes;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +21,14 @@ import java.util.List;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pay")
 public class PayController {
-    @Autowired
-    PayService payService;
+    private final PayService payService;
 
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
 
-    @Autowired
-    CartService cartService;
+    private final CartService cartService;
 
     @PostMapping("/complete")
     public BaseResponse<PostOrderResponse> paymentComplete(@RequestBody PostOrderInfo postOrderInfo, @AuthenticationPrincipal UserLoginRes userLoginRes) throws IOException {

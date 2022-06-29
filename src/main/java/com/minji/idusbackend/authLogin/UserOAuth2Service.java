@@ -21,9 +21,7 @@ import java.util.Map;
 @Service
 
 public class UserOAuth2Service extends DefaultOAuth2UserService {
-
-    @Autowired
-    MemberDao memberDao;
+    private final MemberDao memberDao;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

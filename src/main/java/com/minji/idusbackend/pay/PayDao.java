@@ -1,6 +1,7 @@
 package com.minji.idusbackend.pay;
 
 import com.minji.idusbackend.pay.model.PostPayRes;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import javax.sql.DataSource;
 import java.math.BigInteger;
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @Repository
 public class PayDao {
     private JdbcTemplate jdbcTemplate;

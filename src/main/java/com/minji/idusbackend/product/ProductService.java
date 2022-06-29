@@ -3,7 +3,7 @@ package com.minji.idusbackend.product;
 import com.minji.idusbackend.cbn.model.GetCbnProductRes;
 import com.minji.idusbackend.member.model.UserLoginRes;
 import com.minji.idusbackend.product.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    @Autowired
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     public PostProductRes createProduct(BigInteger useridx, PostProductReq postProductReq) {
         return productDao.createProduct(useridx, postProductReq);
