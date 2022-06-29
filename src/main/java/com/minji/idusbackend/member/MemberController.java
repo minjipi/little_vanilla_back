@@ -6,6 +6,8 @@ import com.minji.idusbackend.config.BaseResponseStatus;
 import com.minji.idusbackend.config.JwtTokenUtil;
 import com.minji.idusbackend.member.model.*;
 import com.minji.idusbackend.seller.PostSellerReq;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
@@ -21,6 +23,7 @@ import java.util.UUID;
 import static com.minji.idusbackend.config.BaseResponseStatus.*;
 import static com.minji.idusbackend.utils.Validation.isValidatedIdx;
 
+@Api(value = "MemberController V1")
 @CrossOrigin("http://www.alittlevanilla.kro.kr")
 @RestController
 @RequestMapping("/member")
@@ -44,7 +47,9 @@ public class MemberController {
         this.memberDao = memberDao;
     }
 
+
     @ResponseBody
+    @ApiOperation(value = "회원 가입")
     @PostMapping("/signup")
     public BaseResponse<PostMemberRes> createMember(@RequestBody PostMemberReq postMemberReq) {
 
@@ -74,6 +79,7 @@ public class MemberController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "회원 가입 이메일 인증")
     @GetMapping("/confirm")
     public RedirectView signupConfirm(GetEmailConfirmReq getEmailConfirmReq) {
         GetEmailCertRes getEmailCertRes = emailCertService.signupConfirm(getEmailConfirmReq);
