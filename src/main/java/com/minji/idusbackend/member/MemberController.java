@@ -50,7 +50,7 @@ public class MemberController {
 
         try {
             if (postMemberReq.getNickname() == null) {
-                return new BaseResponse<>(POST_USER_NICKNAME_NULL);
+                return new BaseResponse<>(POST_USER_INFO_NULL);
             }
 
             String token = UUID.randomUUID().toString();
@@ -58,6 +58,7 @@ public class MemberController {
             System.out.println("====== Controller : createMember : Req ====== " + postMemberReq);
 
             PostMemberRes postMemberRes = memberService.createMember(postMemberReq, token);
+
             UserDetails userDetails = memberService.findByEmailStatusZero(postMemberReq.getEmail());
 
             final String jwt = jwtTokenUtil.generateToken(userDetails);
@@ -80,8 +81,7 @@ public class MemberController {
         if (getEmailCertRes.getStatus() == 1) {
             return new RedirectView("http://www.alittlevanilla.kro.kr/emailconfirm/" + getEmailConfirmReq.getJwt());
         } else {
-//             수정 요청 : 인증 에러 페이지.
-            return new RedirectView("http://www.alittlevanilla.kro.kr");
+            return new RedirectView("http://www.alittlevanilla.kro.kr/emailCertError");
         }
     }
 

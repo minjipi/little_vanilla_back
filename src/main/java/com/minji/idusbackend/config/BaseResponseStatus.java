@@ -32,7 +32,7 @@ public enum BaseResponseStatus {
     PATCH_PRE_DELETED_USER(false, 2040, "이미 탈퇴한 회원입니다."),
 
     // [POST] /users
-    POST_USER_NICKNAME_NULL(false, 2041, "닉네임을 입력해주세요."),
+    POST_USER_INFO_NULL(false, 2041, "빠진 가입 정보가 없는지 확인해주세요."),
 
     // [GET] /products
     EMPTY_IDX(false, 2050, "IDX 값을 입력해주세요."),

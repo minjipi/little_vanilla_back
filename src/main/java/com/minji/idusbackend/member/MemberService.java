@@ -32,7 +32,7 @@ public class MemberService {
     public void modifyMemberInfo(PatchMemberModityReq patchMemberModityReq, BigInteger idx) throws BaseException {
         try {
             int result = memberDao.modifyMemberInfo(patchMemberModityReq, idx);
-            System.out.println("modifyMemberInfo result: "+ result);
+            System.out.println("modifyMemberInfo result: " + result);
 
             if (result == 0) {
                 throw new BaseException(MODIFY_FAIL_USERNAME);
@@ -42,7 +42,7 @@ public class MemberService {
         }
     }
 
-    public GetMemberRes getModifyMemberInfo(BigInteger userIdx){
+    public GetMemberRes getModifyMemberInfo(BigInteger userIdx) {
         return memberDao.getModifyMemberInfo(userIdx);
     }
 
@@ -56,9 +56,8 @@ public class MemberService {
         postMemberReq.setPassword(passwordEncoder.encode(postMemberReq.getPassword()));
         PostMemberRes postMemberRes = memberDao.createMember(postMemberReq);
 
-
-        // DB에 토큰을 저장하는거 대신에 redis에 저장시키게 변경
-        //emailCertDao.createToken(new GetEmailCertReq(token, postMemberReq.getEmail()));
+        // emailCertDao.createToken(new GetEmailCertReq(token, postMemberReq.getEmail()));
+        // DB에 토큰을 저장하는거 대신 redis에 저장시키게 수정
         emailCertRedisService.saveToken(token, postMemberReq.getEmail(), 300);
 
         return postMemberRes;
@@ -68,13 +67,12 @@ public class MemberService {
     public UserDetails findByEmailStatusZero(String username) throws UsernameNotFoundException {
         try {
             UserLoginRes userLoginRes = memberDao.findByEmailStatusZero(username);
-            System.out.println("== JwtUserDetailsService, loadUserByUsername, userLoginRes: ==" + userLoginRes);
+            System.out.println("findByEmailStatusZero");
+            System.out.println("JwtUserDetailsService, loadUserByUsername, userLoginRes: " + userLoginRes);
 
             if (userLoginRes != null) {
                 return userLoginRes;
-            }
-
-            else {
+            } else {
                 throw new UsernameNotFoundException("User not found with username: " + username);
             }
         } catch (Exception exception) {
