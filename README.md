@@ -7,7 +7,8 @@
 <br />
 
 ## 프로젝트 전체 구조 <br />
-<img width="1196" alt="스크린샷 2022-06-20 오후 5 36 33" src="https://user-images.githubusercontent.com/68539040/174560817-03b66bae-eaa0-46e5-8fdd-96770856d44c.png"> <br /> <br />
+<img width="1353" alt="전체과정" src="https://user-images.githubusercontent.com/68539040/176331491-ac4ec70b-5d4b-4299-af16-5f86301e3b37.png">
+ <br /> <br />
 
 ## 🚀 프로젝트 주요 관심사
 + 이유와 근거가 명확한 기술의 사용을 지향합니다.
